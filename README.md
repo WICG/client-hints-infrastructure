@@ -104,36 +104,39 @@ mechanisms.  That would effectively reduce the passive fingerprinting surface on
 the web, and enable browser to keep closer tabs on entities that use that
 information for seemingly nefarious reasons.
 
-# Opt-in mechanism
+# The Client Hints infrastructure
 
-How can servers opt into receiving hints from the client?
+How can servers opt into receiving hints from the client? How should client send those hints? And how should that be handled across origins?
 
+This section answers those questions.
+
+## Opt-in mechanism
 They can do that using the HTTP response headers described in the sections
 below. They can similarly opt-in by using the headers' HTML equivalents, the
 `<meta>` HTML tag and its `http-equiv` attribute.
 
 
-## `Accept-CH`
+### `Accept-CH`
 
 The `Accept-CH` header enables server to request specific hints from the
 browser. The header's value is a comma separated list, where each value in that
 list represents a request header hint that the server is interested in
 receiving.
 
-### Example
+#### Example
 
 If the server's response to the navigation request includes the `Accept-CH: foo,
 bar` header, same-origin subresource requests on the page will include the
 `Sec-Foo: foo-value` and `Sec-Bar: bar-value` request headers.
 
-# `Accept-CH-Lifetime`
+### `Accept-CH-Lifetime`
 
 In order to enable hints for navigation requests (albeit not to the very-first
 one), the `Accept-CH-Lifetime` header tells the browser to maintain the Client
 Hints opt-in persistency over time.  The header's value is an integer that
 represents the number of seconds that preference should be kept by the browser.
 
-### Example
+#### Example
 
 If the server's response to the navigation request includes the `Accept-CH: foo,
 bar` and `Accept-CH-Lifetime: 3600`, same-origin requests on *on that origin*
