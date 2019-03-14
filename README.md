@@ -164,7 +164,9 @@ which are potentially active resources.
 
 # Practical considerations
 
-## Each hint in its own header ## `Sec-` prefix ## Caching considerations
+## Each hint in its own header
+
+## `Sec-` prefix ## Caching considerations
 
 # Privacy considerations
 
