@@ -8,18 +8,18 @@ Therefore Client Hints is created as an opt-in mechanism, where if the server
 intends to use those hints, it needs to actively request for them.
 
 This document outlines the Client Hints infrastructure, explains it at a higher
-level and points to the various specification and draft proposals in which it
-is officially defined.  This document does not describe the various features
-and hints which rely on the infrastructure. They will be defined in their
-respective specifications.
+level and points to the various specification and draft proposals in which it is
+officially defined.  This document does not describe the various features and
+hints which rely on the infrastructure. They will be defined in their respective
+specifications.
 
 # Why conneg?
 
-When we need to choose for a solution that will provide alternative resources
-to the user's browser based on various factors, we are faced with a design
-dillema: We can provide the browser with a list of all potential URLs and let
-the browser choose the best one, or we can use **content negotiation** and pick
-the best fit resource variant on the server.
+When we need to choose for a solution that will provide alternative resources to
+the user's browser based on various factors, we are faced with a design dillema:
+We can provide the browser with a list of all potential URLs and let the browser
+choose the best one, or we can use **content negotiation** and pick the best fit
+resource variant on the server.
 
 The former option certainly has its place, and it is used successfully across
 the web in examples like `<picture>`, `srcset`, `<video>`, etc.
@@ -64,12 +64,12 @@ limit Client Hints to be an opt-in solution? Why can't we expose those details
 to all servers, and let them do the right thing?
 
 There are two reasons for that:
-* Exposing all the details and dimensions to all servers runs a risk of
-  bloating request headers. There are many potential details that can be
-  useful, and we expect that list to grow over time.  Sending all hints all the
-  time can quickly bloat HTTP requests, and make them significantly larger than
-  they should be. It is better for servers to specifically request the headers
-  they would take into account, and only send them.
+* Exposing all the details and dimensions to all servers runs a risk of bloating
+  request headers. There are many potential details that can be useful, and we
+  expect that list to grow over time.  Sending all hints all the time can
+  quickly bloat HTTP requests, and make them significantly larger than they
+  should be. It is better for servers to specifically request the headers they
+  would take into account, and only send them.
 * Exposing those details by default significantly increases the risk of
   **passive user fingerprinting**, where each one of those details is used to
   add anthropy bits to the user's "fingerprint", resulting in accurate
@@ -100,15 +100,18 @@ need, making any such fingerprinting use detectable.
 
 But, Client Hints can enable us to do more than that for user privacy, and turn
 passive-fingerprinting-enabling content-negotiation mechanisms into opt-in-only
-mechanisms.  That would effectively reduce the passive fingerprinting surface
-on the web, and enable browser to keep closer tabs on entities that use that
+mechanisms.  That would effectively reduce the passive fingerprinting surface on
+the web, and enable browser to keep closer tabs on entities that use that
 information for seemingly nefarious reasons.
 
 # Opt-in mechanism
 
 How can servers opt into receiving hints from the client?
 
-They can use the following HTTP response headers:
+They can do that using the HTTP response headers described in the sections
+below. They can similarly opt-in by using the headers' HTML equivalents, the
+`<meta>` HTML tag and its `http-equiv` attribute.
+
 
 ## `Accept-CH`
 
@@ -119,8 +122,8 @@ receiving.
 
 ### Example
 
-If the server's response to the navigation request includes the `Accept-CH:
-foo, bar` header, same-origin subresource requests on the page will include the
+If the server's response to the navigation request includes the `Accept-CH: foo,
+bar` header, same-origin subresource requests on the page will include the
 `Sec-Foo: foo-value` and `Sec-Bar: bar-value` request headers.
 
 # `Accept-CH-Lifetime`
@@ -132,16 +135,15 @@ represents the number of seconds that preference should be kept by the browser.
 
 ### Example
 
-If the server's response to the navigation request includes the `Accept-CH:
-foo, bar` and `Accept-CH-Lifetime: 3600`, same-origin requests on *on that
-origin* will include the `Sec-Foo: foo-value` and `Sec-Bar: bar-value` request
-headers for the next hour, including the navigation requests of future
-navigations.
+If the server's response to the navigation request includes the `Accept-CH: foo,
+bar` and `Accept-CH-Lifetime: 3600`, same-origin requests on *on that origin*
+will include the `Sec-Foo: foo-value` and `Sec-Bar: bar-value` request headers
+for the next hour, including the navigation requests of future navigations.
 
 ## Same Origin Policy
 
-The opt-in mechanism description above included the fact that the opt-in is
-only applied to same-origin requests, and only applied when it is received on a
+The opt-in mechanism description above included the fact that the opt-in is only
+applied to same-origin requests, and only applied when it is received on a
 navigation resource. Why is that important?
 
 As mentioned before, we don't want the mechanism to be used to increase
@@ -152,9 +154,9 @@ fingerprinting surface. Those resources can already run scripts to exfiltrate
 that data, and CH only provides them with a more convenient and performant way
 to do that, when that data is needed for content negotiation purposes.
 
-But, that also means that we don't want passive subresources (e.g. images) to
-be able to exfiltrate the same data, and we certainly don't want them to be
-able to exfiltrate it for the entire origin for a longer amount of time.
+But, that also means that we don't want passive subresources (e.g. images) to be
+able to exfiltrate the same data, and we certainly don't want them to be able to
+exfiltrate it for the entire origin for a longer amount of time.
 
 Therefore, by default, client hints are only applicable to the same origin as
 the page navigation, and the opt-in is only available for navigation requests,
@@ -162,13 +164,64 @@ which are potentially active resources.
 
 ## Cross-origin hint delegation
 
-# Practical considerations
+If Client Hints are only being sent on same-origin requests, how can we handle
+cross-origin requests?
 
-## Each hint in its own header
+As the use-case for client hints is to enable content negotiation at scale, and
+as many optimization services are offered over different origins than the main
+page's origin, cross-origin support is a vital part of client hints.
+
+In order to support that use-case, we have defined delegation of client hints to
+specific cross-origin hosts, using Feature Policy.
+
+Servers can opt-in to such delegation by applying `ch-` prefixed policies for
+the desired hints.
+
+### Example
+
+A server sending the following header `Feature-Policy: ch-example foo.com
+bar.com; ch-example-2 foobar.org` will delegate the `example` hint to the
+"foo.com" and "bar.com" origins and `example-2` to the foobar.org origin.  That
+would enable those origins to receive those hints and perform content adaptation
+based on them.
+
+### Privacy implications
+
+Why is it privacy safe for pages to delegate hints to certain third party
+origins?
+
+Since we're treating Client Hints as an active fingerprinting equivalent, we are
+comfortable with the information it exposes to servers, as the same information
+is already freely available in the equivalent JS APIs. Similarly, third party
+delegation is safe because pages are already able to use other means, such as
+link decoration, to achieve the same information sharing with third parties,
+only in less performant ways.
 
 ## `Sec-` prefix
+Adding new request headers increases the risk that legacy server systems already
+use those values for a different purpose. Changing the request header values
+such legacy systems receive may result in server bugs.
+
+While that risk is significantly mitigated by the opt-in mechanisms of Client
+Hints, other specifications relying on Client Hints should reduce it even
+further by adding a `Sec-` prefix to Client Hints request header names they pick
+for their features.
+
+Adding a `Sec-` prefix will also enable us to simplify the processing model, as
+such headers cannot be added by a Service Worker, and potentially enable us to
+add all such headers to CORS' safe-list, avoiding unwanted preflights for
+requests with Client Hints.
 
 ## Caching considerations
+
+When adapting content to specific client hints request headers, servers should
+add the `Vary` header to their responses to indicate such adaptation to caches,
+and make sure that such resources are not cached using only their URL as the
+cache key.
+
+This is also the reason that each Client Hint is represented using a separate
+header, in order to reduce variance in caches in responses that may rely on some
+hints, but not others.
 
 # Privacy considerations
 
