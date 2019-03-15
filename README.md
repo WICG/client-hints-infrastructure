@@ -1,21 +1,23 @@
-Client Hints is a content negotiation mechanism that enables negotiation of
-various details about the user's device, conditions and preferences from the
-client to the server, so that the server is able to pick a resources that's the
-best fit for the user in his current situation.  At the same time, exposing
-those details to servers can increase their ability to passively fingerprint
-users without their consent, which is something we would prefer to avoid.
-Therefore Client Hints is created as an opt-in mechanism, where if the server
-intends to use those hints, it needs to actively request for them.
+Client Hints is a content negotiation mechanism that enables the client to send
+various details about the user's device, conditions and preferences to the
+server. It enables the server to pick a resource that's the best fit for the
+user in his current situation, to improve the user's performance or experience.
+
+At the same time, exposing those details to servers can increase their ability
+to passively fingerprint users without their consent, which is something we
+need to avoid.  Therefore Client Hints is created as an opt-in mechanism, where
+if the server intends to use those hints, it needs to actively request for
+them.
 
 This document outlines the Client Hints infrastructure, explains it at a higher
 level and points to the various specification and draft proposals in which it
-is officially defined.  This document does not describe the various features
-and hints which rely on the infrastructure. They will be defined in their
-respective specifications.
+is officially defined. At the same time, it does not describe the various
+features and hints which rely on the infrastructure. They will be defined in
+their respective specifications.
 
 # Why conneg?
 
-When we need to choose for a solution that will provide alternative resources
+When we need to choose a solution that will provide alternative resources
 to the user's browser based on various factors, we are faced with a design
 dillema: We can provide the browser with a list of all potential URLs and let
 the browser choose the best one, or we can use **content negotiation** and pick
@@ -44,18 +46,19 @@ the user:
    - Memory and CPU capabilities
    - Range of colors the screen can display 
 * Browser characteristics
-   - User Agent version and other details
+   - User Agent major or full version
+   - Device model, OS version and platform
    - Supported formats and codecs
 * User preferences
    - Data saving preferences
-   - Language preferences
+   - Preferred language
 * Network conditions
    - RTT
    - Effective bandwidth
 
 The list above is not necessarily exhaustive, but it can give us an idea as to
-why providing the URLs for all the above dimensions (and their permutations) to
-the browser may not be practical in some cases.
+why simply providing the browser with URLs for all the above dimensions and
+their permutations may not be practical, at least in some cases.
 
 # Why an opt-in?
 
@@ -65,14 +68,15 @@ to all servers, and let them do the right thing?
 
 There are two reasons for that:
 * Exposing all the details and dimensions to all servers runs a risk of
-  bloating request headers. There are many potential details that can be
-  useful, and we expect that list to grow over time.  Sending all hints all the
-  time can quickly bloat HTTP requests, and make them significantly larger than
-  they should be. It is better for servers to specifically request the headers
-  they would take into account, and only send them.
+  bloating request headers. There are many potential details that can be useful
+  for content negotiation, and we expect that list to grow over time. Sending
+  all the hints all the time can quickly bloat HTTP requests, and make them
+  significantly larger than they should be. To avoid request bloat, it is
+  more efficient for servers to specifically request the headers they would
+  take into account, and send only these hints with upgoing requests.
 * Exposing those details by default significantly increases the risk of
-  **passive user fingerprinting**, where each one of those details is used to
-  add anthropy bits to the user's "fingerprint", resulting in accurate
+  **passive user fingerprinting**, where each one of those details can be used
+  to add anthropy bits to the user's "fingerprint", resulting in accurate
   identification of users across the web, even when they take measures to avoid
   such tracking (e.g. blocking of third-party cookies).
 
@@ -87,7 +91,7 @@ navigation request as well.
 At the same time, for features which are critical for content negotiation of
 navigation requests, browsers may choose to send them regardless of a server
 opt-in, in case it deems exposing that information as something that doesn't
-increase the passive fingerprinting area.
+increase the passive fingerprinting surface.
 
 ## Privacy enhancing content negotiation???
 
@@ -109,12 +113,11 @@ information for seemingly nefarious reasons.
 How can servers opt into receiving hints from the client? How should client
 send those hints? And how should that be handled across origins?
 
-This section answers those questions.
+## Opt-in mechanism
 
-## Opt-in mechanism They can do that using the HTTP response headers described
+Server can opt-in to Client Hints by using the HTTP response headers described
 in the sections below. They can similarly opt-in by using the headers' HTML
 equivalents, the `<meta>` HTML tag and its `http-equiv` attribute.
-
 
 ### `Accept-CH`
 
