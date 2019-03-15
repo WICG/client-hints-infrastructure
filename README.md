@@ -212,14 +212,15 @@ already use those values for a different purpose. Changing the request header
 values such legacy systems receive may result in server bugs.
 
 While that risk is significantly mitigated by the opt-in mechanisms of Client
-Hints, other specifications relying on Client Hints should reduce it even
-further by adding a `Sec-` prefix to Client Hints request header names they
-pick for their features.
+Hints (as those same servers would be opting in to get those headers, we feel
+it is required to mitigate it even further.  So, Client Hints request headers
+should be preceded by `Sec-` prefix.
 
-Adding a `Sec-` prefix will also enable us to simplify the processing model, as
-such headers cannot be added by a Service Worker, and potentially enable us to
-add all such headers to CORS' safe-list, avoiding unwanted preflights for
-requests with Client Hints.
+
+Adding a `Sec-` prefix will also enable us to simplify the related Fetch
+processing model, as such headers cannot be added by a Service Worker, and
+potentially enable us to add all such headers to CORS' safe-list, avoiding
+unwanted preflights for requests with Client Hints.
 
 ## Caching considerations
 
@@ -229,7 +230,7 @@ and make sure that such resources are not cached using only their URL as the
 cache key.
 
 This is also the reason that each Client Hint is represented using a separate
-header, in order to reduce variance in caches in responses that may rely on
+header, in order to reduce cache variance in responses that may rely on
 some hints, but not others.
 
 # Privacy considerations
@@ -239,15 +240,15 @@ related precautions are being taken:
 
 * Client Hint features should not be shipped unless there is a Javascript-based
   equivalent API, which enables developers access to the same data and is
-  deemed privacy-safe to ship.
-  - One reason for that is Extensible Web principles - we want the shipped
+  deemed privacy-safe to ship
+  - One reason for that is Extensible Web principles &mdash; want the shipped
     features to be somewhat polyfillable (Even if `Sec-` headers cannot be
     added by Service Workers)
-  - From a privacy perspective, since we consider Client-Hints to be a
-    potential active fingerprinting vector, if information is already available
-    through other active fingerprinting means, such as a Javascript API, it is
-    safe to ship it through Client Hints as well.
-* Browsers should turn off hints when users chose to turn off Javascript
+  - As discussed above, from a privacy perspective, we consider Client-Hints to
+    be a potential active fingerprinting vector. Therefore, if information is
+    already available through other active fingerprinting means, such as a
+    Javascript API, it is safe to ship it through Client Hints as well.
+* Browsers should turn off hints when users choose to turn off Javascript
   - If the user has turned off Javascript, that means that the Javascript-based
     equivalent active fingerprinting vectors have been disabled. Since that
     could have been the user's intention when turning off scripting, browsers
@@ -257,7 +258,7 @@ related precautions are being taken:
   - Browsers are free to take privacy-enhancing heuristics into account when
     deciding to respect the server's opt-in to receive them. Similar heuristics
     can also be used when deciding what values they should be sending.
-* Accept-CH-Lifetime persistence should not outlast other origin state
+* Accept-CH-Lifetime persistence should not outlast other types of origin state
   - Browsers typically provide their users with means to clear state regarding
     certain origins: for example, delete the cache for an origin or its
     cookies. When users take such an action, it is likely that they want to get
