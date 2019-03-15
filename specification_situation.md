@@ -63,6 +63,7 @@ This change sets the image density of the Response based on the response's Conte
 
 This step makes sure that cross-origin redirects are not adding Client Hints headers if the set Feature Policy does not allow them to do that. It does that by removing those headers from such redirects.
 
+<!--
 <script>
 /*
 const fetch_changes = [
@@ -109,6 +110,7 @@ const fetch_changes = [
 })();
 */
 </script>
+-->
 
 ## HTML
 
