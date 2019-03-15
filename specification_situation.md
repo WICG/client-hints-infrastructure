@@ -35,9 +35,36 @@ The latest defintions, aligning the specification with the implementation, are d
 
 Let's examine the changes that the PR makes to the standard.
 
-<div id="fetch_changes_list">
-</div>
+### [CORS safe-list](https://whatpr.org/fetch/773/939817c...a50febc.html#cors-safelisted-request-header)
+
+The changes to the safe-list below make sure that requests which start with `Sec-` are considered safe and do not trigger preflights. As such requests are necessarily created by the browser, cannot be forged by the user and are likely to be safe for server implementations, we believe that it is a safe choice.
+
+### [client-hints set renaming](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-request-client-hints-list)
+
+As part of the related HTML PR, we've changed the previous client hints list to client hints set. This aligns with that change.
+
+### [Image density response concept](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-response-image-density)
+
+This defines the concept of image density and attaches it to a reponse.
+
+### [client hints set definition](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-fetch)
+
+This defines the client hints set concept as well as a list of its valid values, which are the various features relying on the Client Hints infrastructure.
+
+### [Fetch integration](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-fetch)
+
+This change integrates the Client Hints logic into the fetch processing steps. It clones the client-hints set from the client's global object onto the request, and adds hints to requests, while making sure that they are allowed to be added based on the set Feature Policy.
+
+### [Image density setting](https://whatpr.org/fetch/773/939817c...a50febc.html#ref-for-concept-response-header-list①⑤)
+
+This change sets the image density of the Response based on the response's Content-DPR header.
+
+### [Post-redirect potential header removal](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-http-redirect-fetch)
+
+This step makes sure that cross-origin redirects are not adding Client Hints headers if the set Feature Policy does not allow them to do that. It does that by removing those headers from such redirects.
+
 <script>
+/*
 const fetch_changes = [
   { "summary": "CORS safe-list",
     "description": "The changes to the safe-list below make sure that requests which start with `Sec-` are considered safe and do not trigger preflights. As such requests are necessarily created by the browser, cannot be forged by the user and are likely to be safe for server implementations, we believe that it is a safe choice.",
@@ -80,6 +107,7 @@ const fetch_changes = [
     list.appendChild(element.firstChild);
   }
 })();
+*/
 </script>
 
 ## HTML
