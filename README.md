@@ -154,12 +154,13 @@ navigation resource. Why is that important?
 
 As mentioned before, we don't want the mechanism to be used to increase
 fingerprinting on the web.  The hints that Client Hints provides should
-generally be available through Javascript APIs (see the "Privacy
-Considerations" section).  That means that for *active* resources (e.g. HTML),
-Client Hints does not increase the active fingerprinting surface. Those
-resources can already run scripts to exfiltrate that data, and Client Hints
-only provides them with a more convenient and performant way to do that, when
-that data is needed for content negotiation purposes.
+generally be available through Javascript APIs (see the [Privacy
+Considerations](#privacy-considerations) section for more details). That means
+that for *active* resources (e.g. HTML), Client Hints does not increase the
+active fingerprinting surface. Those resources can already run scripts to
+exfiltrate that data, and Client Hints only provides them with a more
+convenient and performant way to do that, when that data is needed for content
+negotiation purposes.
 
 But, that also means that we don't want passive subresources (e.g. images) to
 be able to exfiltrate the same data, and we certainly don't want them to be
@@ -204,9 +205,11 @@ Similarly, third party delegation is safe because pages are already able to use
 other means, such as link decoration, to achieve the same information sharing
 with third parties, only in less performant ways.
 
-## `Sec-` prefix Adding new request headers increases the risk that legacy
-server systems already use those values for a different purpose. Changing the
-request header values such legacy systems receive may result in server bugs.
+## `Sec-` prefix
+
+Adding new request headers increases the risk that legacy server systems
+already use those values for a different purpose. Changing the request header
+values such legacy systems receive may result in server bugs.
 
 While that risk is significantly mitigated by the opt-in mechanisms of Client
 Hints, other specifications relying on Client Hints should reduce it even
