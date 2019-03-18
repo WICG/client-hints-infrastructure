@@ -67,24 +67,24 @@ the current implementation (e.g. do not include the `Accept-CH-Lifetime`
 mechanism).  The latest defintions, aligning the specification with the
 implementation, are defined in
 [Fetch#773](https://github.com/whatwg/fetch/pull/773). A diff of the PR can be
-previewed [here](https://whatpr.org/fetch/773/939817c...a50febc.html).
+previewed [here](https://whatpr.org/fetch/773/939817c...56c7c7b.html).
 
 Let's examine the changes that the PR makes to the standard.
 
-### [Fetch integration](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-fetch)
+### [Fetch integration](https://whatpr.org/fetch/773/939817c...56c7c7b.html#concept-fetch)
 
 This change integrates the Client Hints logic into the fetch processing steps.
 It clones the client-hints set from the client's global object onto the
 request, and adds hints to requests, while making sure that they are allowed to
 be added based on the set Feature Policy.
 
-### [Post-redirect potential header removal](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-http-redirect-fetch)
+### [Post-redirect potential header removal](https://whatpr.org/fetch/773/939817c...56c7c7b.html#concept-http-redirect-fetch)
 
 This step makes sure that cross-origin redirects are not adding Client Hints
 headers if the set Feature Policy does not allow them to do that. It does that
 by removing those headers from such redirects.
 
-### [CORS safe-list](https://whatpr.org/fetch/773/939817c...a50febc.html#cors-safelisted-request-header)
+### [CORS safe-list](https://whatpr.org/fetch/773/939817c...56c7c7b.html#cors-safelisted-request-header)
 
 This change to the safe-list makes sure that requests which start with `Sec-`
 are considered safe and do not trigger preflights. As such requests are
@@ -93,12 +93,12 @@ to be safe for server implementations, we believe that it is a safe choice.
 
 ### client hints set
 
-#### [client hints set renaming](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-request-client-hints-list)
+#### [client hints set renaming](https://whatpr.org/fetch/773/939817c...56c7c7b.html#concept-request-client-hints-list)
 
 As part of the related HTML PR, we've changed the previous client hints list to
 client hints set. This aligns with that change.
 
-#### [client hints set definition](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-fetch)
+#### [client hints set definition](https://whatpr.org/fetch/773/939817c...56c7c7b.html#concept-fetch)
 
 This defines the client hints set concept as well as a list of its valid
 values, which are the various features relying on the Client Hints
@@ -106,11 +106,11 @@ infrastructure.
 
 ### Image density
 
-#### [Image density response concept](https://whatpr.org/fetch/773/939817c...a50febc.html#concept-response-image-density)
+#### [Image density response concept](https://whatpr.org/fetch/773/939817c...56c7c7b.html#concept-response-image-density)
 
 This defines the concept of image density and attaches it to a reponse.
 
-#### [Image density setting](https://whatpr.org/fetch/773/939817c...a50febc.html#ref-for-concept-response-header-list①⑤)
+#### [Image density setting](https://whatpr.org/fetch/773/939817c...56c7c7b.html#ref-for-concept-response-header-list①⑤)
 
 This change sets the image density of the Response based on the response's
 Content-DPR header.
