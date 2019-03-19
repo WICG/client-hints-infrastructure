@@ -117,7 +117,7 @@ Content-DPR header.
 
 ## HTML
 
-### [Initializing a new Document object](https://whatpr.org/html/3774/e32a6f8...44b682a/browsing-the-web.html#initialise-the-document-object)
+### [Initializing a new Document object](https://whatpr.org/html/3774/e32a6f8...335f566/browsing-the-web.html#initialise-the-document-object)
 
 * Initializes Client Hints set on the Document based on its environment
   serttings object's origin. 
@@ -126,62 +126,66 @@ Content-DPR header.
 * If we are in a secure context and the navigation is a top-level navigation,
   parse `Accept-CH-Lifetime` and add a new entry to Accept-CH-Lifetime cache.
 
-### [Accept-CH-Lifetime cache](https://whatpr.org/html/3774/e32a6f8...44b682a/offline.html#accept-ch-lifetime-cache)
+### [Accept-CH-Lifetime cache](https://whatpr.org/html/3774/e32a6f8...335f566/offline.html#accept-ch-lifetime-cache)
 
 This defines the Accept-CH-Lifetime per-origin cache, and its related
 processing models.
 
-### [Image-related Client Hints headers](https://whatpr.org/html/3774/e32a6f8...44b682a/images.html#image-related-client-hints-request-headers)
+### [Image-related Client Hints headers](https://whatpr.org/html/3774/e32a6f8...335f566/images.html#image-related-client-hints-request-headers)
 
 This defines the Client Hints image-related request headers: `DPR`,
 `Viewport-Width` and `Width`, as well as the corresponding response header,
 `Content-DPR`.
 
+### [Policy Controlled Features](https://whatpr.org/html/3774/e32a6f8...335f566/infrastructure.html#policy-controlled-features
+
+This defines the various Client Hints related feature policies, that enable third party delegation.
+
 ### http-equiv
 
-#### [http-equiv attributes](https://whatpr.org/html/3774/e32a6f8...44b682a/indices.html#attributes-3)
+#### [http-equiv attributes](https://whatpr.org/html/3774/e32a6f8...335f566/indices.html#attributes-3)
 
 This references the `accept-ch` and `accept-ch-lifetime` `http-equiv` attribute
 values.
 
-#### [Pragma directives](https://whatpr.org/html/3774/e32a6f8...44b682a/semantics.html#pragma-directives)
+#### [Pragma directives](https://whatpr.org/html/3774/e32a6f8...335f566/semantics.html#pragma-directives)
 
 Defines the `Accept-CH` and `Accept-CH-Lifetime` pragma directives and their
 processing models.
 
 ### client hints set definitions
 
-#### [Environment settings object's client hints set](https://whatpr.org/html/3774/e32a6f8...44b682a/webappapis.html#concept-settings-object-client-hints-set)
+#### [Environment settings object's client hints set](https://whatpr.org/html/3774/e32a6f8...335f566/webappapis.html#concept-settings-object-client-hints-set)
 
 Defines the client hints set on the environment settings object.
 
-#### [Window's client hints set](https://whatpr.org/html/3774/e32a6f8...44b682a/window-object.html#script-settings-for-window-objects:concept-settings-object-client-hints-set)
+#### [Window's client hints set](https://whatpr.org/html/3774/e32a6f8...335f566/window-object.html#script-settings-for-window-objects:concept-settings-object-client-hints-set)
 
 Defines the processing for client hints set when a window environment settings
 object is created. 
 
-#### [WorkerGlobalScope's client hints set](https://whatpr.org/html/3774/e32a6f8...44b682a/workers.html#concept-workerglobalscope-client-hints-set)
+#### [WorkerGlobalScope's client hints set](https://whatpr.org/html/3774/e32a6f8...335f566/workers.html#concept-workerglobalscope-client-hints-set)
 
 Defines the client hints set on WorkerGlobalScope.
 
-#### [Worker's client hints set](https://whatpr.org/html/3774/e32a6f8...44b682a/workers.html#script-settings-for-workers:concept-settings-object-client-hints-set)
+#### [Worker's client hints set](https://whatpr.org/html/3774/e32a6f8...335f566/workers.html#script-settings-for-workers:concept-settings-object-client-hints-set)
 
 Defines the processing for client hints set when a worker environment settings
 object is created. 
 
-#### [Docuemnt's client hints set](https://whatpr.org/html/3774/e32a6f8...44b682a/dom.html#concept-document-client-hints-set)
+#### [Docuemnt's client hints set](https://whatpr.org/html/3774/e32a6f8...335f566/dom.html#concept-document-client-hints-set)
 
 Defines the document's client hints set concept.
 
 ### Definitions from other specifications
 
 ####
-[Infrastructure](https://whatpr.org/html/3774/e32a6f8...44b682a/infrastructure.html)
+[Infrastructure](https://whatpr.org/html/3774/e32a6f8...335f566/infrastructure.html)
 
 Adds references to "field-name", "delta-seconds" and "client hints set".
 
 ####
-[References](https://whatpr.org/html/3774/e32a6f8...44b682a/references.html)
+[References](https://whatpr.org/html/3774/e32a6f8...335f566/references.html)
 
 Adds references to the Client Hints I-D and to Structured Headers.
 
