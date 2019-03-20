@@ -155,7 +155,7 @@ This is also the reason that each Client Hint is represented using a separate
 header, in order to reduce cache variance in responses that may rely on
 some hints, but not others.
 
-# Securirty and privacy considerations
+# Security and privacy considerations
 
 There are a few key mechanisms we already discussed that are part of the Client Hints infrastructure, and which enable secure and privacy preserving deployment of Client Hints:
 * Server opt-ins must be delivered on a top-level navigation request, over a secure connection.
