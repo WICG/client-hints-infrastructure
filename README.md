@@ -38,8 +38,10 @@ send those hints? And how should that be handled across origins?
 ## Opt-in mechanism
 
 Servers can opt-in to Client Hints by using the HTTP response headers described
-in the sections below. They can similarly opt-in by using the headers' HTML
-equivalents, the `<meta>` HTML tag and its `http-equiv` attribute.
+in the sections below. For security and privacy reasons, the opt-in must be
+received on the response of the top-level navigation, over a secure connection.
+They can similarly opt-in by using the headers' HTML equivalents, the `<meta>`
+HTML tag and its `http-equiv` attribute.
 
 ### `Accept-CH`
 
@@ -134,15 +136,14 @@ already use those values for a different purpose. Changing the request header
 values such legacy systems receive may result in server bugs.
 
 While that risk is significantly mitigated by the opt-in mechanisms of Client
-Hints (as those same servers would be opting in to get those headers, we feel
+Hints (as those same servers would be opting in to get those headers), we feel
 it is required to mitigate it even further.  So, Client Hints request headers
 should be preceded by `Sec-` prefix.
 
 
-Adding a `Sec-` prefix will also enable us to simplify the related Fetch
-processing model, as such headers cannot be added by a Service Worker, and
-potentially enable us to add all such headers to CORS' safe-list, avoiding
-unwanted preflights for requests with Client Hints.
+Adding a `Sec-` prefix will also potentially enable us to simplify the related
+Fetch processing model, as it clearly indicates that these are headers that
+were added by the user agent.
 
 ## Caching considerations
 
@@ -157,25 +158,31 @@ some hints, but not others.
 
 # Security and privacy considerations
 
-There are a few key mechanisms we already discussed that are part of the Client Hints infrastructure, and which enable secure and privacy preserving deployment of Client Hints:
-* Server opt-ins must be delivered on a top-level navigation request, over a secure connection.
+There are a few key mechanisms we already discussed that are part of the Client
+Hints infrastructure, and which enable secure and privacy preserving deployment
+of Client Hints:
+
+* Server opt-ins must be delivered on a top-level navigation request, over a
+  secure connection.
 * Hints are delivered only to same-origin requests, over a secure connection.
-* If hints are required for certain third party hosts, the first-party content can explicitly delegate specific hints to specific servers.
+* If hints are required for certain third party hosts, the first-party content
+  can explicitly delegate specific hints to specific servers.
 * Hints are `Sec-` prefixed, to avoid legacy server bugs.
 
-Beyond that, when implementing Client Hints, browsers should make sure that certain privacy
-related precautions are being taken:
+Beyond that, when implementing Client Hints, browsers should make sure that
+certain privacy related precautions are being taken:
 
 * Client Hint features should not be shipped unless there is a Javascript-based
   equivalent API, which enables developers access to the same data and is
   deemed privacy-safe to ship
-  - One reason for that is Extensible Web principles &mdash; want the shipped
-    features to be somewhat polyfillable (Even if `Sec-` headers cannot be
-    added by Service Workers)
+  - One reason for that is Extensible Web principles &mdash; we want the
+    shipped features to be somewhat polyfillable (Even if `Sec-` headers cannot
+    be added by developers)
   - As discussed above, from a privacy perspective, we consider Client-Hints to
-    be a potential active fingerprinting vector. Therefore, if information is
-    already available through other active fingerprinting means, such as a
-    Javascript API, it is safe to ship it through Client Hints as well.
+    be a potential active fingerprinting vector equivalent. Therefore, it is
+    only safe to ship with it hints which provide information that is already
+    available through other active fingerprinting means, such as a Javascript
+    API.
 * Browsers should turn off hints when users choose to turn off Javascript
   - If the user has turned off Javascript, that means that the Javascript-based
     equivalent active fingerprinting vectors have been disabled. Since that
@@ -249,13 +256,13 @@ hints it would like to receive. This makes such requests explicit and does not e
 passive fingerprinting using those hints, which is one of the key and guiding
 requirements for Client Hints.
 
-Beyond that, exposing all the details and dimensions to all servers runs a risk
-of bloating request headers. There are many potential details that can be
-useful for content negotiation, and we expect that list to grow over time.
-Sending all the hints all the time can quickly bloat HTTP requests, and make
-them significantly larger than they should be. To avoid request bloat, it is
-more efficient for servers to specifically request the headers they would take
-into account, and send only these hints with upgoing requests.
+Beyond that, exposing all details and adaptation dimensions to all servers runs
+a risk of bloating request headers. There are many potential details that can
+be useful for content negotiation, and we expect that list to grow over time.
+Sending all the hints all the time can quickly result in bloat, and make
+requests significantly larger than they should be. To avoid that, it is more
+efficient for servers to specifically request the headers they would take into
+account, and send only these hints with upgoing requests.
 
 Unfortunately, that decision doesn't come without tradeoffs. Client Hints as an
 opt-in mechanism currently means that content adaptation of the initial
@@ -271,14 +278,16 @@ _Note:_ there may be other, out of band, opt-in mechanisms in the future that
 could enable delivery of hints on first navigation to new origins, such as
 Origin Policy.
 
-## **Privacy enhancing** content negotiation
+## Privacy enhancing content negotiation
 
 Content negotiation is typically viewed as a mechanism that enables
 passive fingerprinting, by adding different bits of data to different user's
 requests by default, and enabling servers to use that to tell users apart
-without leaving any trace of that activity. The Client Hints infrastructure and
-its opt-in enables us to avoid that, as servers need to tell the browsers which
-information they need, making any such fingerprinting use detectable.
+without leaving any trace of that activity.
+
+The Client Hints infrastructure and its opt-in enables us to avoid that, as
+servers need to tell the browsers which information they need, making any such
+fingerprinting use detectable.
 
 But, Client Hints can also enable us to do more than that for user privacy, and
 turn passive-fingerprinting-enabling content-negotiation mechanisms (e.g. The
