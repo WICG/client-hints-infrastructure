@@ -2,15 +2,18 @@ Client Hints is collection of HTTP and user-agent features that enables
 privacy-preserving proactive content negotiation with explicit third party
 delegation mechanism:
 
-* Proactive content negotiation at the HTTP layer (defined in the IETF I-D)
+* Proactive content negotiation at the HTTP layer (defined in the
+  [IETF I-D](https://httpwg.org/http-extensions/client-hints.html))
   enables servers to request delivery of specific hints to enable optimized and
   automated selection of resources based on the user's device conditions and
   preferences, and enables client to decide which hints requests they respect
   with a per-origin granularity.  
-* Origin scoped, opt-in nature of negotiation (defined as part of the HTML and
-  Fetch specifications) enables the client to only advertise requested hint
-  data (e.g. user agent and device characteristics) to select secure-transport
-  origins, instead of appending such data on every outgoing request.  
+* Origin scoped, opt-in nature of negotiation (to be defined as part of the
+  [HTML](https://github.com/whatwg/html/pull/3774) and
+  [Fetch](https://github.com/whatwg/fetch/pull/773) specifications) enables the
+  client to only advertise requested hint data (e.g. user agent and device
+  characteristics) to select secure-transport origins, instead of appending
+  such data on every outgoing request.  
 * Origin opt-in applies to same-origin assets only and delivery to third party
   origins is subject to explicit first party delegation via Feature Policy,
   enabling tight control over which third party origins can access requested
