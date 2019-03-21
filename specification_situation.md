@@ -1,13 +1,17 @@
 <base target="_blank">
 
-The specification of Client Hints is divided between different standardization bodies and different standards. To make matters worse, since the feature does not yet have multiple browser implementation support, some of the specification for the feature lives in PRs on the relevant standards.
+The specification of Client Hints is divided between several different
+standards.  To make matters worse, since Client Hints does not yet have support
+from two implementers, some of these bits of Client Hints spec are still hidden
+away in PRs.
 
-This document's purpose is to make it clearer how all those pieces fit together, and be used as a pointer for folks that want to get a better understanding of the current specification situation.
+This document attempts to provide a clear view of all of these pieces, and how
+they fit together.
 
 # High-level
 
-The specification of the Client Hints is divided between
-the following specifications and proposals:
+The specification of the Client Hints is divided between the following
+specifications and proposals:
 
 
 <!-- I think this could go higher level, and talk more about verbs/why and less about nouns/what -->
