@@ -43,6 +43,8 @@ received on the response of the top-level navigation, over a secure connection.
 They can similarly opt-in by using the headers' HTML equivalents, the `<meta>`
 HTML tag and its `http-equiv` attribute.
 
+[TODO: opt-in is double keyed]
+
 ### `Accept-CH`
 
 The `Accept-CH` header enables servers to request specific hints from the
@@ -58,10 +60,10 @@ foo, bar` header, same-origin subresource requests on the page will include the
 
 ### `Accept-CH-Lifetime`
 
-In order to enable hints for navigation requests (albeit not to the very-first
-one), the `Accept-CH-Lifetime` header tells the browser to maintain the Client
-Hints opt-in persistency over time.  The header's value is an integer that
-represents the number of seconds that preference should be kept by the browser.
+In order to enable delivery of hints for all features requests to the origin (navigation and subresource requests), the server can use `Accept-CH-Lifetime` header to communicate an integer value, which represents the number of seconds, that indicates a preference for how long this policy should be kept by the browser.
+
+[TODO: clarify that subresource requests can and will receive hints on first navigation]
+
 
 #### Example
 
@@ -86,13 +88,17 @@ exfiltrate that data, and Client Hints only provides them with a more
 convenient and performant way to do that, when that data is needed for content
 negotiation purposes.
 
-But, that also means that we don't want passive subresources (e.g. images) to
-be able to exfiltrate the same data, and we certainly don't want them to be
+[TODO: mention that CSS can also probe.. not just JavaScript]
+
+But, that also means that we don't want passive 3P subresources (e.g. images) to
+be able to exfiltrate the same data without explicit permission, and we certainly don't want them to be
 able to exfiltrate it for the entire origin for a longer amount of time.
 
-Therefore, by default, client hints are only applicable to the same origin as
-the page navigation, and the opt-in is only available for navigation requests,
-which are potentially active resources.
+[TODO ^ what does longer amount of time mean?]
+
+Therefore, by default, Client Hints opt-in is only applicable to 1P resources, and access by 3P subresources must be explicitly permitted by the 1P origin.
+
+[TODO ^ unless I'm misintrepreting what you were trying to explain here?]
 
 ## Cross-origin hint delegation
 
@@ -117,6 +123,8 @@ bar.com; ch-example-2 foobar.org` will delegate the `example` hint to the
 would enable those origins to receive those hints and perform content
 adaptation based on them.
 
+[Q: I know the question will come up.. do we allow *?]
+
 ### Privacy implications
 
 Why is it privacy safe for pages to delegate hints to certain third party
@@ -139,7 +147,6 @@ While that risk is significantly mitigated by the opt-in mechanisms of Client
 Hints (as those same servers would be opting in to get those headers), we feel
 it is required to mitigate it even further.  So, Client Hints request headers
 should be preceded by `Sec-` prefix.
-
 
 Adding a `Sec-` prefix will also potentially enable us to simplify the related
 Fetch processing model, as it clearly indicates that these are headers that
@@ -168,6 +175,8 @@ of Client Hints:
 * If hints are required for certain third party hosts, the first-party content
   can explicitly delegate specific hints to specific servers.
 * Hints are `Sec-` prefixed, to avoid legacy server bugs.
+
+[TODO: ^ legacy server bugs is, I think, a weaker promise than the fact that UA has control over this namespace and thus servers can have better assurance of what can be communicated here and how]
 
 Beyond that, when implementing Client Hints, browsers should make sure that
 certain privacy related precautions are being taken:
