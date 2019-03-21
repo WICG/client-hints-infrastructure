@@ -8,37 +8,47 @@ away in PRs.
 This document attempts to provide a clear view of all of these pieces, and how
 they fit together.
 
+
 # High-level
 
 The specification of the Client Hints is divided between the following
 specifications and proposals:
 
-
-<!-- I think this could go higher level, and talk more about verbs/why and less about nouns/what -->
-
 * IETF [Client Hints Internet-Draft](https://httpwg.org/http-extensions/client-hints.html)
    - Provides the motivation for Client Hints.
    - Defines the fundamental Client Hints infrastructure:
-      - The `Accept-CH` response header, which servers may use to advertise support for certain Client Hints.
-      - The `Accept-CH-Lifetime` response header, which servers may use to ask clients to remember that support.
-   - Provides both general guidelines, and formal requirements, about Client Hints’ impact on caching, security, and privacy.
-    - Does *not* define any actual, particular hints – or say anything about how Client Hints works in web contexts.
+      - The `Accept-CH` response header, which servers may use to advertise
+        support for certain Client Hints.
+      - The `Accept-CH-Lifetime` response header, which servers may use to ask
+        clients to remember that support.
+   - Provides both general guidelines, and formal requirements, about Client
+     Hints’ impact on caching, security, and privacy.
+   - Does *not* define any actual, particular hints – or say anything about how
+     Client Hints works in web contexts.
 
 * WHATWG HTML specification ([PR](https://github.com/whatwg/html/pull/3774))
-   - Defines how web clients should process the `Accept-CH` and `Accept-CH-Lifetime` headers sent by servers.
-   - Defines several specific Hints, which web clients may use to tell servers about their viewport/device characteristics, and connection quality.
-   - Defines Feature Policies for each of the Hints. These allow first party servers to control which third parties should get which hints.
-   - Defines some new bits of Document state, which store information about which servers should get which hints, and for how long.
+   - Defines how web clients should process the `Accept-CH` and
+     `Accept-CH-Lifetime` headers sent by servers.
+   - Defines several specific Hints, which web clients may use to tell servers
+     about their viewport/device characteristics, and connection quality.
+   - Defines Feature Policies for each of the Hints. These allow first party
+     servers to control which third parties should get which hints.
+   - Defines some new bits of Document state, which store information about
+     which servers should get which hints, and for how long.
    - (Also defines the `Content-DPR` response header.)
 
 * WHATWG Fetch specification ([PR](https://github.com/whatwg/fetch/pull/773))
-   - Defines how, and when, web clients should actually go about sending hints, based on the state of the parent Document or Javascript execution context.
-   - (Also defines the concept of image response density, to support the `Content-DPR` response header.)
+   - Defines how, and when, web clients should actually go about sending hints,
+     based on the state of the parent Document or Javascript execution context.
+   - (Also defines the concept of image response density, to support the
+     `Content-DPR` response header.)
    
 * W3C Feature Policy specification ([relevant section](https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature)))
-   - In order to perform third party Client Hint delegation, Feature Policy has been extended to control features within fetch requests (not just Documents).
+   - In order to perform third party Client Hint delegation, Feature Policy has
+     been extended to control features within fetch requests (not just Documents).
 
-# IETF 
+
+# IETF
 
 The [Client Hints Internet-Draft](https://httpwg.org/http-extensions/client-hints.html) is
 maintained as part of the HTTPWG at the IETF.  It defines the various headers
