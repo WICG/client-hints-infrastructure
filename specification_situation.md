@@ -1,41 +1,54 @@
 <base target="_blank">
 
-The specification of Client Hints is divided between different standardization
-bodies and different standards.  To make matters worse, since the feature does
-not yet have multiple browser implementation support, some of the specification
-for the feature lives in PRs on the relevant standards.
+The specification of Client Hints is divided between different standards and
+standardization bodies. Since the feature does not yet have multiple browser
+implementation support, some of the specification for the feature lives in PRs
+on the relevant standards, so there's no single location in which interested
+folks can review the current feature's specification.
 
-This document's purpose is to make it clearer how all those pieces fit
-together, and be used as a pointer for folks that want to get a better
-understanding of the current specification situation.
+This document attempts to provide a clear view of all of these pieces, and how
+they fit together.
 
 # High-level
 
-The specification of the Client Hints infrastructure and features is divided to
-the following specifications and proposals:
+The specification of the Client Hints infrastructure and features is divided
+between the following specifications and proposals:
 
 * IETF [Client Hints Internet-Draft](https://httpwg.org/http-extensions/client-hints.html)
-   - Defines the Client Hints infrastructure headers (`Accept-CH` and
-     `Accept-CH-Lifetime`), their format and how servers should behave with
-     regards to them.
+   - Provides the motivation for Client Hints.
+   - Defines the fundamental Client Hints infrastructure:
+      - The `Accept-CH` response header, which servers may use to advertise
+        support for certain Client Hints.
+      - The `Accept-CH-Lifetime` response header, which servers may use to ask
+        clients to remember that support for future navigations.
+   - Provides both general guidelines, and formal requirements, about Client
+     Hints’ impact on caching, security, and privacy.
+   - Does *not* define any actual, particular hints – or say anything about how
+     Client Hints works in web contexts.
 * WHATWG HTML specification ([PR](https://github.com/whatwg/html/pull/3774))
-   - Defines the web concepts related to Accept-CH and Accept-CH-Lifetime,
-     their processing on top-level navigation responses as well as defines the
-     related caches that make sure origin persistency is maintained.
-   - Defines image related Client-Hint features: `DPR`, `Viewport-Width`,
-     `Width` and the related `Content-DPR` response header.
+   - Defines how web clients should process the `Accept-CH` and
+     `Accept-CH-Lifetime` headers sent by servers.
+   - Defines several specific Hints, which web clients may use to tell server
+     about their viewport width, image resource display width, or screen
+     density, as well as the related `Content-DPR` header.
+   - Defines Feature Policies for each of the Hints. These allow first party
+     servers to control which third parties should get which hints.
+   - Defines the Document state related to `Accept-CH-Lifetime`, which store
+     information about which servers should get which hints, and for how long.
 * WHATWG Fetch specification ([PR](https://github.com/whatwg/fetch/pull/773))
-   - Integrates the HTML web concepts to Fetch's algorithms to make sure that
-     opted-in hints are added to requests for same-origin or delegated-to
-     cross-origin requests.
-   - Makes sure hints are removed from not delegated-to cross-origin requests
-     after redirections.
+   - Defines how, and when, web clients should actually go about sending hints,
+     based on the state of the parent Document or Javascript execution context.
+      - More specifically, it integrates the HTML web concepts to Fetch's
+        algorithms to make sure that opted-in hints are added to requests for
+        same-origin or delegated-to cross-origin requests. It also makes sure
+        hints are removed from not delegated-to cross-origin requests after
+        redirections.
    - Defines all `Sec-` prefixed requests as CORS safe.
    - Defines the concept of image response density, to support the
      `Content-DPR` response header.
-* W3C Feature Policy specification
-   - Defines infrastructure that enables 3rd party delegation for Client Hints.
-
+* W3C Feature Policy specification ([relevant section](https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature)))
+   - In order to perform third party Client Hint delegation, Feature Policy has
+     been extended to control features within fetch requests (not just Documents).
 
 # IETF 
 
@@ -93,7 +106,7 @@ to be safe for server implementations, we believe that it is a safe choice.
 
 ### client hints set
 
-#### [client hints set renaming](https://whatpr.org/fetch/773/939817c...56c7c7b.html#concept-request-client-hints-list)
+#### [client hints set renaming](https://whatpr.org/fetch/773/939817c...56c7c7b.html#concept-request-client-hints-set)
 
 As part of the related HTML PR, we've changed the previous client hints list to
 client hints set. This aligns with that change.
