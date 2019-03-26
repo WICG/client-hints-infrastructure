@@ -11,7 +11,7 @@ they fit together.
 
 # High-level
 
-The specification of the Client Hints infrastructure is divided between the
+The specification of the Client Hints **infrastructure** is divided between the
 following specifications and proposals:
 
 * IETF [Client Hints Internet-Draft](https://httpwg.org/http-extensions/client-hints.html)
