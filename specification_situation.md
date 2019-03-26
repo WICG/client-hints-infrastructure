@@ -11,8 +11,8 @@ they fit together.
 
 # High-level
 
-The specification of the Client Hints infrastructure and features is divided
-between the following specifications and proposals:
+The specification of the Client Hints infrastructure is divided between the
+following specifications and proposals:
 
 * IETF [Client Hints Internet-Draft](https://httpwg.org/http-extensions/client-hints.html)
    - Provides the motivation for Client Hints.
@@ -28,11 +28,6 @@ between the following specifications and proposals:
 * WHATWG HTML specification ([PR](https://github.com/whatwg/html/pull/3774))
    - Defines how web clients should process the `Accept-CH` and
      `Accept-CH-Lifetime` headers sent by servers.
-   - Defines several specific Hints, which web clients may use to tell server
-     about their viewport width, image resource display width, or screen
-     density, as well as the related `Content-DPR` header.
-   - Defines Feature Policies for each of the Hints. These allow first party
-     servers to control which third parties should get which hints.
    - Defines the Document state related to `Accept-CH-Lifetime`, which store
      information about which servers should get which hints, and for how long.
 * WHATWG Fetch specification ([PR](https://github.com/whatwg/fetch/pull/773))
@@ -49,6 +44,22 @@ between the following specifications and proposals:
 * W3C Feature Policy specification ([relevant section](https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature)))
    - In order to perform third party Client Hint delegation, Feature Policy has
      been extended to control features within fetch requests (not just Documents).
+
+The specification of **features** that rely on the Client Hints infrastructure is divided between the following specifications and proposals:
+
+* WHATWG HTML specification ([PR](https://github.com/whatwg/html/pull/3774))
+   - Defines several specific Hints, which web clients may use to tell servers
+     about their viewport width, image resource display width, or screen
+     density, as well as the related `Content-DPR` header.
+   - Defines Feature Policies for each of the Hints. These allow first party
+     servers to control which third parties should get which hints.
+* The [Network Information API](https://wicg.github.io/netinfo/)
+   - Defines several specific Hints, which web clients may use to tell servers
+     about their network conditions as well as the user's preference regarding
+     data savings.
+* The [Device Memory API](https://w3c.github.io/device-memory/)
+   - Defines a hint which web clients may use to tell servers about their
+     device's overall memory.
 
 # IETF 
 
@@ -210,3 +221,17 @@ Feature Policy added the
 [Should request be allowed to use feature?](https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature)
 algorithm which is the infrastructure that enables the use of Feature Policy as
 a way to delegate hints to third parties.
+
+## Network Information API
+
+The network information API defines several Hints related to the browser's
+[Effective Connection Type](https://wicg.github.io/netinfo/#ect-request-header-field),
+[Round-Trip Time](https://wicg.github.io/netinfo/#rtt-request-header-field), and 
+[Downlink bandwidth](https://wicg.github.io/netinfo/#downlink-request-header-field).
+It also defines a Hint related to the user's preference regarding
+[data savings](https://wicg.github.io/netinfo/#save-data-request-header-field).
+
+## Device Memory API
+
+The Device Memory API defines a Hint related to the
+[user's device's overall memory capabilities](https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header).
