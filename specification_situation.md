@@ -47,19 +47,25 @@ following specifications and proposals:
 
 The specification of **features** that rely on the Client Hints infrastructure is divided between the following specifications and proposals:
 
-* WHATWG HTML specification ([PR](https://github.com/whatwg/html/pull/3774))
+* Image related features - WHATWG HTML specification ([PR](https://github.com/whatwg/html/pull/3774))
    - Defines several specific Hints, which web clients may use to tell servers
      about their viewport width, image resource display width, or screen
      density, as well as the related `Content-DPR` header.
    - Defines Feature Policies for each of the Hints. These allow first party
      servers to control which third parties should get which hints.
-* The [Network Information API](https://wicg.github.io/netinfo/)
+* Network related features - The [Network Information API](https://wicg.github.io/netinfo/)
    - Defines several specific Hints, which web clients may use to tell servers
      about their network conditions as well as the user's preference regarding
      data savings.
-* The [Device Memory API](https://w3c.github.io/device-memory/)
+* Memory - The [Device Memory API](https://w3c.github.io/device-memory/)
    - Defines a hint which web clients may use to tell servers about their
      device's overall memory.
+* Privacy related features - [User Agent Client Hints](https://tools.ietf.org/html/draft-west-ua-client-hints-00)
+  and [Lang Client Hint](https://tools.ietf.org/html/draft-west-lang-client-hint-00)
+  - Define ways to replace the existing `User-Agent` and `Accept-Language`
+    request headers by Client Hints, enabling to replace the current passive
+    fingerprinting vectors by active fingerprinting, which can be monitored and
+    controlled by the browser.
 
 # IETF 
 
