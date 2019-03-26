@@ -1,10 +1,10 @@
 <base target="_blank">
 
 The specification of Client Hints is divided between different standards and
-standardization bodies. Since the feature does not yet have multiple browser
-implementation support, some of the specification for the feature lives in PRs
-on the relevant standards, so there's no single location in which interested
-folks can review the current feature's specification.
+standardization bodies. Since the feature does not yet have support from
+multiple browser engines, some of the specification for the feature lives in
+PRs on the relevant standards, so there's no single location in which
+interested folks can review the current feature's specification.
 
 This document attempts to provide a clear view of all of these pieces, and how
 they fit together.
