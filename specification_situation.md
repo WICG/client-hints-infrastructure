@@ -41,7 +41,7 @@ following specifications and proposals:
    - Defines all `Sec-` prefixed requests as CORS safe.
    - Defines the concept of image response density, to support the
      `Content-DPR` response header.
-* W3C Feature Policy specification ([relevant section](https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature)))
+* W3C Feature Policy specification ([relevant section](https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature))
    - In order to perform third party Client Hint delegation, Feature Policy has
      been extended to control features within fetch requests (not just Documents).
 
@@ -167,7 +167,7 @@ This defines the Client Hints image-related request headers: `DPR`,
 `Viewport-Width` and `Width`, as well as the corresponding response header,
 `Content-DPR`.
 
-### [Policy Controlled Features](https://whatpr.org/html/3774/e32a6f8...ddb0544/infrastructure.html#policy-controlled-features
+### [Policy Controlled Features](https://whatpr.org/html/3774/e32a6f8...ddb0544/infrastructure.html#policy-controlled-features)
 
 This defines the various Client Hints related feature policies, that enable third party delegation.
 
