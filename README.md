@@ -19,7 +19,7 @@ delegation mechanism:
   enabling tight control over which third party origins can access requested
   hint data.
 
-The goal of Client Hints is to **reduce active fingerprinting** on the web while
+The goal of Client Hints is to **reduce passive fingerprinting** on the web while
 **enabling scalable and privacy preserving content adaptation** between client
 and server, via a standardized set of content negotiation primitives at the
 HTTP and user agent levels.
