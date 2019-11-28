@@ -4,25 +4,28 @@ delegation mechanism:
 
 * Proactive content negotiation at the HTTP layer (defined in the
   [IETF I-D](https://httpwg.org/http-extensions/client-hints.html))
-  enables servers to request delivery of specific hints, in order to enable optimized and
-  automated selection of resources based on a user's device, conditions and
-  preferences, and lets clients decide which hint requests they want to grant,
-  with per-hint and per-origin granularity.  
-* Origin scoped, opt-in nature of negotiation (to be defined as part of the
+  enables servers to request delivery of specific hints, in order to enable
+  optimized and automated selection of resources based on a user's device,
+  conditions and preferences, and lets clients decide which hint requests they
+  want to grant, with per-hint and per-origin granularity.  
+* Integration of said mechanism with web concepts (to be defined as part of the
   [HTML](https://github.com/whatwg/html/pull/3774) and
-  [Fetch](https://github.com/whatwg/fetch/pull/773) specifications) enables the
-  client to only advertise requested hint data (e.g. user agent and device
-  characteristics) to select secure-transport origins, instead of appending
-  such data on every outgoing request.  
-* Origin opt-in applies to same-origin assets only and delivery to third party
+  [Fetch](https://github.com/whatwg/fetch/pull/773) specifications) enables
+  browsers to benefit from content adaptation, and have it play nicely with
+  current web restrictions (e.g. same-origin policy). 
+* The opt-in nature of the mechanism enables browsers to advertise requested
+  hint data (e.g. user agent and device characteristics) selectively to
+  secure-transport origins, instead of appending such data on every outgoing
+  request.  
+* Origin opt-in applies to same-origin assets only and delivery to third-party
   origins is subject to explicit first party delegation via Feature Policy,
   enabling tight control over which third party origins can access requested
   hint data.
 
-The goal of Client Hints is to **reduce passive fingerprinting** on the web while
-**enabling scalable and privacy preserving content adaptation** between client
-and server, via a standardized set of content negotiation primitives at the
-HTTP and user agent levels.
+The goal of Client Hints is to **reduce passive fingerprinting** on the web
+while **enabling scalable and privacy preserving content adaptation** between
+client and server, via a standardized set of content negotiation primitives at
+the HTTP and user agent levels.
 
 This document outlines the Client Hints infrastructure, explains it at a high
 level and points to the various specification and draft proposals in which it
@@ -52,7 +55,8 @@ list represents a request header hint that the server is interested in
 receiving.
 
 When an `Accept-CH` opt-in is received on the top-level navigation, same-origin
-subresource requests on that page will receive the requested hints. 
+subresource requests on that page will receive the requested hints, unless the
+client has reasons to avoid sending that information to the server. 
 
 #### Example
 
@@ -233,19 +237,19 @@ certain privacy-related precautions are being taken:
 
 ## Proactive content negotiation and its benefits
 
-When we need to choose a solution that will provide alternative resources to
-the user's browser based on various factors, we are faced with a design
-dillema: Either we can provide the browser with a list of all potential URLs and let
-the browser choose the best one, or we can use **content negotiation** and pick
-the best-fit resource variant on the server.
+When choosing a solution that will provide alternative resources to the user's
+browser based on various factors, we are faced with a design dillema: Either
+the developer can provide the browser with a list of all potential URLs and let
+the browser choose the best one, or can use **content negotiation** and let the
+server pick the best-fit resource variant.
 
 The former option certainly has its place, and it is used successfully across
 the web in examples like `<picture>`, `srcset`, `<video>`, etc.
 
 At the same time, there are some use-cases where it is not sufficient.
 Transformation and adaptation of the page's subresources in a manner that is
-independent from the page's markup can result in more scalable and dedicated
-solutions, that don't have to be assimilated into markup related workflows. 
+independent from the page's markup can result in more scalable solutions, that
+don't have to be assimilated into markup related workflows. 
 
 By decoupling the resource selection from markup, we can enable external
 services to perform those transformations automatically. We can also provide a
