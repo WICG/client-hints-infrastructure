@@ -12,17 +12,45 @@ Abstract: Specification of the Client Hints infrastructure and its integration w
 Introduction {#intro}
 =====================
 
-Client Hints is really awesome! 
-ISSUE: add words
+Client Hints is collection of HTTP and user-agent features that enables
+privacy-preserving, proactive content negotiation with an explicit third-party
+delegation mechanism:
 
+* Proactive content negotiation at the HTTP layer enables servers to request
+* delivery of specific hints, in order to enable
+  optimized and automated selection of resources based on a user's device,
+  conditions and preferences, and lets clients decide which hint requests they
+  want to grant, with per-hint and per-origin granularity.  
+* Integration of said mechanism with web concepts, defined in this document,
+  enables browsers to benefit from content adaptation, and have it play nicely with
+  current web restrictions (e.g. same-origin policy). 
+* The opt-in nature of the mechanism enables browsers to advertise requested
+  hint data (e.g. user agent and device characteristics) selectively to
+  secure-transport origins, instead of appending such data on every outgoing
+  request.  
+* Origin opt-in applies to same-origin assets only and delivery to third-party
+  origins is subject to explicit first party delegation via Feature Policy,
+  enabling tight control over which third party origins can access requested
+  hint data.
+
+The goal of Client Hints is to **reduce passive fingerprinting** on the web
+while **enabling scalable and privacy preserving content adaptation** between
+client and server, via a standardized set of content negotiation primitives at
+the HTTP and user agent levels.
+
+
+Relationship to the Internet Draft {#id}
+===========
+
+The Client Hints opt-in mechanism is described in the Client Hints
+[IETF I-D](https://httpwg.org/http-extensions/client-hints.html)
 Integration with Fetch {#fetch}
 ===========
 
 Integration with HTML {#html}
 ===========
 
-Relationship to the Internet Draft {#id}
-===========
+
 
 Security and Privacy considerations {#privacy}
 ===========
