@@ -1215,7 +1215,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 60a9f27730c0c9ae3e20485f824cef3713caf5fb" name="generator">
   <link href="https://yoavweiss.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="5b0f0572877edc1ddd5782d40af15f727ddc1c63" name="document-revision">
+  <meta content="f5136a5b7ac70b087568be7f5ed0f695499c458b" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1367,7 +1367,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-11-28">28 November 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-11-29">29 November 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1403,10 +1403,9 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
     <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
-    <li><a href="#fetch"><span class="secno">2</span> <span class="content">Integration with Fetch</span></a>
+    <li><a href="#id"><span class="secno">2</span> <span class="content">Relationship to the Internet Draft</span></a>
     <li><a href="#html"><span class="secno">3</span> <span class="content">Integration with HTML</span></a>
-    <li><a href="#id"><span class="secno">4</span> <span class="content">Relationship to the Internet Draft</span></a>
-    <li><a href="#privacy"><span class="secno">5</span> <span class="content">Security and Privacy considerations</span></a>
+    <li><a href="#privacy"><span class="secno">4</span> <span class="content">Security and Privacy considerations</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
@@ -1417,12 +1416,43 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
   </nav>
   <main>
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
-   <p>Client Hints is really awesome!
-ISSUE: add words</p>
-   <h2 class="heading settled" data-level="2" id="fetch"><span class="secno">2. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch"></a></h2>
+   <p>Client Hints is collection of HTTP and user-agent features that enables
+privacy-preserving, proactive content negotiation with an explicit third-party
+delegation mechanism:</p>
+   <ul>
+    <li data-md>
+     <p>Proactive content negotiation at the HTTP layer enables servers to request</p>
+    <li data-md>
+     <p>delivery of specific hints, in order to enable
+  optimized and automated selection of resources based on a user’s device,
+  conditions and preferences, and lets clients decide which hint requests they
+  want to grant, with per-hint and per-origin granularity.</p>
+    <li data-md>
+     <p>Integration of said mechanism with web concepts, defined in this document,
+  enables browsers to benefit from content adaptation, and have it play nicely with
+  current web restrictions (e.g. same-origin policy).</p>
+    <li data-md>
+     <p>The opt-in nature of the mechanism enables browsers to advertise requested
+  hint data (e.g. user agent and device characteristics) selectively to
+  secure-transport origins, instead of appending such data on every outgoing
+  request.</p>
+    <li data-md>
+     <p>Origin opt-in applies to same-origin assets only and delivery to third-party
+  origins is subject to explicit first party delegation via Feature Policy,
+  enabling tight control over which third party origins can access requested
+  hint data.</p>
+   </ul>
+   <p>The goal of Client Hints is to **reduce passive fingerprinting** on the web
+while **enabling scalable and privacy preserving content adaptation** between
+client and server, via a standardized set of content negotiation primitives at
+the HTTP and user agent levels.</p>
+   <h2 class="heading settled" data-level="2" id="id"><span class="secno">2. </span><span class="content">Relationship to the Internet Draft</span><a class="self-link" href="#id"></a></h2>
+   <p>The Client Hints opt-in mechanism is described in the Client Hints
+[IETF I-D](https://httpwg.org/http-extensions/client-hints.html)
+Integration with Fetch {#fetch}</p>
+    =========== 
    <h2 class="heading settled" data-level="3" id="html"><span class="secno">3. </span><span class="content">Integration with HTML</span><a class="self-link" href="#html"></a></h2>
-   <h2 class="heading settled" data-level="4" id="id"><span class="secno">4. </span><span class="content">Relationship to the Internet Draft</span><a class="self-link" href="#id"></a></h2>
-   <h2 class="heading settled" data-level="5" id="privacy"><span class="secno">5. </span><span class="content">Security and Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
+   <h2 class="heading settled" data-level="4" id="privacy"><span class="secno">4. </span><span class="content">Security and Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
