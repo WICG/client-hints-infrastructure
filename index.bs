@@ -9,6 +9,13 @@ Editor: Yoav Weiss, Google, yoav@yoav.ws, https://blog.yoav.ws
 Abstract: Specification of the Client Hints infrastructure and its integration with Fetch and HTML
 </pre>
 
+<pre class="link-defaults">
+spec:infra; type:dfn; for:/; text:list
+spec:infra; type:dfn; for:list; text:append
+spec:infra; type:dfn; for:set; text:append
+spec:html; type:dfn; for:/; text:origin
+</pre>
+
 Introduction {#intro}
 =====================
 
@@ -18,42 +25,137 @@ delegation mechanism:
 
 * Proactive content negotiation at the HTTP layer enables servers to request
 * delivery of specific hints, in order to enable
-  optimized and automated selection of resources based on a user's device,
-  conditions and preferences, and lets clients decide which hint requests they
-  want to grant, with per-hint and per-origin granularity.  
+    optimized and automated selection of resources based on a user's device,
+    conditions and preferences, and lets clients decide which hint requests they
+    want to grant, with per-hint and per-origin granularity.  
 * Integration of said mechanism with web concepts, defined in this document,
-  enables browsers to benefit from content adaptation, and have it play nicely with
-  current web restrictions (e.g. same-origin policy). 
+    enables browsers to benefit from content adaptation, and have it play nicely with
+    current web restrictions (e.g. same-origin policy). 
 * The opt-in nature of the mechanism enables browsers to advertise requested
-  hint data (e.g. user agent and device characteristics) selectively to
-  secure-transport origins, instead of appending such data on every outgoing
-  request.  
+    hint data (e.g. user agent and device characteristics) selectively to
+    secure-transport origins, instead of appending such data on every outgoing
+    request.  
 * Origin opt-in applies to same-origin assets only and delivery to third-party
-  origins is subject to explicit first party delegation via Feature Policy,
-  enabling tight control over which third party origins can access requested
-  hint data.
+    origins is subject to explicit first party delegation via Feature Policy,
+    enabling tight control over which third party origins can access requested
+    hint data.
 
 The goal of Client Hints is to **reduce passive fingerprinting** on the web
 while **enabling scalable and privacy preserving content adaptation** between
 client and server, via a standardized set of content negotiation primitives at
 the HTTP and user agent levels.
 
+Infrastructure definition {#definition}
+=========================
 
-Relationship to the Internet Draft {#id}
-===========
+The specification of the Client Hints **infrastructure** is divided between the
+following specifications and proposals:
 
-The Client Hints opt-in mechanism is described in the Client Hints
-[IETF I-D](https://httpwg.org/http-extensions/client-hints.html)
-Integration with Fetch {#fetch}
-===========
+* IETF [Client Hints Internet-Draft](https://httpwg.org/http-extensions/client-hints.html)
+   - Provides the motivation for Client Hints.
+   - Defines the fundamental Client Hints infrastructure:
+      - The `Accept-CH` response header, which servers may use to advertise
+        support for certain Client Hints.
+      - The `Accept-CH-Lifetime` response header, which servers may use to ask
+        clients to remember that support for future navigations.
+   - Provides both general guidelines, and formal requirements, about Client
+     Hints’ impact on caching, security, and privacy.
+   - Does *not* define any actual, particular hints – or say anything about how
+     Client Hints works in web contexts.
+* WHATWG HTML specification - defined below
+   - Defines how web clients should process the `Accept-CH` headers sent by servers.
+   - Defines the Document state related to `Accept-CH`, which stores
+     information about which servers should get which hints.
+* WHATWG Fetch specification - defined below
+   - Defines how, and when, web clients should actually go about sending hints,
+     based on the state of the parent Document or Javascript execution context.
+      - More specifically, it integrates the HTML web concepts with Fetch's
+        algorithms to make sure that opted-in hints are added to requests for
+        same-origin or delegated-to cross-origin requests. It also makes sure
+        hints are removed from not delegated-to cross-origin requests after
+        redirections.
+   - Defines all `Sec-` prefixed requests as CORS safe.
+* W3C Feature Policy specification
+    ([relevant section](https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature))
+   - In order to perform third party Client Hint delegation, Feature Policy has
+     been extended to control features within fetch requests (rather than just Documents).
 
 Integration with HTML {#html}
 ===========
 
+This specification integrates with the HTML specification by patching the algorithms below.
 
+Accept-CH cache {#accept-ch-cache-definition}
+----------------
+
+An <dfn>Accept-CH cache</dfn> is owned by the user agent and consists of a [=list=] of [=structs=], each with the following fields:
+
+* An <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]).
+* A <dfn for="accept-ch-cache">client hints set</dfn> (a [=client hints set=]).
+
+The Accept-CH cache can effectively act as an alternative cookie store,
+since sites can use each of the hints as a bit set on the client, and that information will be
+communicated to them on every request. As such, a user agent MUST evict that
+cache whenever the user clears their cookies or when session cookies expire.
+
+To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
+given |origin| and |client hints set|, [=list/append=] a new [=struct=] with the following fields to the [=Accept-CH cache=]:
+
+* |origin|, an [=accept-ch-cache/origin=]
+* |client hints set|, a [=accept-ch-cache/client hints set=]
+
+To <dfn>retrieve the client hints set</dfn> given an |origin|:
+
+1) Let |clientHintsSet| be an empty [=ordered set=].
+
+2) Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |origin|.
+
+3) For each entry in |originMatchingEntries|, for each token in its [=client hints set=], [=set/append=] the token to |client hints set|.
+
+4) Return |clientHintsSet|.
+
+Initialize Client Hints set {#initialize-ch-set}
+-----------------------
+When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |document|, |browsingContext| and |response| as inputs, run the following steps:
+
+1) Let |settingsObject| be |document|'s [=relevant settings object=].
+
+2) Let |clientHintsSet| be the result of running [=retrieve the client hints set=] with |settingsObject|'s [=environment settings object/origin=].
+
+3) For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |document|'s [=client hints set=].
+
+4) If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, abort these steps.
+
+5) If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+
+6) If |response|'s `Accept-CH` header is present, parse the header field value according to the
+   `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |document|'s [=client hints set=].
+
+7) [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |document|'s [=client hints set=] as inputs.
+
+<a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>  {#init-document}
+--------------
+After step 11, starting with "Initialize a Document's CSP list", call [$initialize the Client Hints set$] with |document|, |browsingContext| and |response| as inputs.
+
+http-equiv attributes {#http-equiv-attributes}
+-------------
+
+Pragma directives {#pragma-directives}
+------------
+
+Client hints set definitions {#client-hints-set}
+-------------
+
+Integration with Fetch {#fetch}
+===========
 
 Security and Privacy considerations {#privacy}
 ===========
 
+Terms {#terms}
+====
+
+The following terms are defined in the HTTP specifications:
+<dfn href="https://tools.ietf.org/html/rfc7230#section-3.2">field-name</dfn>
 
 
