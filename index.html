@@ -1213,9 +1213,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 60a9f27730c0c9ae3e20485f824cef3713caf5fb" name="generator">
+  <meta content="Bikeshed version e1a165f1c2fb1cc2aceb87e110984a42830c36fa" name="generator">
   <link href="https://yoavweiss.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="f5136a5b7ac70b087568be7f5ed0f695499c458b" name="document-revision">
+  <meta content="1e434cb2746c46ac3c58851470a0265be645ce69" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1255,6 +1255,43 @@ figcaption {
 figcaption:not(.no-marker)::before {
     content: "Figure " counter(figure) " ";
 }</style>
+<style>/* style-dfn-panel */
+
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    height: auto;
+    width: -webkit-fit-content;
+    width: fit-content;
+    max-width: 300px;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: #DDDDDD;
+    color: black;
+    border: outset 0.2em;
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: black; }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0; }
+.dfn-panel li { list-style: inside; }
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled { cursor: pointer; }
+</style>
 <style>/* style-selflinks */
 
 .heading, .issue, .note, .example, li, dt {
@@ -1367,7 +1404,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-11-29">29 November 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2019-12-02">2 December 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1403,10 +1440,27 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
     <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
-    <li><a href="#id"><span class="secno">2</span> <span class="content">Relationship to the Internet Draft</span></a>
-    <li><a href="#html"><span class="secno">3</span> <span class="content">Integration with HTML</span></a>
-    <li><a href="#privacy"><span class="secno">4</span> <span class="content">Security and Privacy considerations</span></a>
+    <li><a href="#definition"><span class="secno">2</span> <span class="content">Infrastructure definition</span></a>
+    <li>
+     <a href="#html"><span class="secno">3</span> <span class="content">Integration with HTML</span></a>
+     <ol class="toc">
+      <li><a href="#accept-ch-cache-definition"><span class="secno">3.1</span> <span class="content">Accept-CH cache</span></a>
+      <li><a href="#initialize-ch-set"><span class="secno">3.2</span> <span class="content">Initialize Client Hints set</span></a>
+      <li><a href="#init-document"><span class="secno">3.3</span> <span class="content"><span>Create and initialize a Document object</span></span></a>
+      <li><a href="#http-equiv-attributes"><span class="secno">3.4</span> <span class="content">http-equiv attributes</span></a>
+      <li><a href="#pragma-directives"><span class="secno">3.5</span> <span class="content">Pragma directives</span></a>
+      <li><a href="#client-hints-set"><span class="secno">3.6</span> <span class="content">Client hints set definitions</span></a>
+     </ol>
+    <li><a href="#fetch"><span class="secno">4</span> <span class="content">Integration with Fetch</span></a>
+    <li><a href="#privacy"><span class="secno">5</span> <span class="content">Security and Privacy considerations</span></a>
+    <li><a href="#terms"><span class="secno">6</span> <span class="content">Terms</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
+    <li>
+     <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
+     <ol class="toc">
+      <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
+      <li><a href="#index-defined-elsewhere"><span class="secno"></span> <span class="content">Terms defined by reference</span></a>
+     </ol>
     <li>
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
@@ -1424,35 +1478,127 @@ delegation mechanism:</p>
      <p>Proactive content negotiation at the HTTP layer enables servers to request</p>
     <li data-md>
      <p>delivery of specific hints, in order to enable
-  optimized and automated selection of resources based on a user’s device,
-  conditions and preferences, and lets clients decide which hint requests they
-  want to grant, with per-hint and per-origin granularity.</p>
+optimized and automated selection of resources based on a user’s device,
+conditions and preferences, and lets clients decide which hint requests they
+want to grant, with per-hint and per-origin granularity.</p>
     <li data-md>
      <p>Integration of said mechanism with web concepts, defined in this document,
-  enables browsers to benefit from content adaptation, and have it play nicely with
-  current web restrictions (e.g. same-origin policy).</p>
+enables browsers to benefit from content adaptation, and have it play nicely with
+current web restrictions (e.g. same-origin policy).</p>
     <li data-md>
      <p>The opt-in nature of the mechanism enables browsers to advertise requested
-  hint data (e.g. user agent and device characteristics) selectively to
-  secure-transport origins, instead of appending such data on every outgoing
-  request.</p>
+hint data (e.g. user agent and device characteristics) selectively to
+secure-transport origins, instead of appending such data on every outgoing
+request.</p>
     <li data-md>
      <p>Origin opt-in applies to same-origin assets only and delivery to third-party
-  origins is subject to explicit first party delegation via Feature Policy,
-  enabling tight control over which third party origins can access requested
-  hint data.</p>
+origins is subject to explicit first party delegation via Feature Policy,
+enabling tight control over which third party origins can access requested
+hint data.</p>
    </ul>
    <p>The goal of Client Hints is to **reduce passive fingerprinting** on the web
 while **enabling scalable and privacy preserving content adaptation** between
 client and server, via a standardized set of content negotiation primitives at
 the HTTP and user agent levels.</p>
-   <h2 class="heading settled" data-level="2" id="id"><span class="secno">2. </span><span class="content">Relationship to the Internet Draft</span><a class="self-link" href="#id"></a></h2>
-   <p>The Client Hints opt-in mechanism is described in the Client Hints
-[IETF I-D](https://httpwg.org/http-extensions/client-hints.html)
-Integration with Fetch {#fetch}</p>
-    =========== 
+   <h2 class="heading settled" data-level="2" id="definition"><span class="secno">2. </span><span class="content">Infrastructure definition</span><a class="self-link" href="#definition"></a></h2>
+   <p>The specification of the Client Hints **infrastructure** is divided between the
+following specifications and proposals:</p>
+   <ul>
+    <li data-md>
+     <p>IETF [Client Hints Internet-Draft](https://httpwg.org/http-extensions/client-hints.html)</p>
+    <li data-md>
+     <p>Provides the motivation for Client Hints.</p>
+    <li data-md>
+     <p>Defines the fundamental Client Hints infrastructure:</p>
+     <ul>
+      <li data-md>
+       <p>The `Accept-CH` response header, which servers may use to advertise
+support for certain Client Hints.</p>
+      <li data-md>
+       <p>The `Accept-CH-Lifetime` response header, which servers may use to ask
+clients to remember that support for future navigations.</p>
+     </ul>
+    <li data-md>
+     <p>Provides both general guidelines, and formal requirements, about Client
+ Hints’ impact on caching, security, and privacy.</p>
+    <li data-md>
+     <p>Does *not* define any actual, particular hints – or say anything about how
+ Client Hints works in web contexts.</p>
+    <li data-md>
+     <p>WHATWG HTML specification - defined below</p>
+    <li data-md>
+     <p>Defines how web clients should process the `Accept-CH` headers sent by servers.</p>
+    <li data-md>
+     <p>Defines the Document state related to `Accept-CH`, which stores
+ information about which servers should get which hints.</p>
+    <li data-md>
+     <p>WHATWG Fetch specification - defined below</p>
+    <li data-md>
+     <p>Defines how, and when, web clients should actually go about sending hints,
+ based on the state of the parent Document or Javascript execution context.</p>
+     <ul>
+      <li data-md>
+       <p>More specifically, it integrates the HTML web concepts with Fetch’s
+algorithms to make sure that opted-in hints are added to requests for
+same-origin or delegated-to cross-origin requests. It also makes sure
+hints are removed from not delegated-to cross-origin requests after
+redirections.</p>
+     </ul>
+    <li data-md>
+     <p>Defines all `Sec-` prefixed requests as CORS safe.</p>
+    <li data-md>
+     <p>W3C Feature Policy specification
+([relevant section](https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature))</p>
+    <li data-md>
+     <p>In order to perform third party Client Hint delegation, Feature Policy has
+ been extended to control features within fetch requests (rather than just Documents).</p>
+   </ul>
    <h2 class="heading settled" data-level="3" id="html"><span class="secno">3. </span><span class="content">Integration with HTML</span><a class="self-link" href="#html"></a></h2>
-   <h2 class="heading settled" data-level="4" id="privacy"><span class="secno">4. </span><span class="content">Security and Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
+   <p>This specification integrates with the HTML specification by patching the algorithms below.</p>
+   <h3 class="heading settled" data-level="3.1" id="accept-ch-cache-definition"><span class="secno">3.1. </span><span class="content">Accept-CH cache</span><a class="self-link" href="#accept-ch-cache-definition"></a></h3>
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="accept-ch-cache">Accept-CH cache</dfn> is owned by the user agent and consists of a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list">list</a> of <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct">structs</a>, each with the following fields:</p>
+   <ul>
+    <li data-md>
+     <p>An <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn-type="dfn" data-noexport id="accept-ch-cache-origin">origin</dfn> (an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin">origin</a>).</p>
+    <li data-md>
+     <p>A <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn-type="dfn" data-noexport id="accept-ch-cache-client-hints-set">client hints set</dfn> (a <a data-link-type="dfn" href="#accept-ch-cache-client-hints-set" id="ref-for-accept-ch-cache-client-hints-set">client hints set</a>).</p>
+   </ul>
+   <p>The Accept-CH cache can effectively act as an alternative cookie store,
+since sites can use each of the hints as a bit set on the client, and that information will be
+communicated to them on every request. As such, a user agent MUST evict that
+cache whenever the user clears their cookies or when session cookies expire.</p>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="add-a-new-accept-ch-cache-entry">add a new Accept-CH cache entry</dfn> to the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache">Accept-CH cache</a>,
+given <var>origin</var> and <var>client hints set</var>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append">append</a> a new <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct①">struct</a> with the following fields to the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache①">Accept-CH cache</a>:</p>
+   <ul>
+    <li data-md>
+     <p><var>origin</var>, an <a data-link-type="dfn" href="#accept-ch-cache-origin" id="ref-for-accept-ch-cache-origin">origin</a></p>
+    <li data-md>
+     <p><var>client hints set</var>, a <a data-link-type="dfn" href="#accept-ch-cache-client-hints-set" id="ref-for-accept-ch-cache-client-hints-set①">client hints set</a></p>
+   </ul>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="retrieve-the-client-hints-set">retrieve the client hints set</dfn> given an <var>origin</var>:</p>
+   <p>1) Let <var>clientHintsSet</var> be an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set">ordered set</a>.</p>
+   <p>2) Let <var>originMatchingEntries</var> be the entries in the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache②">Accept-CH cache</a> whose <a data-link-type="dfn" href="#accept-ch-cache-origin" id="ref-for-accept-ch-cache-origin①">origin</a> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>origin</var>.</p>
+   <p>3) For each entry in <var>originMatchingEntries</var>, for each token in its <a data-link-type="dfn" href="#accept-ch-cache-client-hints-set" id="ref-for-accept-ch-cache-client-hints-set②">client hints set</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append">append</a> the token to <var>client hints set</var>.</p>
+   <p>4) Return <var>clientHintsSet</var>.</p>
+   <h3 class="heading settled" data-level="3.2" id="initialize-ch-set"><span class="secno">3.2. </span><span class="content">Initialize Client Hints set</span><a class="self-link" href="#initialize-ch-set"></a></h3>
+    When asked to <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export id="abstract-opdef-initialize-the-client-hints-set">initialize the Client Hints set</dfn> with <var>document</var>, <var>browsingContext</var> and <var>response</var> as inputs, run the following steps: 
+   <p>1) Let <var>settingsObject</var> be <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>.</p>
+   <p>2) Let <var>clientHintsSet</var> be the result of running <a data-link-type="dfn" href="#retrieve-the-client-hints-set" id="ref-for-retrieve-the-client-hints-set">retrieve the client hints set</a> with <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a>.</p>
+   <p>3) For each <var>hint</var> in <var>clientHintsSet</var>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append①">append</a> <var>hint</var> to <var>document</var>’s <a data-link-type="dfn" href="#accept-ch-cache-client-hints-set" id="ref-for-accept-ch-cache-client-hints-set③">client hints set</a>.</p>
+   <p>4) If the result of executing <a data-link-type="abstract-op" href="https://w3c.github.io/webappsec-secure-contexts/#settings-object" id="ref-for-settings-object">Is an environment settings object contextually secure?</a> on <var>settingsObject</var> is false, abort these steps.</p>
+   <p>5) If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a> does not equal <var>browsingContext</var>, abort these steps.</p>
+   <p>6) If <var>response</var>’s `Accept-CH` header is present, parse the header field value according to the
+   `Accept-CH` header parsing rules, as a <a data-link-type="dfn" href="#field-name" id="ref-for-field-name">field-name</a>. Add each parsed client hints token to <var>document</var>’s <a data-link-type="dfn" href="#accept-ch-cache-client-hints-set" id="ref-for-accept-ch-cache-client-hints-set④">client hints set</a>.</p>
+   <p>7) <a data-link-type="dfn" href="#add-a-new-accept-ch-cache-entry" id="ref-for-add-a-new-accept-ch-cache-entry">Add a new Accept-CH cache entry</a> with <var>response</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin①">origin</a> and <var>document</var>’s <a data-link-type="dfn" href="#accept-ch-cache-client-hints-set" id="ref-for-accept-ch-cache-client-hints-set⑤">client hints set</a> as inputs.</p>
+   <h3 class="heading settled" data-level="3.3" id="init-document"><span class="secno">3.3. </span><span class="content"><a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a></span><a class="self-link" href="#init-document"></a></h3>
+    After step 11, starting with "Initialize a Document’s CSP list", call <a data-link-type="abstract-op" href="#abstract-opdef-initialize-the-client-hints-set" id="ref-for-abstract-opdef-initialize-the-client-hints-set">initialize the Client Hints set</a> with <var>document</var>, <var>browsingContext</var> and <var>response</var> as inputs. 
+   <h3 class="heading settled" data-level="3.4" id="http-equiv-attributes"><span class="secno">3.4. </span><span class="content">http-equiv attributes</span><a class="self-link" href="#http-equiv-attributes"></a></h3>
+   <h3 class="heading settled" data-level="3.5" id="pragma-directives"><span class="secno">3.5. </span><span class="content">Pragma directives</span><a class="self-link" href="#pragma-directives"></a></h3>
+   <h3 class="heading settled" data-level="3.6" id="client-hints-set"><span class="secno">3.6. </span><span class="content">Client hints set definitions</span><a class="self-link" href="#client-hints-set"></a></h3>
+   <h2 class="heading settled" data-level="4" id="fetch"><span class="secno">4. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch"></a></h2>
+   <h2 class="heading settled" data-level="5" id="privacy"><span class="secno">5. </span><span class="content">Security and Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
+   <h2 class="heading settled" data-level="6" id="terms"><span class="secno">6. </span><span class="content">Terms</span><a class="self-link" href="#terms"></a></h2>
+   <p>The following terms are defined in the HTTP specifications: <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport href="https://tools.ietf.org/html/rfc7230#section-3.2" id="field-name">field-name</dfn></p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -1600,9 +1746,204 @@ Integration with Fetch {#fetch}</p>
 
 })();
 </script>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+  <ul class="index">
+   <li><a href="#accept-ch-cache">Accept-CH cache</a><span>, in §3.1</span>
+   <li><a href="#add-a-new-accept-ch-cache-entry">add a new Accept-CH cache entry</a><span>, in §3.1</span>
+   <li><a href="#accept-ch-cache-client-hints-set">client hints set</a><span>, in §3.1</span>
+   <li><a href="#field-name">field-name</a><span>, in §6</span>
+   <li><a href="#abstract-opdef-initialize-the-client-hints-set">initialize the Client Hints set</a><span>, in §3.2</span>
+   <li><a href="#accept-ch-cache-origin">origin</a><span>, in §3.1</span>
+   <li><a href="#retrieve-the-client-hints-set">retrieve the client hints set</a><span>, in §3.1</span>
+  </ul>
+  <aside class="dfn-panel" data-for="term-for-concept-settings-object-origin">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin">https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-settings-object-origin">3.2. Initialize Client Hints set</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-relevant-settings-object">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-relevant-settings-object">3.2. Initialize Client Hints set</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-same-origin">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#same-origin">https://html.spec.whatwg.org/multipage/origin.html#same-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-same-origin">3.1. Accept-CH cache</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-top-level-browsing-context">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-top-level-browsing-context">3.2. Initialize Client Hints set</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-set-append">
+   <a href="https://infra.spec.whatwg.org/#set-append">https://infra.spec.whatwg.org/#set-append</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-set-append">3.1. Accept-CH cache</a>
+    <li><a href="#ref-for-set-append①">3.2. Initialize Client Hints set</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-list">
+   <a href="https://infra.spec.whatwg.org/#list">https://infra.spec.whatwg.org/#list</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-list">3.1. Accept-CH cache</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-ordered-set">
+   <a href="https://infra.spec.whatwg.org/#ordered-set">https://infra.spec.whatwg.org/#ordered-set</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-ordered-set">3.1. Accept-CH cache</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-struct">
+   <a href="https://infra.spec.whatwg.org/#struct">https://infra.spec.whatwg.org/#struct</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-struct">3.1. Accept-CH cache</a> <a href="#ref-for-struct①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-settings-object">
+   <a href="https://w3c.github.io/webappsec-secure-contexts/#settings-object">https://w3c.github.io/webappsec-secure-contexts/#settings-object</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-settings-object">3.2. Initialize Client Hints set</a>
+   </ul>
+  </aside>
+  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
+  <ul class="index">
+   <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin" style="color:initial">origin <small>(for environment settings object)</small></span>
+     <li><span class="dfn-paneled" id="term-for-relevant-settings-object" style="color:initial">relevant settings object</span>
+     <li><span class="dfn-paneled" id="term-for-same-origin" style="color:initial">same origin</span>
+     <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[INFRA]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-set-append" style="color:initial">append <small>(for set)</small></span>
+     <li><span class="dfn-paneled" id="term-for-list" style="color:initial">list</span>
+     <li><span class="dfn-paneled" id="term-for-ordered-set" style="color:initial">ordered set</span>
+     <li><span class="dfn-paneled" id="term-for-struct" style="color:initial">struct</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[secure-contexts]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-settings-object" style="color:initial">Is an environment settings object contextually secure?</span>
+    </ul>
+  </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-html">[HTML]
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-infra">[INFRA]
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
+   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/">Secure Contexts</a>. 15 September 2016. CR. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
   </dl>
+  <aside class="dfn-panel" data-for="accept-ch-cache">
+   <b><a href="#accept-ch-cache">#accept-ch-cache</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-accept-ch-cache">3.1. Accept-CH cache</a> <a href="#ref-for-accept-ch-cache①">(2)</a> <a href="#ref-for-accept-ch-cache②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="accept-ch-cache-origin">
+   <b><a href="#accept-ch-cache-origin">#accept-ch-cache-origin</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-accept-ch-cache-origin">3.1. Accept-CH cache</a> <a href="#ref-for-accept-ch-cache-origin①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="accept-ch-cache-client-hints-set">
+   <b><a href="#accept-ch-cache-client-hints-set">#accept-ch-cache-client-hints-set</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-accept-ch-cache-client-hints-set">3.1. Accept-CH cache</a> <a href="#ref-for-accept-ch-cache-client-hints-set①">(2)</a> <a href="#ref-for-accept-ch-cache-client-hints-set②">(3)</a>
+    <li><a href="#ref-for-accept-ch-cache-client-hints-set③">3.2. Initialize Client Hints set</a> <a href="#ref-for-accept-ch-cache-client-hints-set④">(2)</a> <a href="#ref-for-accept-ch-cache-client-hints-set⑤">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="add-a-new-accept-ch-cache-entry">
+   <b><a href="#add-a-new-accept-ch-cache-entry">#add-a-new-accept-ch-cache-entry</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-add-a-new-accept-ch-cache-entry">3.2. Initialize Client Hints set</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="retrieve-the-client-hints-set">
+   <b><a href="#retrieve-the-client-hints-set">#retrieve-the-client-hints-set</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-retrieve-the-client-hints-set">3.2. Initialize Client Hints set</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="abstract-opdef-initialize-the-client-hints-set">
+   <b><a href="#abstract-opdef-initialize-the-client-hints-set">#abstract-opdef-initialize-the-client-hints-set</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-abstract-opdef-initialize-the-client-hints-set">3.3. Create and initialize a Document object</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="field-name">
+   <b><a href="#field-name">#field-name</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-field-name">3.2. Initialize Client Hints set</a>
+   </ul>
+  </aside>
+<script>/* script-dfn-panel */
+
+document.body.addEventListener("click", function(e) {
+    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
+    // Find the dfn element or panel, if any, that was clicked on.
+    var el = e.target;
+    var target;
+    var hitALink = false;
+    while(el.parentElement) {
+        if(el.tagName == "A") {
+            // Clicking on a link in a <dfn> shouldn't summon the panel
+            hitALink = true;
+        }
+        if(el.classList.contains("dfn-paneled")) {
+            target = "dfn";
+            break;
+        }
+        if(el.classList.contains("dfn-panel")) {
+            target = "dfn-panel";
+            break;
+        }
+        el = el.parentElement;
+    }
+    if(target != "dfn-panel") {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
+            el.classList.remove("on");
+            el.classList.remove("activated");
+        });
+    }
+    if(target == "dfn" && !hitALink) {
+        // open the panel
+        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
+        if(dfnPanel) {
+            dfnPanel.classList.add("on");
+            var rect = el.getBoundingClientRect();
+            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
+            dfnPanel.style.top = window.scrollY + rect.top + "px";
+            var panelRect = dfnPanel.getBoundingClientRect();
+            var panelWidth = panelRect.right - panelRect.left;
+            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
+                // Reposition, because the panel is overflowing
+                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
+            }
+        } else {
+            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
+        }
+    } else if(target == "dfn-panel") {
+        // Switch it to "activated" state, which pins it.
+        el.classList.add("activated");
+        el.style.left = null;
+        el.style.top = null;
+    }
+
+});
+</script>
