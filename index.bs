@@ -133,6 +133,15 @@ When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |docum
 
 7) [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |document|'s [=client hints set=] as inputs.
 
+<div class=note>
+NOTE: The above algorithm:
+
+* Initializes client hints set on the Document based on its environment settings object's origin. 
+* If we are in a secure context and the navigation is a top-level navigation,
+    it parses `Accept-CH` and adds the results to the document's client hints set as well as the Accept-CH cache.
+    </div>
+
+
 <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>  {#init-document}
 --------------
 After step 11, starting with "Initialize a Document's CSP list", call [$initialize the Client Hints set$] with |document|, |browsingContext| and |response| as inputs.
@@ -142,6 +151,32 @@ http-equiv attributes {#http-equiv-attributes}
 
 Pragma directives {#pragma-directives}
 ------------
+For the table in <a href="https://html.spec.whatwg.org/multipage/#pragma-directives">pragma directives</a>,
+add a line with a "State" value of [=Accept-CH state|Accept-CH=] and a "Keyword" value of <dfn>accept-ch</dfn>.
+
+### <dfn>Accept-CH state</dfn> (`http-equiv="[=accept-ch=]"`) ### {#accept-ch-state-link}
+
+This pragma appends client hints tokens to the [=Document=]'s [=client hints set=].
+
+1) If the <{meta}> element is not a child of a <{head}> element, then return.
+
+2) If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
+
+3) Let |settingsObject| be the <{meta}> element's [=relevant settings object=].
+
+4) If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, then return.
+
+5) If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+
+6) Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
+
+7) Parse |acceptCHValue| according to the [=Accept-CH=] header parsing rules, as a [=field-name=].
+     [=set/Append=] each parsed client-hints token to the <{meta}> element's [=node document=]'s [=client hints set=].
+
+8) [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and the current [=Document=]'s [=client hints set=].
+
+ISSUE: Properly define the browsingContext, current document, and maybe more
+
 
 Client hints set definitions {#client-hints-set}
 -------------
