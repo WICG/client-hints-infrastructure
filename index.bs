@@ -19,6 +19,28 @@ spec:fetch; type:dfn; for:Request; text:request
 spec:fetch; type:dfn; text:client
 </pre>
 
+<pre class=biblio>
+{
+    "FEATURE-POLICY": {
+        "authors": [
+            "Ian Clelland"
+        ],
+        "href": "https://wicg.github.io/feature-policy/",
+        "publisher": "WICG",
+        "title": "Feature Policy"
+    },
+    "CLIENT-HINTS": {
+        "authors": [
+            "Ilya Grigorik",
+            "Yoav Weiss"
+          ],
+          "href": "https://httpwg.org/http-extensions/client-hints.html",
+          "publisher": "IETF HTTP-WG",
+          "title": "Client Hints"
+    }
+}
+
+</pre>
 Introduction {#intro}
 =====================
 
@@ -54,46 +76,51 @@ Infrastructure definition {#definition}
 The specification of the Client Hints **infrastructure** is divided between the
 following specifications and proposals:
 
-* IETF [Client Hints Internet-Draft](https://httpwg.org/http-extensions/client-hints.html)
-   - Provides the motivation for Client Hints.
-   - Defines the fundamental Client Hints infrastructure:
-      - The `Accept-CH` response header, which servers may use to advertise
-        support for certain Client Hints.
-      - The `Accept-CH-Lifetime` response header, which servers may use to ask
-        clients to remember that support for future navigations.
-   - Provides both general guidelines, and formal requirements, about Client
-     Hints’ impact on caching, security, and privacy.
-   - Does *not* define any actual, particular hints – or say anything about how
-     Client Hints works in web contexts.
-* WHATWG HTML specification - defined below
-   - Defines how web clients should process the `Accept-CH` headers sent by servers.
-   - Defines the Document state related to `Accept-CH`, which stores
-     information about which servers should get which hints.
-* WHATWG Fetch specification - defined below
-   - Defines how, and when, web clients should actually go about sending hints,
-     based on the state of the parent Document or Javascript execution context.
-      - More specifically, it integrates the HTML web concepts with Fetch's
-        algorithms to make sure that opted-in hints are added to requests for
-        same-origin or delegated-to cross-origin requests. It also makes sure
-        hints are removed from not delegated-to cross-origin requests after
-        redirections.
-   - Defines all `Sec-` prefixed requests as CORS safe.
-* W3C Feature Policy specification
-    ([relevant section](https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature))
-   - In order to perform third party Client Hint delegation, Feature Policy has
-     been extended to control features within fetch requests (rather than just Documents).
+* IETF [[!CLIENT-HINTS]]
+     - Provides the motivation for Client Hints.
+     - Defines the fundamental Client Hints infrastructure:
+        - The `Accept-CH` response header, which servers may use to advertise
+            support for certain Client Hints.
+        - The `Accept-CH-Lifetime` response header, which servers may use to ask
+            clients to remember that support for future navigations.
+     - Provides both general guidelines, and formal requirements, about Client
+         Hints’ impact on caching, security, and privacy.
+     - Does *not* define any actual, particular hints – or say anything about how
+         Client Hints works in web contexts.
+* Client Hints infrastructure - this document
+     - Defines how web clients should process the `Accept-CH` headers sent by servers.
+     - Defines the Document state related to `Accept-CH`, which stores
+         information about which servers should get which hints.
+     - Defines how, and when, web clients should actually go about sending hints,
+         based on the state of their environment settings object.
+        - More specifically, it integrates the HTML web concepts with Fetch's
+            algorithms to make sure that opted-in hints are added to requests for
+            same-origin or delegated-to cross-origin requests. It also makes sure
+            hints are removed from not delegated-to cross-origin requests after
+            redirections.
+     - Integrates those concepts with the [[!HTML]] and [[!FETCH]] specifications, 
+          by patching various concepts there.
+* W3C Feature Policy specification (<a href="https://w3c.github.io/webappsec-feature-policy/#should-request-be-allowed-to-use-feature">relevant section</a>)
+     - In order to perform third party Client Hint delegation, Feature Policy has
+         been extended to control features within fetch requests (rather than just Documents).
 
-Integration with HTML {#html}
-===========
+Document level processing {#document-processing}
+==============
 
-This specification integrates with the HTML specification by patching the algorithms below.
+<h3 id=concept-client-hints-set>Client hints set</h3>
+
+<p>A <dfn>client hints set</dfn> is a
+<a for=/>set</a> of
+<a href=http://httpwg.org/http-extensions/client-hints.html#accept-ch>Client hint tokens</a>.
+
+TODO: Add a registry with possible values.
 
 Accept-CH cache {#accept-ch-cache-definition}
 ----------------
 
 An <dfn>Accept-CH cache</dfn> is owned by the user agent and is an [=ordered map=],
   [=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]), 
-  with a value of <dfn for="accept-ch-cache">client hints set</dfn> (a [=fetch/client hints set=]).
+  with a value of <dfn for="accept-ch-cache">client hints set</dfn> (a [=/client hints set=]).
 
 The Accept-CH cache can effectively act as an alternative cookie store,
 since sites can use each of the hints as a bit set on the client, and that information will be
@@ -102,7 +129,7 @@ cache whenever the user clears their cookies or when session cookies expire.
 
 To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
 given |origin| and |client hints set|, [=map/set=] the value of an entry in [=Accept-CH cache=], 
-given the [=map/value=] |client hints set|, a [=fetch/client hints set=], 
+given the [=map/value=] |client hints set|, a [=/client hints set=], 
 [=map/key|keyed=] on |origin|, an [=accept-ch-cache/origin=], 
 
 To <dfn>retrieve the client hints set</dfn> given an |origin|:
@@ -111,7 +138,7 @@ To <dfn>retrieve the client hints set</dfn> given an |origin|:
 
 2) Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |origin|.
 
-3) For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |client hints set|.
+3) For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |clientHintsSet|.
 
 4) Return |clientHintsSet|.
 
@@ -145,13 +172,6 @@ NOTE: The above algorithm:
     </div>
 
 
-<a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>  {#init-document}
---------------
-After step 11, starting with "Initialize a Document's CSP list", call [$initialize the Client Hints set$] with |document|, |browsingContext| and |response| as inputs.
-
-http-equiv attributes {#http-equiv-attributes}
--------------
-
 Non-normative: In the table on <a href="https://html.spec.whatwg.org/multipage/#attributes-3">attributes</a>, add "accept-ch" in the line which attribute is "http-equiv".
 
 Pragma directives {#pragma-directives}
@@ -182,24 +202,132 @@ Note: This pragma appends client hints tokens to the [=environment settings obje
 
 8) [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and |settingsObject|'s [=environment settings object/client hints set=].
 
+Integration with HTML {#html}
+===========
+
+This specification integrates with the [[!HTML]] specification by patching the algorithms below:
+
+Document object initialization {#document-init}
+----------
+
+At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>
+After step 11, starting with "Initialize a Document's CSP list", call [$initialize the Client Hints set$] with |document|, |browsingContext| and |response| as inputs.
+
+http-equiv attributes {#http-equiv-attributes}
+-------------
+
 Extending environment settings object {#extending-environment-settings-object}
 -------------
 
-An [=environment settings object=] has a <dfn for="environment settings object">client hints set</dfn>: a [=fetch/client hints set=], initially the empty set, used for [=fetches=] performed using the [=environment settings object=] as a [=request=] [=client=].
+An [=environment settings object=] has a <dfn for="environment settings object">client hints set</dfn>: a [=/client hints set=], initially the empty set, used for [=fetches=] performed using the [=environment settings object=] as a [=request=] [=client=].
 
-Integration with Fetch {#fetch}
+Request processing {#request-processing}
 ===========
 
-<h3 id=concept-client-hints-set>Client-hints set</h3>
 
-<p>A <dfn for=fetch>client hints set</dfn> is a
-<a for=/>set</a> of
-<a href=http://httpwg.org/http-extensions/client-hints.html#accept-ch>Client hint tokens</a>.
+When asked to <dfn abstract-op>append client hints to request</dfn> with |request| as input, run the following steps:
 
-TODO: Add a registry with possible values.
+<p>If <var>request</var> is a <a>navigation request</a>, a user agent should, for each
+<a for=/>header</a> <a for=header>name</a> (<var>hintName</var>) in the registry's low entropy table,
+if <var>request</var>'s <a for=request>header list</a>
+<a for="header list">does not contain</a> <var>hintName</var>, then
+<a for="header list">append</a>
+<var>hintName</var>/the corresponding value to
+<var>request</var>'s <a for=request>header list</a>.
+
+ISSUE: Define registry's low entropy table
+
+<p>If <var>request</var>'s <var>client</var> is not null, then <a for=list>for each</a> <var>hintName</var> of <var>request</var>'s <var>client</var>'s
+<a for="environment settings object">client hints set</a>:
+
+<ol>
+  <li>
+   <p>Let <var>value</var> be the return value of running <a>find client hint value</a>, given <var>hintName</var> as input.
+
+
+  <li><p>If <var>request</var> is a <a>subresource request</a> and the result of running
+   <a href="https://w3c.github.io/webappsec-feature-policy/#algo-should-request-be-allowed-to-use-feature">Should request be allowed to use feature?</a>,
+   given <var>request</var> and <var>hintName</var>’s
+   <a href="http://httpwg.org/http-extensions/client-hints.html#opt-in-via-feature-policy">associated
+   policy-controlled feature</a>, returns <code>false</code>, then skip the next steps and
+   continue to the next <var>hintName</var>.
+   [[!FEATURE-POLICY]] [[!CLIENT-HINTS]]
+
+  <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
+  ISSUE: We need to figure out if we really want a `Sec-` prefix, and if so also exempt it from CORS.
+
+  <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">does not
+  contain</a> <var>hintName</var>, a user agent should <a for="header list">append</a>
+  <var>hintName</var>/<var>value</var> to <var>request</var>'s <a for=request>header list</a>.
+</ol>
+
+When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn> with |request as input, run the following steps:
+
+<ol>
+ <li>If |request|'s [=client=] is null, then abort these steps.
+
+ <li>Let |clientHintsSet| be |request|'s |client|'s [=environment settings object/client hints set=].
+ <li><p><a for=list>For each</a> <var>hintName</var> of |clientHintsSet|:
+ <ol>
+  <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
+  <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">contains</a>
+  <var>hintName</var> and if the result of running <a
+  href="https://wicg.github.io/feature-policy/#should-request-be-allowed-to-use-feature">Should
+  request be allowed to use feature?</a>, given <var>request</var> and <var>hintName</var>’s
+  <a href="http://httpwg.org/http-extensions/client-hints.html#opt-in-via-feature-policy">associated
+  policy-controlled feature</a>, returns <code>false</code>, then remove <var>hintName</var> from
+  <a for=request>header list</a>.
+  [[!FEATURE-POLICY]] [[!CLIENT-HINTS]]
+ </ol>
+</ol>
+
+Integration with Fetch {#fetch}
+==============
+
+This specification integrates with the [[!FETCH]] specification by patching the algorithms below:
+
+In [=Fetching=], after step 1.6, run [$append client hints to request$] with |request| as input.
+
+In [=HTTP-redirect fetch=], after step 7, run [$remove client hints from redirect if needed$] with |request| as input.
+
+Feature Registry {#registry}
+==========
+
+Low entropy hint table:
+<table>
+ <tbody><tr>
+  <th><a for=header>Name</a>
+  <th><a for=header>Value</a>
+ <tr>
+  <td>`<code>Save-Data</code>`
+  <td>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>save-data value</a>
+</table>
+
+When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch on |hint| and return the result:
+ <dl class=switch>
+  <dt>`<code>DPR</code>`
+  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#dpr>dpr value</a>
+  <dt>`<code>Save-Data</code>`
+  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>save-data value</a>
+  <dt>`<code>Viewport-Width</code>`
+  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#viewport-width>viewport-width value</a>
+  <dt>`<code>Width</code>`
+  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#width>width value</a>
+  <dt>`<code>Device-Memory</code>`
+  <dd>a suitable <a href=https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header>Device-Memory value</a>
+  <dt>`<code>RTT</code>`
+  <dd>a suitable <a href=https://wicg.github.io/netinfo/#rtt-request-header-field>RTT value</a>
+  <dt>`<code>Downlink</code>`
+  <dd>a suitable <a href=https://wicg.github.io/netinfo/#downlink-request-header-field>Downlink value</a>
+  <dt>`<code>ECT</code>`
+  <dd>a suitable <a href=https://wicg.github.io/netinfo/#ect-request-header-field>ECT value</a>
+ </dl>
+
+ISSUE: Links here are broken, need to link to actual definitions.
 
 Security and Privacy considerations {#privacy}
 ===========
+See [[!CLIENT-HINTS]].
 
 Terms {#terms}
 ====
