@@ -171,9 +171,6 @@ NOTE: The above algorithm:
     it parses `Accept-CH` and adds the results to the environment setting object's client hints set as well as the Accept-CH cache.
     </div>
 
-
-Non-normative: In the table on <a href="https://html.spec.whatwg.org/multipage/#attributes-3">attributes</a>, add "accept-ch" in the line which attribute is "http-equiv".
-
 Pragma directives {#pragma-directives}
 ------------
 For the table in <a href="https://html.spec.whatwg.org/multipage/#pragma-directives">pragma directives</a>,
@@ -215,6 +212,8 @@ After step 11, starting with "Initialize a Document's CSP list", call [$initiali
 
 http-equiv attributes {#http-equiv-attributes}
 -------------
+
+Non-normative: In the table on <a href="https://html.spec.whatwg.org/multipage/#attributes-3">attributes</a>, add "accept-ch" in the line which attribute is "http-equiv".
 
 Extending environment settings object {#extending-environment-settings-object}
 -------------
