@@ -14,6 +14,9 @@ spec:infra; type:dfn; for:/; text:list
 spec:infra; type:dfn; for:list; text:append
 spec:infra; type:dfn; for:set; text:append
 spec:html; type:dfn; for:/; text:origin
+spec:fetch; type:dfn; for:/; text:fetch
+spec:fetch; type:dfn; for:Request; text:request
+spec:fetch; type:dfn; text:client
 </pre>
 
 Introduction {#intro}
@@ -88,10 +91,9 @@ This specification integrates with the HTML specification by patching the algori
 Accept-CH cache {#accept-ch-cache-definition}
 ----------------
 
-An <dfn>Accept-CH cache</dfn> is owned by the user agent and consists of a [=list=] of [=structs=], each with the following fields:
-
-* An <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]).
-* A <dfn for="accept-ch-cache">client hints set</dfn> (a [=client hints set=]).
+An <dfn>Accept-CH cache</dfn> is owned by the user agent and is an [=ordered map=],
+  [=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]), 
+  with a value of <dfn for="accept-ch-cache">client hints set</dfn> (a [=fetch/client hints set=]).
 
 The Accept-CH cache can effectively act as an alternative cookie store,
 since sites can use each of the hints as a bit set on the client, and that information will be
@@ -99,10 +101,9 @@ communicated to them on every request. As such, a user agent MUST evict that
 cache whenever the user clears their cookies or when session cookies expire.
 
 To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
-given |origin| and |client hints set|, [=list/append=] a new [=struct=] with the following fields to the [=Accept-CH cache=]:
-
-* |origin|, an [=accept-ch-cache/origin=]
-* |client hints set|, a [=accept-ch-cache/client hints set=]
+given |origin| and |client hints set|, [=map/set=] the value of an entry in [=Accept-CH cache=], 
+given the [=map/value=] |client hints set|, a [=fetch/client hints set=], 
+[=map/key|keyed=] on |origin|, an [=accept-ch-cache/origin=], 
 
 To <dfn>retrieve the client hints set</dfn> given an |origin|:
 
@@ -110,35 +111,37 @@ To <dfn>retrieve the client hints set</dfn> given an |origin|:
 
 2) Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |origin|.
 
-3) For each entry in |originMatchingEntries|, for each token in its [=client hints set=], [=set/append=] the token to |client hints set|.
+3) For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |client hints set|.
 
 4) Return |clientHintsSet|.
 
 Initialize Client Hints set {#initialize-ch-set}
 -----------------------
-When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |document|, |browsingContext| and |response| as inputs, run the following steps:
+When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |document| and |response| as inputs, run the following steps:
 
 1) Let |settingsObject| be |document|'s [=relevant settings object=].
 
 2) Let |clientHintsSet| be the result of running [=retrieve the client hints set=] with |settingsObject|'s [=environment settings object/origin=].
 
-3) For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |document|'s [=client hints set=].
+3) For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
 
 4) If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, abort these steps.
 
-5) If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+5) Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
 
-6) If |response|'s `Accept-CH` header is present, parse the header field value according to the
-   `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |document|'s [=client hints set=].
+6) If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 
-7) [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |document|'s [=client hints set=] as inputs.
+7) If |response|'s `Accept-CH` header is present, parse the header field value according to the
+   `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |settingsObject|'s [=environment settings object/client hints set=].
+
+8) [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
 
 <div class=note>
 NOTE: The above algorithm:
 
 * Initializes client hints set on the Document based on its environment settings object's origin. 
 * If we are in a secure context and the navigation is a top-level navigation,
-    it parses `Accept-CH` and adds the results to the document's client hints set as well as the Accept-CH cache.
+    it parses `Accept-CH` and adds the results to the environment setting object's client hints set as well as the Accept-CH cache.
     </div>
 
 
@@ -149,6 +152,8 @@ After step 11, starting with "Initialize a Document's CSP list", call [$initiali
 http-equiv attributes {#http-equiv-attributes}
 -------------
 
+Non-normative: In the table on <a href="https://html.spec.whatwg.org/multipage/#attributes-3">attributes</a>, add "accept-ch" in the line which attribute is "http-equiv".
+
 Pragma directives {#pragma-directives}
 ------------
 For the table in <a href="https://html.spec.whatwg.org/multipage/#pragma-directives">pragma directives</a>,
@@ -156,7 +161,7 @@ add a line with a "State" value of [=Accept-CH state|Accept-CH=] and a "Keyword"
 
 ### <dfn>Accept-CH state</dfn> (`http-equiv="[=accept-ch=]"`) ### {#accept-ch-state-link}
 
-This pragma appends client hints tokens to the [=Document=]'s [=client hints set=].
+Note: This pragma appends client hints tokens to the [=environment settings object=]'s [=environment settings object/client hints set=].
 
 1) If the <{meta}> element is not a child of a <{head}> element, then return.
 
@@ -166,23 +171,32 @@ This pragma appends client hints tokens to the [=Document=]'s [=client hints set
 
 4) If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, then return.
 
-5) If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+5) Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
 
-6) Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
+6) If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+
+7) Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
 
 7) Parse |acceptCHValue| according to the [=Accept-CH=] header parsing rules, as a [=field-name=].
-     [=set/Append=] each parsed client-hints token to the <{meta}> element's [=node document=]'s [=client hints set=].
+     [=set/Append=] each parsed client-hints token to |settingsObject|'s [=environment settings object/client hints set=].
 
-8) [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and the current [=Document=]'s [=client hints set=].
+8) [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and |settingsObject|'s [=environment settings object/client hints set=].
 
-ISSUE: Properly define the browsingContext, current document, and maybe more
-
-
-Client hints set definitions {#client-hints-set}
+Extending environment settings object {#extending-environment-settings-object}
 -------------
+
+An [=environment settings object=] has a <dfn for="environment settings object">client hints set</dfn>: a [=fetch/client hints set=], initially the empty set, used for [=fetches=] performed using the [=environment settings object=] as a [=request=] [=client=].
 
 Integration with Fetch {#fetch}
 ===========
+
+<h3 id=concept-client-hints-set>Client-hints set</h3>
+
+<p>A <dfn for=fetch>client hints set</dfn> is a
+<a for=/>set</a> of
+<a href=http://httpwg.org/http-extensions/client-hints.html#accept-ch>Client hint tokens</a>.
+
+TODO: Add a registry with possible values.
 
 Security and Privacy considerations {#privacy}
 ===========
