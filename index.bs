@@ -7,6 +7,7 @@ Group: WICG
 URL: https://yoavweiss.github.io/client-hints-infrastructure
 Editor: Yoav Weiss, Google, yoav@yoav.ws, https://blog.yoav.ws 
 Abstract: Specification of the Client Hints infrastructure and its integration with Fetch and HTML
+Markup Shorthands: markdown yes
 </pre>
 
 <pre class="link-defaults">
@@ -49,17 +50,17 @@ privacy-preserving, proactive content negotiation with an explicit third-party
 delegation mechanism:
 
 * Proactive content negotiation at the HTTP layer enables servers to request
-* delivery of specific hints, in order to enable
-    optimized and automated selection of resources based on a user's device,
-    conditions and preferences, and lets clients decide which hint requests they
-    want to grant, with per-hint and per-origin granularity.  
+    delivery of specific hints, in order to enable optimized and automated
+    selection of resources based on a user's device, conditions and preferences,
+    and lets clients decide which hint requests they want to grant, with
+    per-hint and per-origin granularity.
 * Integration of said mechanism with web concepts, defined in this document,
     enables browsers to benefit from content adaptation, and have it play nicely with
-    current web restrictions (e.g. same-origin policy). 
+    current web restrictions (e.g. same-origin policy).
 * The opt-in nature of the mechanism enables browsers to advertise requested
     hint data (e.g. user agent and device characteristics) selectively to
     secure-transport origins, instead of appending such data on every outgoing
-    request.  
+    request.
 * Origin opt-in applies to same-origin assets only and delivery to third-party
     origins is subject to explicit first party delegation via Feature Policy,
     enabling tight control over which third party origins can access requested
@@ -104,7 +105,7 @@ following specifications and proposals:
      - In order to perform third party Client Hint delegation, Feature Policy has
          been extended to control features within fetch requests (rather than just Documents).
 
-Document level processing {#document-processing}
+Document-level processing {#document-processing}
 ==============
 
 <h3 id=concept-client-hints-set>Client hints set</h3>
@@ -113,7 +114,7 @@ Document level processing {#document-processing}
 <a for=/>set</a> of
 <a href=http://httpwg.org/http-extensions/client-hints.html#accept-ch>Client hint tokens</a>.
 
-TODO: Add a registry with possible values.
+Issue: TODO: Add a registry with possible values.
 
 Accept-CH cache {#accept-ch-cache-definition}
 ----------------
@@ -134,37 +135,27 @@ given the [=map/value=] |client hints set|, a [=/client hints set=],
 
 To <dfn>retrieve the client hints set</dfn> given an |origin|:
 
-1) Let |clientHintsSet| be an empty [=ordered set=].
-
-2) Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |origin|.
-
-3) For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |clientHintsSet|.
-
-4) Return |clientHintsSet|.
+1. Let |clientHintsSet| be an empty [=ordered set=].
+2. Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |origin|.
+3. For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |clientHintsSet|.
+4. Return |clientHintsSet|.
 
 Initialize Client Hints set {#initialize-ch-set}
 -----------------------
 When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |document| and |response| as inputs, run the following steps:
 
-1) Let |settingsObject| be |document|'s [=relevant settings object=].
-
-2) Let |clientHintsSet| be the result of running [=retrieve the client hints set=] with |settingsObject|'s [=environment settings object/origin=].
-
-3) For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
-
-4) If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, abort these steps.
-
-5) Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
-
-6) If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-
-7) If |response|'s `Accept-CH` header is present, parse the header field value according to the
+1. Let |settingsObject| be |document|'s [=relevant settings object=].
+2. Let |clientHintsSet| be the result of running [=retrieve the client hints set=] with |settingsObject|'s [=environment settings object/origin=].
+3. For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
+4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, abort these steps.
+5. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
+6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+7. If |response|'s `Accept-CH` header is present, parse the header field value according to the
    `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |settingsObject|'s [=environment settings object/client hints set=].
-
-8) [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
+8. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
 
 <div class=note>
-NOTE: The above algorithm:
+Note, the above algorithm:
 
 * Initializes client hints set on the Document based on its environment settings object's origin. 
 * If we are in a secure context and the navigation is a top-level navigation,
@@ -176,28 +167,20 @@ Pragma directives {#pragma-directives}
 For the table in <a href="https://html.spec.whatwg.org/multipage/#pragma-directives">pragma directives</a>,
 add a line with a "State" value of [=Accept-CH state|Accept-CH=] and a "Keyword" value of <dfn>accept-ch</dfn>.
 
-### <dfn>Accept-CH state</dfn> (`http-equiv="[=accept-ch=]"`) ### {#accept-ch-state-link}
+### <dfn>Accept-CH state</dfn> (`http-equiv="accept-ch"`) ### {#accept-ch-state-link}
 
 Note: This pragma appends client hints tokens to the [=environment settings object=]'s [=environment settings object/client hints set=].
 
-1) If the <{meta}> element is not a child of a <{head}> element, then return.
-
-2) If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
-
-3) Let |settingsObject| be the <{meta}> element's [=relevant settings object=].
-
-4) If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, then return.
-
-5) Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
-
-6) If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-
-7) Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
-
-7) Parse |acceptCHValue| according to the [=Accept-CH=] header parsing rules, as a [=field-name=].
+1. If the <{meta}> element is not a child of a <{head}> element, then return.
+2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
+3. Let |settingsObject| be the <{meta}> element's [=relevant settings object=].
+4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, then return.
+5. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
+6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+7. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
+8. Parse |acceptCHValue| according to the [=Accept-CH=] header parsing rules, as a [=field-name=].
      [=set/Append=] each parsed client-hints token to |settingsObject|'s [=environment settings object/client hints set=].
-
-8) [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and |settingsObject|'s [=environment settings object/client hints set=].
+9. [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and |settingsObject|'s [=environment settings object/client hints set=].
 
 Integration with HTML {#html}
 ===========
@@ -213,7 +196,11 @@ After step 11, starting with "Initialize a Document's CSP list", call [$initiali
 http-equiv attributes {#http-equiv-attributes}
 -------------
 
-Non-normative: In the table on <a href="https://html.spec.whatwg.org/multipage/#attributes-3">attributes</a>, add "accept-ch" in the line which attribute is "http-equiv".
+<div class=non-normative>
+*This section is non-normative.*
+
+In the table on <a href="https://html.spec.whatwg.org/multipage/#attributes-3">attributes</a>, add "accept-ch" in the line which attribute is "http-equiv".
+</div>
 
 Extending environment settings object {#extending-environment-settings-object}
 -------------
@@ -234,7 +221,7 @@ if <var>request</var>'s <a for=request>header list</a>
 <var>hintName</var>/the corresponding value to
 <var>request</var>'s <a for=request>header list</a>.
 
-ISSUE: Define registry's low entropy table
+Issue: Define registry's low entropy table
 
 <p>If <var>request</var>'s <var>client</var> is not null, then <a for=list>for each</a> <var>hintName</var> of <var>request</var>'s <var>client</var>'s
 <a for="environment settings object">client hints set</a>:
@@ -253,7 +240,7 @@ ISSUE: Define registry's low entropy table
    [[!FEATURE-POLICY]] [[!CLIENT-HINTS]]
 
   <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
-  ISSUE: We need to figure out if we really want a `Sec-` prefix, and if so also exempt it from CORS.
+  <div class=issue>We need to figure out if we really want a `Sec-` prefix, and if so also exempt it from CORS.</div>
 
   <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">does not
   contain</a> <var>hintName</var>, a user agent should <a for="header list">append</a>
@@ -298,31 +285,31 @@ Low entropy hint table:
   <th><a for=header>Name</a>
   <th><a for=header>Value</a>
  <tr>
-  <td>`<code>Save-Data</code>`
+  <td>`Save-Data`
   <td>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>save-data value</a>
 </table>
 
 When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch on |hint| and return the result:
  <dl class=switch>
-  <dt>`<code>DPR</code>`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#dpr>dpr value</a>
-  <dt>`<code>Save-Data</code>`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>save-data value</a>
-  <dt>`<code>Viewport-Width</code>`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#viewport-width>viewport-width value</a>
-  <dt>`<code>Width</code>`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#width>width value</a>
-  <dt>`<code>Device-Memory</code>`
+  <dt>`DPR`
+  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#dpr>DPR value</a>
+  <dt>`Save-Data`
+  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>Save-Data value</a>
+  <dt>`Viewport-Width`
+  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#viewport-width>Viewport-Width value</a>
+  <dt>`Width`
+  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#width>Width value</a>
+  <dt>`Device-Memory`
   <dd>a suitable <a href=https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header>Device-Memory value</a>
-  <dt>`<code>RTT</code>`
+  <dt>`RTT`
   <dd>a suitable <a href=https://wicg.github.io/netinfo/#rtt-request-header-field>RTT value</a>
-  <dt>`<code>Downlink</code>`
+  <dt>`Downlink`
   <dd>a suitable <a href=https://wicg.github.io/netinfo/#downlink-request-header-field>Downlink value</a>
-  <dt>`<code>ECT</code>`
+  <dt>`ECT`
   <dd>a suitable <a href=https://wicg.github.io/netinfo/#ect-request-header-field>ECT value</a>
  </dl>
 
-ISSUE: Links here are broken, need to link to actual definitions.
+Issue: Links here are broken, need to link to actual definitions.
 
 Security and Privacy considerations {#privacy}
 ===========
