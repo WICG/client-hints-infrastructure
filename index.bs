@@ -82,8 +82,6 @@ following specifications and proposals:
      - Defines the fundamental Client Hints infrastructure:
         - The `Accept-CH` response header, which servers may use to advertise
             support for certain Client Hints.
-        - The `Accept-CH-Lifetime` response header, which servers may use to ask
-            clients to remember that support for future navigations.
      - Provides both general guidelines, and formal requirements, about Client
          Hints’ impact on caching, security, and privacy.
      - Does *not* define any actual, particular hints – or say anything about how
