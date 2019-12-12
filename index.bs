@@ -221,7 +221,7 @@ if <var>request</var>'s <a for=request>header list</a>
 
 Issue: Define registry's low entropy table
 
-<p>If <var>request</var>'s <var>client</var> is not null, then <a for=list>for each</a> <var>hintName</var> of <var>request</var>'s <var>client</var>'s
+<p>If <var>request</var>'s <a for="request">client</a> is not null, then <a for=list>for each</a> token <var>hintName</var> of <var>request</var>'s <a for="request">client</a>'s
 <a for="environment settings object">client hints set</a>:
 
 <ol>
