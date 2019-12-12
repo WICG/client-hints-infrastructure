@@ -127,7 +127,7 @@ communicated to them on every request. As such, a user agent MUST evict that
 cache whenever the user clears their cookies or when session cookies expire.
 
 To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
-given |origin| and |client hints set|, [=map/set=] the value of an entry in [=Accept-CH cache=], 
+given an [=accept-ch-cache/origin=] |origin| and a [=/client hints set=] |client hints set|, [=map/set=] [=Accept-CH cache=][|origin|] to |client hints set|.
 given the [=map/value=] |client hints set|, a [=/client hints set=], 
 [=map/key|keyed=] on |origin|, an [=accept-ch-cache/origin=], 
 
