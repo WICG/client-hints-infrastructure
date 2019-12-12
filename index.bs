@@ -188,8 +188,8 @@ This specification integrates with the [[!HTML]] specification by patching the a
 Document object initialization {#document-init}
 ----------
 
-At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>
-After step 11, starting with "Initialize a Document's CSP list", call [$initialize the Client Hints set$] with |document|, |browsingContext| and |response| as inputs.
+At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>,
+after step 11, starting with "Initialize a Document's CSP list", call [$initialize the Client Hints set$] with |document|, |browsingContext| and |response| as inputs.
 
 http-equiv attributes {#http-equiv-attributes}
 -------------
