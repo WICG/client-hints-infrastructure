@@ -145,7 +145,7 @@ When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |docum
 1. Let |settingsObject| be |document|'s [=relevant settings object=].
 2. Let |clientHintsSet| be the result of running [=retrieve the client hints set=] with |settingsObject|'s [=environment settings object/origin=].
 3. For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
-4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, abort these steps.
+4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, abort these steps.
 5. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
 6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 7. If |response|'s `Accept-CH` header is present, parse the header field value according to the
@@ -172,7 +172,7 @@ Note: This pragma appends client hints tokens to the [=environment settings obje
 1. If the <{meta}> element is not a child of a <{head}> element, then return.
 2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
 3. Let |settingsObject| be the <{meta}> element's [=relevant settings object=].
-4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, then return.
+4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
 5. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
 6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 7. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
