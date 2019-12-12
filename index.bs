@@ -149,7 +149,7 @@ When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |docum
 5. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
 6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 7. If |response|'s `Accept-CH` header is present, parse the header field value according to the
-   `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |settingsObject|'s [=environment settings object/client hints set=].
+    `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |settingsObject|'s [=environment settings object/client hints set=].
 8. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
 
 <div class=note>
