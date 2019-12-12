@@ -245,7 +245,7 @@ Issue: Define registry's low entropy table
   <var>hintName</var>/<var>value</var> to <var>request</var>'s <a for=request>header list</a>.
 </ol>
 
-When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn> with |request as input, run the following steps:
+When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn> with |request| as input, run the following steps:
 
 <ol>
  <li>If |request|'s [=client=] is null, then abort these steps.
