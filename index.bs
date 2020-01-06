@@ -127,9 +127,7 @@ communicated to them on every request. As such, a user agent MUST evict that
 cache whenever the user clears their cookies or when session cookies expire.
 
 To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
-given |origin| and |client hints set|, [=map/set=] the value of an entry in [=Accept-CH cache=], 
-given the [=map/value=] |client hints set|, a [=/client hints set=], 
-[=map/key|keyed=] on |origin|, an [=accept-ch-cache/origin=], 
+given an [=accept-ch-cache/origin=] |origin| and a [=/client hints set=] |client hints set|, [=map/set=] [=Accept-CH cache=][|origin|] to |client hints set|.
 
 To <dfn>retrieve the client hints set</dfn> given an |origin|:
 
@@ -145,11 +143,11 @@ When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |docum
 1. Let |settingsObject| be |document|'s [=relevant settings object=].
 2. Let |clientHintsSet| be the result of running [=retrieve the client hints set=] with |settingsObject|'s [=environment settings object/origin=].
 3. For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
-4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, abort these steps.
+4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, abort these steps.
 5. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
 6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 7. If |response|'s `Accept-CH` header is present, parse the header field value according to the
-   `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |settingsObject|'s [=environment settings object/client hints set=].
+    `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |settingsObject|'s [=environment settings object/client hints set=].
 8. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
 
 <div class=note>
@@ -172,7 +170,7 @@ Note: This pragma appends client hints tokens to the [=environment settings obje
 1. If the <{meta}> element is not a child of a <{head}> element, then return.
 2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
 3. Let |settingsObject| be the <{meta}> element's [=relevant settings object=].
-4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is false, then return.
+4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
 5. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
 6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 7. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
@@ -188,8 +186,8 @@ This specification integrates with the [[!HTML]] specification by patching the a
 Document object initialization {#document-init}
 ----------
 
-At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>
-After step 11, starting with "Initialize a Document's CSP list", call [$initialize the Client Hints set$] with |document|, |browsingContext| and |response| as inputs.
+At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>,
+after step 11, starting with "Initialize a Document's CSP list", call [$initialize the Client Hints set$] with |document| and |response| as inputs.
 
 http-equiv attributes {#http-equiv-attributes}
 -------------
@@ -221,7 +219,7 @@ if <var>request</var>'s <a for=request>header list</a>
 
 Issue: Define registry's low entropy table
 
-<p>If <var>request</var>'s <var>client</var> is not null, then <a for=list>for each</a> <var>hintName</var> of <var>request</var>'s <var>client</var>'s
+<p>If <var>request</var>'s <a for="request">client</a> is not null, then <a for=list>for each</a> token <var>hintName</var> of <var>request</var>'s <a for="request">client</a>'s
 <a for="environment settings object">client hints set</a>:
 
 <ol>
@@ -245,7 +243,7 @@ Issue: Define registry's low entropy table
   <var>hintName</var>/<var>value</var> to <var>request</var>'s <a for=request>header list</a>.
 </ol>
 
-When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn> with |request as input, run the following steps:
+When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn> with |request| as input, run the following steps:
 
 <ol>
  <li>If |request|'s [=client=] is null, then abort these steps.
