@@ -211,6 +211,26 @@ Extending environment settings object {#extending-environment-settings-object}
 
 An [=environment settings object=] has a <dfn for="environment settings object">client hints set</dfn>: a [=/client hints set=], initially the empty set, used for [=fetches=] performed using the [=environment settings object=] as a [=request=] [=client=].
 
+Extending the list of policy-controlled features {#extending-policy-controlled-features}
+-------------
+
+Add the following to the <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#policy-controlled-features">list of policy-controlled features</a>:
+
+- <code><dfn export>ch-save-data</dfn></code> which has a [=default allowlist=] of `'*'`
+- <code><dfn export>ch-dpr</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-width</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-viewport-width</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-device-memory</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-rtt</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-downlink</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-ect</dfn></code> which has a [=default allowlist=] of `'self'`
+
+Issue: Should Save-data really have an allowlist of '*'? If so, is it because it's somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?
+
+Issue: Do we want ch- prefixes here?
+
+Issue: Should we add the proposed user agent and lang client hints here?
+
 Request processing {#request-processing}
 ===========
 
