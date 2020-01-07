@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 183d4d29e1c92c00aaf58a92ad55ea0b5af9866f" name="generator">
   <link href="https://yoavweiss.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="bb48c6673bdf91eacff268c91d5f3c0ad95f660e" name="document-revision">
+  <meta content="00243e9a1640bde49665cf94eb955eeb6d9e312e" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1467,6 +1467,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li><a href="#http-equiv-attributes"><span class="secno">4.3</span> <span class="content">http-equiv attributes</span></a>
       <li><a href="#pragma-directives"><span class="secno">4.4</span> <span class="content">Pragma directives</span></a>
       <li><a href="#extending-environment-settings-object"><span class="secno">4.5</span> <span class="content">Extending environment settings object</span></a>
+      <li><a href="#extending-policy-controlled-features"><span class="secno">4.6</span> <span class="content">Extending the list of policy-controlled features</span></a>
      </ol>
     <li><a href="#request-processing"><span class="secno">5</span> <span class="content">Request processing</span></a>
     <li><a href="#fetch"><span class="secno">6</span> <span class="content">Integration with Fetch</span></a>
@@ -1670,6 +1671,29 @@ after step 6, add the following step:
 add a line with a "State" value of <a data-link-type="dfn" href="#accept-ch-state" id="ref-for-accept-ch-state">Accept-CH</a> and a "Keyword" value of <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="accept-ch">accept-ch</dfn>. 
    <h3 class="heading settled" data-level="4.5" id="extending-environment-settings-object"><span class="secno">4.5. </span><span class="content">Extending environment settings object</span><a class="self-link" href="#extending-environment-settings-object"></a></h3>
    <p>An <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> has a <dfn class="dfn-paneled" data-dfn-for="environment settings object" data-dfn-type="dfn" data-noexport id="environment-settings-object-client-hints-set">client hints set</dfn>: a <a data-link-type="dfn" href="#client-hints-set" id="ref-for-client-hints-set②">client hints set</a>, initially the empty set, used for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch" id="ref-for-concept-fetch">fetches</a> performed using the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object②">environment settings object</a> as a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-request" id="ref-for-concept-request-request">request</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client">client</a>.</p>
+   <h3 class="heading settled" data-level="4.6" id="extending-policy-controlled-features"><span class="secno">4.6. </span><span class="content">Extending the list of policy-controlled features</span><a class="self-link" href="#extending-policy-controlled-features"></a></h3>
+   <p>Add the following to the <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#policy-controlled-features">list of policy-controlled features</a>:</p>
+   <ul>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-save-data">ch-save-data<a class="self-link" href="#ch-save-data"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist">default allowlist</a> of <code>'*'</code></p>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-dpr">ch-dpr<a class="self-link" href="#ch-dpr"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist①">default allowlist</a> of <code>'self'</code></p>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-width">ch-width<a class="self-link" href="#ch-width"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist②">default allowlist</a> of <code>'self'</code></p>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-viewport-width">ch-viewport-width<a class="self-link" href="#ch-viewport-width"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist③">default allowlist</a> of <code>'self'</code></p>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-device-memory">ch-device-memory<a class="self-link" href="#ch-device-memory"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist④">default allowlist</a> of <code>'self'</code></p>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-rtt">ch-rtt<a class="self-link" href="#ch-rtt"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist⑤">default allowlist</a> of <code>'self'</code></p>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-downlink">ch-downlink<a class="self-link" href="#ch-downlink"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist⑥">default allowlist</a> of <code>'self'</code></p>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ect">ch-ect<a class="self-link" href="#ch-ect"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist⑦">default allowlist</a> of <code>'self'</code></p>
+   </ul>
+   <p class="issue" id="issue-ef477b6d"><a class="self-link" href="#issue-ef477b6d"></a> Should Save-data really have an allowlist of <a class="property" data-link-type="propdesc">*</a>? If so, is it because it’s somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?</p>
+   <p class="issue" id="issue-2ab55989"><a class="self-link" href="#issue-2ab55989"></a> Do we want ch- prefixes here?</p>
+   <p class="issue" id="issue-e041c638"><a class="self-link" href="#issue-e041c638"></a> Should we add the proposed user agent and lang client hints here?</p>
    <h2 class="heading settled" data-level="5" id="request-processing"><span class="secno">5. </span><span class="content">Request processing</span><a class="self-link" href="#request-processing"></a></h2>
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export id="abstract-opdef-append-client-hints-to-request">append client hints to request</dfn> with <var>request</var> as input, run the following steps:</p>
    <p>If <var>request</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a>, a user agent should, for each <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header" id="ref-for-concept-header">header</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-name" id="ref-for-concept-header-name">name</a> (<var>hintName</var>) in the registry’s low entropy table,
@@ -1900,6 +1924,14 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
    <li><a href="#accept-ch-state">Accept-CH state</a><span>, in §3.4</span>
    <li><a href="#add-a-new-accept-ch-cache-entry">add a new Accept-CH cache entry</a><span>, in §3.2</span>
    <li><a href="#abstract-opdef-append-client-hints-to-request">append client hints to request</a><span>, in §5</span>
+   <li><a href="#ch-device-memory">ch-device-memory</a><span>, in §4.6</span>
+   <li><a href="#ch-downlink">ch-downlink</a><span>, in §4.6</span>
+   <li><a href="#ch-dpr">ch-dpr</a><span>, in §4.6</span>
+   <li><a href="#ch-ect">ch-ect</a><span>, in §4.6</span>
+   <li><a href="#ch-rtt">ch-rtt</a><span>, in §4.6</span>
+   <li><a href="#ch-save-data">ch-save-data</a><span>, in §4.6</span>
+   <li><a href="#ch-viewport-width">ch-viewport-width</a><span>, in §4.6</span>
+   <li><a href="#ch-width">ch-width</a><span>, in §4.6</span>
    <li>
     client hints set
     <ul>
@@ -1914,6 +1946,12 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
    <li><a href="#abstract-opdef-remove-client-hints-from-redirect-if-needed">remove client hints from redirect if needed</a><span>, in §5</span>
    <li><a href="#retrieve-the-client-hints-set">retrieve the client hints set</a><span>, in §3.2</span>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-default-allowlist">
+   <a href="https://wicg.github.io/feature-policy/#default-allowlist">https://wicg.github.io/feature-policy/#default-allowlist</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-default-allowlist">4.6. Extending the list of policy-controlled features</a> <a href="#ref-for-default-allowlist①">(2)</a> <a href="#ref-for-default-allowlist②">(3)</a> <a href="#ref-for-default-allowlist③">(4)</a> <a href="#ref-for-default-allowlist④">(5)</a> <a href="#ref-for-default-allowlist⑤">(6)</a> <a href="#ref-for-default-allowlist⑥">(7)</a> <a href="#ref-for-default-allowlist⑦">(8)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-header-list-append">
    <a href="https://fetch.spec.whatwg.org/#concept-header-list-append">https://fetch.spec.whatwg.org/#concept-header-list-append</a><b>Referenced in:</b>
    <ul>
@@ -2108,6 +2146,11 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
+    <a data-link-type="biblio">[FEATURE-POLICY]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-default-allowlist" style="color:initial">default allowlist</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-concept-header-list-append" style="color:initial">append</span>
@@ -2175,6 +2218,9 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> TODO: Add a registry with possible values.<a href="#issue-7a6c1ae5"> ↵ </a></div>
+   <div class="issue"> Should Save-data really have an allowlist of <a class="property" data-link-type="propdesc">*</a>? If so, is it because it’s somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?<a href="#issue-ef477b6d"> ↵ </a></div>
+   <div class="issue"> Do we want ch- prefixes here?<a href="#issue-2ab55989"> ↵ </a></div>
+   <div class="issue"> Should we add the proposed user agent and lang client hints here?<a href="#issue-e041c638"> ↵ </a></div>
    <div class="issue"> Define registry’s low entropy table<a href="#issue-f40790e6"> ↵ </a></div>
    <div class="issue">We need to figure out if we really want a <code>Sec-</code> prefix, and if so also exempt it from CORS.<a href="#issue-48a63eb6"> ↵ </a></div>
    <div class="issue"> Links here are broken, need to link to actual definitions.<a href="#issue-f7d4cd9f"> ↵ </a></div>
