@@ -88,8 +88,8 @@ following specifications and proposals:
          Client Hints works in web contexts.
 * Client Hints infrastructure - this document
      - Defines how web clients should process the `Accept-CH` headers sent by servers.
-     - Defines the Document state related to `Accept-CH`, which stores
-         information about which servers should get which hints.
+     - Defines the environment settings object state related to `Accept-CH`,
+         which stores information about which servers should get which hints.
      - Defines how, and when, web clients should actually go about sending hints,
          based on the state of their environment settings object.
         - More specifically, it integrates the HTML web concepts with Fetch's
@@ -103,7 +103,7 @@ following specifications and proposals:
      - In order to perform third party Client Hint delegation, Feature Policy has
          been extended to control features within fetch requests (rather than just Documents).
 
-Document-level processing {#document-processing}
+Environment settings object processing {#environment-settings-object-processing}
 ==============
 
 <h3 id=concept-client-hints-set>Client hints set</h3>
@@ -138,32 +138,27 @@ To <dfn>retrieve the client hints set</dfn> given an |origin|:
 
 Initialize Client Hints set {#initialize-ch-set}
 -----------------------
-When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |document| and |response| as inputs, run the following steps:
+When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |settingsObject| and |response| as inputs, run the following steps:
 
-1. Let |settingsObject| be |document|'s [=relevant settings object=].
-2. Let |clientHintsSet| be the result of running [=retrieve the client hints set=] with |settingsObject|'s [=environment settings object/origin=].
-3. For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
-4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, abort these steps.
-5. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
-6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-7. If |response|'s `Accept-CH` header is present, parse the header field value according to the
+1. Let |clientHintsSet| be the result of running [=retrieve the client hints set=] with |settingsObject|'s [=environment settings object/origin=].
+2. For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
+3. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, abort these steps.
+4. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
+5. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+6. If |response|'s `Accept-CH` header is present, parse the header field value according to the
     `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |settingsObject|'s [=environment settings object/client hints set=].
-8. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
+7. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
 
 <div class=note>
 Note, the above algorithm:
 
-* Initializes client hints set on the Document based on its environment settings object's origin. 
+* Initializes client hints set on the environment settings object based on its origin. 
 * If we are in a secure context and the navigation is a top-level navigation,
     it parses `Accept-CH` and adds the results to the environment setting object's client hints set as well as the Accept-CH cache.
     </div>
 
-Pragma directives {#pragma-directives}
-------------
-For the table in <a href="https://html.spec.whatwg.org/multipage/#pragma-directives">pragma directives</a>,
-add a line with a "State" value of [=Accept-CH state|Accept-CH=] and a "Keyword" value of <dfn>accept-ch</dfn>.
-
-### <dfn>Accept-CH state</dfn> (`http-equiv="accept-ch"`) ### {#accept-ch-state-link}
+<dfn>Accept-CH state</dfn> (`http-equiv="accept-ch"`) {#accept-ch-state-algo}
+--------
 
 Note: This pragma appends client hints tokens to the [=environment settings object=]'s [=environment settings object/client hints set=].
 
@@ -178,6 +173,7 @@ Note: This pragma appends client hints tokens to the [=environment settings obje
      [=set/Append=] each parsed client-hints token to |settingsObject|'s [=environment settings object/client hints set=].
 9. [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and |settingsObject|'s [=environment settings object/client hints set=].
 
+
 Integration with HTML {#html}
 ===========
 
@@ -187,7 +183,14 @@ Document object initialization {#document-init}
 ----------
 
 At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>,
-after step 11, starting with "Initialize a Document's CSP list", call [$initialize the Client Hints set$] with |document| and |response| as inputs.
+after step 11, starting with "Initialize a Document's CSP list", 
+call [$initialize the Client Hints set$] with <var ignore>document</var>'s [=relevant settings object=] and |response| as inputs.
+
+Worker initialization {#worker-init}
+-----------
+At <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
+after step 6, add the following step:
+1. Set |settingsObject|'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
 
 http-equiv attributes {#http-equiv-attributes}
 -------------
@@ -197,6 +200,11 @@ http-equiv attributes {#http-equiv-attributes}
 
 In the table on <a href="https://html.spec.whatwg.org/multipage/#attributes-3">attributes</a>, add "accept-ch" in the line which attribute is "http-equiv".
 </div>
+
+Pragma directives {#pragma-directives}
+------------
+For the table in <a href="https://html.spec.whatwg.org/multipage/#pragma-directives">pragma directives</a>,
+add a line with a "State" value of [=Accept-CH state|Accept-CH=] and a "Keyword" value of <dfn>accept-ch</dfn>.
 
 Extending environment settings object {#extending-environment-settings-object}
 -------------
@@ -248,7 +256,7 @@ When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn>
 <ol>
  <li>If |request|'s [=client=] is null, then abort these steps.
 
- <li>Let |clientHintsSet| be |request|'s |client|'s [=environment settings object/client hints set=].
+ <li>Let |clientHintsSet| be |request|'s <var ignore>client</var>'s [=environment settings object/client hints set=].
  <li><p><a for=list>For each</a> <var>hintName</var> of |clientHintsSet|:
  <ol>
   <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
