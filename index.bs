@@ -109,10 +109,7 @@ Environment settings object processing {#environment-settings-object-processing}
 <h3 id=concept-client-hints-set>Client hints set</h3>
 
 <p>A <dfn>client hints set</dfn> is a
-<a for=/>set</a> of
-<a href=http://httpwg.org/http-extensions/client-hints.html#accept-ch>Client hint tokens</a>.
-
-Issue: TODO: Add a registry with possible values.
+<a for=/>set</a> of [=client hints token=]s.
 
 Accept-CH cache {#accept-ch-cache-definition}
 ----------------
@@ -146,7 +143,7 @@ When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |setti
 4. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
 5. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 6. If |response|'s `Accept-CH` header is present, parse the header field value according to the
-    `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |settingsObject|'s [=environment settings object/client hints set=].
+    `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
 7. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
 
 <div class=note>
@@ -160,7 +157,7 @@ Note, the above algorithm:
 <dfn>Accept-CH state</dfn> (`http-equiv="accept-ch"`) {#accept-ch-state-algo}
 --------
 
-Note: This pragma appends client hints tokens to the [=environment settings object=]'s [=environment settings object/client hints set=].
+Note: This pragma appends [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=].
 
 1. If the <{meta}> element is not a child of a <{head}> element, then return.
 2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
@@ -170,7 +167,7 @@ Note: This pragma appends client hints tokens to the [=environment settings obje
 6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 7. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
 8. Parse |acceptCHValue| according to the [=Accept-CH=] header parsing rules, as a [=field-name=].
-     [=set/Append=] each parsed client-hints token to |settingsObject|'s [=environment settings object/client hints set=].
+     [=set/Append=] each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
 9. [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and |settingsObject|'s [=environment settings object/client hints set=].
 
 
@@ -247,8 +244,10 @@ if <var>request</var>'s <a for=request>header list</a>
 
 Issue: Define registry's low entropy table
 
-<p>If <var>request</var>'s <a for="request">client</a> is not null, then <a for=list>for each</a> token <var>hintName</var> of <var>request</var>'s <a for="request">client</a>'s
-<a for="environment settings object">client hints set</a>:
+<p>If <var>request</var>'s <a for="request">client</a> is not null,
+  then <a for=list>for each</a> [=client hints token=] <var>hintName</var>
+  of <var>request</var>'s <a for="request">client</a>'s
+  <a for="environment settings object">client hints set</a>:
 
 <ol>
   <li>
@@ -302,6 +301,24 @@ In [=HTTP-redirect fetch=], after step 7, run [$remove client hints from redirec
 
 Feature Registry {#registry}
 ==========
+
+Note: This section contains feature specific definitions.
+  New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
+  User Agents can implement some of those features without implementing others.
+
+A <dfn>client hints token</dfn> is a [=byte-lowercase=] representation of one of
+  `<code>DPR</code>`,
+  `<code>Save-Data</code>`,
+  `<code>Viewport-Width</code>`,
+  `<code>Width</code>`,
+  `<code>Device-Memory</code>`,
+  `<code>RTT</code>`,
+  `<code>Downlink</code>`,
+  `<code>ECT</code>`,
+  `<code>Arch</code>`,
+  `<code>Platform</code>`,
+  `<code>UA</code>`,
+  `<code>Mobile</code>`.
 
 Low entropy hint table:
 <table>
