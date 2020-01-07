@@ -42,6 +42,12 @@ spec:fetch; type:dfn; text:client
 }
 
 </pre>
+
+<style>
+table, th, td { border: 1px black solid; }
+thead {background-color: yellow; }
+</style>
+
 Introduction {#intro}
 =====================
 
@@ -208,25 +214,6 @@ Extending environment settings object {#extending-environment-settings-object}
 
 An [=environment settings object=] has a <dfn for="environment settings object">client hints set</dfn>: a [=/client hints set=], initially the empty set, used for [=fetches=] performed using the [=environment settings object=] as a [=request=] [=client=].
 
-Extending the list of policy-controlled features {#extending-policy-controlled-features}
--------------
-
-Add the following to the <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#policy-controlled-features">list of policy-controlled features</a>:
-
-- <code><dfn export>ch-save-data</dfn></code> which has a [=default allowlist=] of `'*'`
-- <code><dfn export>ch-dpr</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-width</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-viewport-width</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-device-memory</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-rtt</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-downlink</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-ect</dfn></code> which has a [=default allowlist=] of `'self'`
-
-Issue: Should Save-data really have an allowlist of '*'? If so, is it because it's somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?
-
-Issue: Do we want ch- prefixes here?
-
-Issue: Should we add the proposed user agent and lang client hints here?
 
 Request processing {#request-processing}
 ===========
@@ -306,40 +293,73 @@ Note: This section contains feature specific definitions.
   New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
   User Agents can implement some of those features without implementing others.
 
+Client hints token {#client-hints-token-definition}
+----------
+
 A <dfn>client hints token</dfn> is a [=byte-lowercase=] representation of one of
-  `<code>DPR</code>`,
   `<code>Save-Data</code>`,
-  `<code>Viewport-Width</code>`,
+  `<code>DPR</code>`,
   `<code>Width</code>`,
+  `<code>Viewport-Width</code>`,
   `<code>Device-Memory</code>`,
   `<code>RTT</code>`,
   `<code>Downlink</code>`,
   `<code>ECT</code>`,
   `<code>Arch</code>`,
+  `<code>Model</code>`,
   `<code>Platform</code>`,
   `<code>UA</code>`,
   `<code>Mobile</code>`.
 
-Low entropy hint table:
+Policy-controlled features {#policy-controlled-features}
+-------------
+
+This document defines the following [=policy-controlled features=]:
+
+- <code><dfn export>ch-save-data</dfn></code> which has a [=default allowlist=] of `'*'`
+- <code><dfn export>ch-dpr</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-width</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-viewport-width</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-device-memory</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-rtt</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-downlink</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-ect</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-arch</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-model</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-platform</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-ua</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-mobile</dfn></code> which has a [=default allowlist=] of `'self'`
+
+Issue: Should Save-data really have an allowlist of '*'? If so, is it because it's somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?
+
+
+Low entropy hint table {#low-entropy-table}
+-------
+
 <table>
- <tbody><tr>
+ <thead>
+ <tr>
   <th><a for=header>Name</a>
   <th><a for=header>Value</a>
+ <tbody>
  <tr>
   <td>`Save-Data`
   <td>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>save-data value</a>
 </table>
 
+Find client hint value {#find-client-hint-value-section}
+------------
+
 When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch on |hint| and return the result:
  <dl class=switch>
-  <dt>`DPR`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#dpr>DPR value</a>
   <dt>`Save-Data`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>Save-Data value</a>
+  <dd>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
+  <dt>`DPR`
+  <dd>a suitable <a href>DPR value</a>
   <dt>`Viewport-Width`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#viewport-width>Viewport-Width value</a>
+  <dd>a suitable <a href>Viewport-Width value</a>
   <dt>`Width`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#width>Width value</a>
+  <dd>a suitable <a href>Width value</a>
   <dt>`Device-Memory`
   <dd>a suitable <a href=https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header>Device-Memory value</a>
   <dt>`RTT`
@@ -348,9 +368,19 @@ When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch o
   <dd>a suitable <a href=https://wicg.github.io/netinfo/#downlink-request-header-field>Downlink value</a>
   <dt>`ECT`
   <dd>a suitable <a href=https://wicg.github.io/netinfo/#ect-request-header-field>ECT value</a>
+  <dt>`Arch`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-arch>Arch value</a>
+  <dt>`Model`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-model>Model value</a>
+  <dt>`Platform`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-platform>Platform value</a>
+  <dt>`UA`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua>UA value</a>
+  <dt>`Mobile`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-mobile>Mobile value</a>
  </dl>
 
-Issue: Links here are broken, need to link to actual definitions.
+Issue: Links for image features are broken, need to actually define that and link to them.
 
 Security and Privacy considerations {#privacy}
 ===========
