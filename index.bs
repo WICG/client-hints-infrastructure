@@ -222,7 +222,7 @@ Request processing {#request-processing}
 When asked to <dfn abstract-op>append client hints to request</dfn> with |request| as input, run the following steps:
 
 <p>If <var>request</var> is a <a>navigation request</a>, a user agent should, for each
-<a for=/>header</a> <a for=header>name</a> (<var>hintName</var>) in the registry's low entropy table,
+<a for=/>header</a> <a for=header>name</a> (<var>hintName</var>) in the registry's [=low entropy hint table=],
 if <var>request</var>'s <a for=request>header list</a>
 <a for="header list">does not contain</a> <var>hintName</var>, then
 <a for="header list">append</a>
@@ -289,7 +289,7 @@ In [=HTTP-redirect fetch=], after step 7, run [$remove client hints from redirec
 Feature Registry {#registry}
 ==========
 
-Note: This section contains feature specific definitions.
+Note: This section contains feature-specific definitions.
   New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
   User Agents can implement some of those features without implementing others.
 
@@ -297,19 +297,19 @@ Client hints token {#client-hints-token-definition}
 ----------
 
 A <dfn>client hints token</dfn> is a [=byte-lowercase=] representation of one of
-  `<code>Save-Data</code>`,
-  `<code>DPR</code>`,
-  `<code>Width</code>`,
-  `<code>Viewport-Width</code>`,
-  `<code>Device-Memory</code>`,
-  `<code>RTT</code>`,
-  `<code>Downlink</code>`,
-  `<code>ECT</code>`,
-  `<code>Arch</code>`,
-  `<code>Model</code>`,
-  `<code>Platform</code>`,
-  `<code>UA</code>`,
-  `<code>Mobile</code>`.
+  `Save-Data`,
+  `DPR`,
+  `Width`,
+  `Viewport-Width`,
+  `Device-Memory`,
+  `RTT`,
+  `Downlink`,
+  `ECT`,
+  `Arch`,
+  `Model`,
+  `Platform`,
+  `UA` or
+  `Mobile`.
 
 Policy-controlled features {#policy-controlled-features}
 -------------
@@ -335,6 +335,7 @@ Issue: Should Save-data really have an allowlist of '*'? If so, is it because it
 
 Low entropy hint table {#low-entropy-table}
 -------
+The <dfn>low entropy hint table</dfn> below defines hints that are only exposing low amounts of entropy.
 
 <table>
  <thead>
@@ -344,7 +345,7 @@ Low entropy hint table {#low-entropy-table}
  <tbody>
  <tr>
   <td>`Save-Data`
-  <td>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>save-data value</a>
+  <td>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
 </table>
 
 Find client hint value {#find-client-hint-value-section}
