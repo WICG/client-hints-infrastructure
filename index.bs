@@ -42,6 +42,12 @@ spec:fetch; type:dfn; text:client
 }
 
 </pre>
+
+<style>
+table, th, td { border: 1px black solid; }
+thead {background-color: yellow; }
+</style>
+
 Introduction {#intro}
 =====================
 
@@ -109,10 +115,7 @@ Environment settings object processing {#environment-settings-object-processing}
 <h3 id=concept-client-hints-set>Client hints set</h3>
 
 <p>A <dfn>client hints set</dfn> is a
-<a for=/>set</a> of
-<a href=http://httpwg.org/http-extensions/client-hints.html#accept-ch>Client hint tokens</a>.
-
-Issue: TODO: Add a registry with possible values.
+<a for=/>set</a> of [=client hints token=]s.
 
 Accept-CH cache {#accept-ch-cache-definition}
 ----------------
@@ -146,7 +149,7 @@ When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |setti
 4. Let |browsingContext| be |settingsObject|'s [=responsible browsing context=].
 5. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 6. If |response|'s `Accept-CH` header is present, parse the header field value according to the
-    `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed client hints token to |settingsObject|'s [=environment settings object/client hints set=].
+    `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
 7. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
 
 <div class=note>
@@ -160,7 +163,7 @@ Note, the above algorithm:
 <dfn>Accept-CH state</dfn> (`http-equiv="accept-ch"`) {#accept-ch-state-algo}
 --------
 
-Note: This pragma appends client hints tokens to the [=environment settings object=]'s [=environment settings object/client hints set=].
+Note: This pragma appends [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=].
 
 1. If the <{meta}> element is not a child of a <{head}> element, then return.
 2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
@@ -170,7 +173,7 @@ Note: This pragma appends client hints tokens to the [=environment settings obje
 6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 7. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
 8. Parse |acceptCHValue| according to the [=Accept-CH=] header parsing rules, as a [=field-name=].
-     [=set/Append=] each parsed client-hints token to |settingsObject|'s [=environment settings object/client hints set=].
+     [=set/Append=] each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
 9. [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and |settingsObject|'s [=environment settings object/client hints set=].
 
 
@@ -211,25 +214,6 @@ Extending environment settings object {#extending-environment-settings-object}
 
 An [=environment settings object=] has a <dfn for="environment settings object">client hints set</dfn>: a [=/client hints set=], initially the empty set, used for [=fetches=] performed using the [=environment settings object=] as a [=request=] [=client=].
 
-Extending the list of policy-controlled features {#extending-policy-controlled-features}
--------------
-
-Add the following to the <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#policy-controlled-features">list of policy-controlled features</a>:
-
-- <code><dfn export>ch-save-data</dfn></code> which has a [=default allowlist=] of `'*'`
-- <code><dfn export>ch-dpr</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-width</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-viewport-width</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-device-memory</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-rtt</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-downlink</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-ect</dfn></code> which has a [=default allowlist=] of `'self'`
-
-Issue: Should Save-data really have an allowlist of '*'? If so, is it because it's somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?
-
-Issue: Do we want ch- prefixes here?
-
-Issue: Should we add the proposed user agent and lang client hints here?
 
 Request processing {#request-processing}
 ===========
@@ -238,7 +222,7 @@ Request processing {#request-processing}
 When asked to <dfn abstract-op>append client hints to request</dfn> with |request| as input, run the following steps:
 
 <p>If <var>request</var> is a <a>navigation request</a>, a user agent should, for each
-<a for=/>header</a> <a for=header>name</a> (<var>hintName</var>) in the registry's low entropy table,
+<a for=/>header</a> <a for=header>name</a> (<var>hintName</var>) in the registry's [=low entropy hint table=],
 if <var>request</var>'s <a for=request>header list</a>
 <a for="header list">does not contain</a> <var>hintName</var>, then
 <a for="header list">append</a>
@@ -247,8 +231,10 @@ if <var>request</var>'s <a for=request>header list</a>
 
 Issue: Define registry's low entropy table
 
-<p>If <var>request</var>'s <a for="request">client</a> is not null, then <a for=list>for each</a> token <var>hintName</var> of <var>request</var>'s <a for="request">client</a>'s
-<a for="environment settings object">client hints set</a>:
+<p>If <var>request</var>'s <a for="request">client</a> is not null,
+  then <a for=list>for each</a> [=client hints token=] <var>hintName</var>
+  of <var>request</var>'s <a for="request">client</a>'s
+  <a for="environment settings object">client hints set</a>:
 
 <ol>
   <li>
@@ -303,26 +289,78 @@ In [=HTTP-redirect fetch=], after step 7, run [$remove client hints from redirec
 Feature Registry {#registry}
 ==========
 
-Low entropy hint table:
+Note: This section contains feature-specific definitions.
+  New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
+  User Agents can implement some of those features without implementing others.
+
+Client hints token {#client-hints-token-definition}
+----------
+
+A <dfn>client hints token</dfn> is a [=byte-lowercase=] representation of one of
+  `Save-Data`,
+  `DPR`,
+  `Width`,
+  `Viewport-Width`,
+  `Device-Memory`,
+  `RTT`,
+  `Downlink`,
+  `ECT`,
+  `Arch`,
+  `Model`,
+  `Platform`,
+  `UA` or
+  `Mobile`.
+
+Policy-controlled features {#policy-controlled-features}
+-------------
+
+This document defines the following [=policy-controlled features=]:
+
+- <code><dfn export>ch-save-data</dfn></code> which has a [=default allowlist=] of `'*'`
+- <code><dfn export>ch-dpr</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-width</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-viewport-width</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-device-memory</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-rtt</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-downlink</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-ect</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-arch</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-model</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-platform</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-ua</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-mobile</dfn></code> which has a [=default allowlist=] of `'self'`
+
+Issue: Should Save-data really have an allowlist of '*'? If so, is it because it's somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?
+
+
+Low entropy hint table {#low-entropy-table}
+-------
+The <dfn>low entropy hint table</dfn> below defines hints that are only exposing low amounts of entropy.
+
 <table>
- <tbody><tr>
+ <thead>
+ <tr>
   <th><a for=header>Name</a>
   <th><a for=header>Value</a>
+ <tbody>
  <tr>
   <td>`Save-Data`
-  <td>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>save-data value</a>
+  <td>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
 </table>
+
+Find client hint value {#find-client-hint-value-section}
+------------
 
 When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch on |hint| and return the result:
  <dl class=switch>
-  <dt>`DPR`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#dpr>DPR value</a>
   <dt>`Save-Data`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#save-data>Save-Data value</a>
+  <dd>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
+  <dt>`DPR`
+  <dd>a suitable <a href>DPR value</a>
   <dt>`Viewport-Width`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#viewport-width>Viewport-Width value</a>
+  <dd>a suitable <a href>Viewport-Width value</a>
   <dt>`Width`
-  <dd>a suitable <a href=http://httpwg.org/http-extensions/client-hints.html#width>Width value</a>
+  <dd>a suitable <a href>Width value</a>
   <dt>`Device-Memory`
   <dd>a suitable <a href=https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header>Device-Memory value</a>
   <dt>`RTT`
@@ -331,9 +369,19 @@ When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch o
   <dd>a suitable <a href=https://wicg.github.io/netinfo/#downlink-request-header-field>Downlink value</a>
   <dt>`ECT`
   <dd>a suitable <a href=https://wicg.github.io/netinfo/#ect-request-header-field>ECT value</a>
+  <dt>`Arch`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-arch>Arch value</a>
+  <dt>`Model`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-model>Model value</a>
+  <dt>`Platform`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-platform>Platform value</a>
+  <dt>`UA`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua>UA value</a>
+  <dt>`Mobile`
+  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-mobile>Mobile value</a>
  </dl>
 
-Issue: Links here are broken, need to link to actual definitions.
+Issue: Links for image features are broken, need to actually define that and link to them.
 
 Security and Privacy considerations {#privacy}
 ===========
