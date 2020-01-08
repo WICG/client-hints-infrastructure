@@ -8,11 +8,10 @@ delegation mechanism:
   optimized and automated selection of resources based on a user's device,
   conditions and preferences, and lets clients decide which hint requests they
   want to grant, with per-hint and per-origin granularity.  
-* Integration of said mechanism with web concepts (to be defined as part of the
-  [HTML](https://github.com/whatwg/html/pull/3774) and
-  [Fetch](https://github.com/whatwg/fetch/pull/773) specifications) enables
-  browsers to benefit from content adaptation, and have it play nicely with
-  current web restrictions (e.g. same-origin policy). 
+* Integration of said mechanism with web concepts (defined in this
+  [specification](https://yoavweiss.github.io/client-hints-infrastructure))
+  specification) enables browsers to benefit from content adaptation, and have it
+  play nicely with current web restrictions (e.g. same-origin policy). 
 * The opt-in nature of the mechanism enables browsers to advertise requested
   hint data (e.g. user agent and device characteristics) selectively to
   secure-transport origins, instead of appending such data on every outgoing
@@ -64,28 +63,12 @@ If a server's response to a navigation request includes the `Accept-CH:
 foo, bar` header, same-origin subresource requests on the page will include the
 `Sec-Foo: foo-value` and `Sec-Bar: bar-value` request headers.
 
-### `Accept-CH-Lifetime`
-
-In order to enable delivery of hints for future navigation requests to the
-same origin on top on subresource requests, servers can use the
-`Accept-CH-Lifetime` header to communicate an integer value, which represents
-the number of seconds, indicating a preference for how long this policy should
-be kept by the client.
-
-#### Example
-
-If the server's response to the top-level navigation request includes the
-`Accept-CH: foo, bar` and `Accept-CH-Lifetime: 3600` headers, same-origin
-requests *to that origin* will include the `Sec-Foo: foo-value` and
-`Sec-Bar: bar-value` request headers for the next hour – on both subresource
-requests and navigation requests.
-
 ## Same-Origin Policy
 
 There are two important restrictions on the opt-in mechanism description above:
 
-- opt-ins will only be granted when the opt-in headers headers are received
-  with a top-level navigation resource
+- opt-ins will only be granted when the opt-in headers are received with a
+  top-level navigation resource
 - after the opt-in, hints will only be sent with same-origin requests
 
 Why are these limitations important?
