@@ -9,7 +9,7 @@ delegation mechanism:
   conditions and preferences, and lets clients decide which hint requests they
   want to grant, with per-hint and per-origin granularity.  
 * Integration of said mechanism with web concepts (defined in this
-  [specification](https://yoavweiss.github.io/client-hints-infrastructure))
+  [specification](https://wicg.github.io/client-hints-infrastructure))
   specification) enables browsers to benefit from content adaptation, and have it
   play nicely with current web restrictions (e.g. same-origin policy). 
 * The opt-in nature of the mechanism enables browsers to advertise requested
