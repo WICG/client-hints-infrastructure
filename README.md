@@ -132,7 +132,7 @@ Since we're treating Client Hints as an active fingerprinting equivalent, we
 are comfortable with the information it exposes to first-party servers, as the same
 information is already freely available in the equivalent Javascript APIs.
 Similarly, third party delegation is safe because first partties are already able to use
-other means (such as link decoration, to achieve the same information sharing
+other means (such as link decoration), to achieve the same information sharing
 with third parties, in less convenient and performant ways.
 
 In short, first parties already have the power to share information about the
