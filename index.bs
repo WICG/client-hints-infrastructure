@@ -221,8 +221,7 @@ Request processing {#request-processing}
 
 When asked to <dfn abstract-op>append client hints to request</dfn> with |request| as input, run the following steps:
 
-<p>If <var>request</var> is a <a>navigation request</a>, a user agent should, for each
-<a for=/>header</a> <a for=header>name</a> (<var>hintName</var>) in the registry's [=low entropy hint table=],
+<p>For each <a for=/>header</a> <a for=header>name</a> (<var>hintName</var>) in the registry's [=low entropy hint table=],
 if <var>request</var>'s <a for=request>header list</a>
 <a for="header list">does not contain</a> <var>hintName</var>, then
 <a for="header list">append</a>
@@ -344,6 +343,12 @@ The <dfn>low entropy hint table</dfn> below defines hints that are only exposing
  <tr>
   <td>`Save-Data`
   <td>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
+ <tr>
+  <td>`UA`
+  <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua>UA value</a>
+ <tr>
+  <td>`UA-Mobile`
+  <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile>Mobile value</a>
 </table>
 
 Find client hint value {#find-client-hint-value-section}
