@@ -1222,9 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 8dfdf2ed5fc6ab13df001e8912368d1a94aa49dd" name="generator">
+  <meta content="Bikeshed version b43aa594f5014ff14748da1aace9afaa73d2b3e6" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="c7de53729fa8977b9ca09506d17c06b28753520e" name="document-revision">
+  <meta content="c19ef1deef8a88f3e925288089cf0330247f5e8d" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -1417,7 +1417,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-01-21">21 January 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-02-13">13 February 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1682,7 +1682,7 @@ add a line with a "State" value of <a data-link-type="dfn" href="#accept-ch-stat
    <p>An <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> has a <dfn class="dfn-paneled" data-dfn-for="environment settings object" data-dfn-type="dfn" data-noexport id="environment-settings-object-client-hints-set">client hints set</dfn>: a <a data-link-type="dfn" href="#client-hints-set" id="ref-for-client-hints-set②">client hints set</a>, initially the empty set, used for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch" id="ref-for-concept-fetch">fetches</a> performed using the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object②">environment settings object</a> as a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-request" id="ref-for-concept-request-request">request</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client">client</a>.</p>
    <h2 class="heading settled" data-level="5" id="request-processing"><span class="secno">5. </span><span class="content">Request processing</span><a class="self-link" href="#request-processing"></a></h2>
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export id="abstract-opdef-append-client-hints-to-request">append client hints to request</dfn> with <var>request</var> as input, run the following steps:</p>
-   <p>If <var>request</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a>, a user agent should, for each <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header" id="ref-for-concept-header">header</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-name" id="ref-for-concept-header-name">name</a> (<var>hintName</var>) in the registry’s <a data-link-type="dfn" href="#low-entropy-hint-table" id="ref-for-low-entropy-hint-table">low entropy hint table</a>,
+   <p>For each <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header" id="ref-for-concept-header">header</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-name" id="ref-for-concept-header-name">name</a> (<var>hintName</var>) in the registry’s <a data-link-type="dfn" href="#low-entropy-hint-table" id="ref-for-low-entropy-hint-table">low entropy hint table</a>,
 if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list">header list</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains">does not contain</a> <var>hintName</var>, then <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-append" id="ref-for-concept-header-list-append">append</a> <var>hintName</var>/the corresponding value to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list①">header list</a>. </p>
    <p>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a> is not null,
   then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate">for each</a> <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token④">client hints token</a> <var>hintName</var> of <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client②">client</a>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set⑧">client hints set</a>: </p>
@@ -1768,6 +1768,12 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
      <tr>
       <td><code>Save-Data</code> 
       <td>a suitable <a href="https://wicg.github.io/savedata/#save-data-request-header-field">Save-Data value</a> 
+     <tr>
+      <td><code>UA</code> 
+      <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua">UA value</a> 
+     <tr>
+      <td><code>UA-Mobile</code> 
+      <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile">Mobile value</a> 
    </table>
    <h3 class="heading settled" data-level="7.4" id="find-client-hint-value-section"><span class="secno">7.4. </span><span class="content">Find client hint value</span><a class="self-link" href="#find-client-hint-value-section"></a></h3>
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="find-client-hint-value">find client hint value</dfn>, given <var>hint</var> as input, switch on <var>hint</var> and return the result:</p>
@@ -2057,12 +2063,6 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
     <li><a href="#ref-for-concept-header-name①">7.3. Low entropy hint table</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-navigation-request">
-   <a href="https://fetch.spec.whatwg.org/#navigation-request">https://fetch.spec.whatwg.org/#navigation-request</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-navigation-request">5. Request processing</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-request-request">
    <a href="https://fetch.spec.whatwg.org/#concept-request-request">https://fetch.spec.whatwg.org/#concept-request-request</a><b>Referenced in:</b>
    <ul>
@@ -2217,7 +2217,6 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
      <li><span class="dfn-paneled" id="term-for-concept-request-header-list" style="color:initial">header list</span>
      <li><span class="dfn-paneled" id="term-for-concept-http-redirect-fetch" style="color:initial">http-redirect fetch</span>
      <li><span class="dfn-paneled" id="term-for-concept-header-name" style="color:initial">name</span>
-     <li><span class="dfn-paneled" id="term-for-navigation-request" style="color:initial">navigation request</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-request" style="color:initial">request</span>
      <li><span class="dfn-paneled" id="term-for-subresource-request" style="color:initial">subresource request</span>
      <li><span class="dfn-paneled" id="term-for-concept-header-value" style="color:initial">value</span>
