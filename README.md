@@ -1,3 +1,5 @@
+# Explainer
+
 Client Hints is collection of HTTP and user-agent features that enables
 privacy-preserving, proactive content negotiation with an explicit third-party
 delegation mechanism:
