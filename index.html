@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version d2959a41, updated Fri Apr 24 17:44:40 2020 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="61f3fd7e743e93f5445a8ccfa33bcfe32e485805" name="document-revision">
+  <meta content="2f5938506370dd79135a8f841978edaf4c176ada" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -1617,7 +1617,7 @@ given an <a data-link-type="dfn" href="#accept-ch-cache-origin" id="ref-for-acce
     <li data-md>
      <p>If the result of executing <a data-link-type="abstract-op" href="https://w3c.github.io/webappsec-secure-contexts/#settings-object" id="ref-for-settings-object">Is an environment settings object contextually secure?</a> on <var>settingsObject</var> is <code>"Not Secure"</code>, abort these steps.</p>
     <li data-md>
-     <p>Let <var>browsingContext</var> be <var>settingsObject</var>’s <a data-link-type="dfn">responsible browsing context</a>.</p>
+     <p>Let <var>browsingContext</var> be <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#window-bc" id="ref-for-window-bc">browsing context</a>.</p>
     <li data-md>
      <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a> does not equal <var>browsingContext</var>, abort these steps.</p>
     <li data-md>
@@ -1647,7 +1647,7 @@ it parses <code>Accept-CH</code> and adds the results to the environment setting
     <li data-md>
      <p>If the result of executing <a data-link-type="abstract-op" href="https://w3c.github.io/webappsec-secure-contexts/#settings-object" id="ref-for-settings-object①">Is an environment settings object contextually secure?</a> on <var>settingsObject</var> is <code>"Not Secure"</code>, then return.</p>
     <li data-md>
-     <p>Let <var>browsingContext</var> be <var>settingsObject</var>’s <a data-link-type="dfn">responsible browsing context</a>.</p>
+     <p>Let <var>browsingContext</var> be <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global①">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#window-bc" id="ref-for-window-bc①">browsing context</a>.</p>
     <li data-md>
      <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> does not equal <var>browsingContext</var>, abort these steps.</p>
     <li data-md>
@@ -2081,6 +2081,13 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
     <li><a href="#ref-for-concept-header-value">7.3. Low entropy hint table</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-window-bc">
+   <a href="https://html.spec.whatwg.org/multipage/window-object.html#window-bc">https://html.spec.whatwg.org/multipage/window-object.html#window-bc</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-window-bc">3.3. Initialize Client Hints set</a>
+    <li><a href="#ref-for-window-bc①">3.4. Accept-CH state (http-equiv="accept-ch")</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-attr-meta-content">
    <a href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content">https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content</a><b>Referenced in:</b>
    <ul>
@@ -2092,6 +2099,13 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
    <ul>
     <li><a href="#ref-for-environment-settings-object">3.4. Accept-CH state (http-equiv="accept-ch")</a>
     <li><a href="#ref-for-environment-settings-object①">4.5. Extending environment settings object</a> <a href="#ref-for-environment-settings-object②">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-settings-object-global">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-settings-object-global">3.3. Initialize Client Hints set</a>
+    <li><a href="#ref-for-concept-settings-object-global①">3.4. Accept-CH state (http-equiv="accept-ch")</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-the-head-element">
@@ -2217,8 +2231,10 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="term-for-window-bc" style="color:initial">browsing context</span>
      <li><span class="dfn-paneled" id="term-for-attr-meta-content" style="color:initial">content</span>
      <li><span class="dfn-paneled" id="term-for-environment-settings-object" style="color:initial">environment settings object</span>
+     <li><span class="dfn-paneled" id="term-for-concept-settings-object-global" style="color:initial">global object</span>
      <li><span class="dfn-paneled" id="term-for-the-head-element" style="color:initial">head</span>
      <li><span class="dfn-paneled" id="term-for-meta" style="color:initial">meta</span>
      <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin" style="color:initial">origin <small>(for environment settings object)</small></span>
