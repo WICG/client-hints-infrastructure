@@ -163,7 +163,7 @@ Note, the above algorithm:
 <dfn>Accept-CH state</dfn> (`http-equiv="accept-ch"`) {#accept-ch-state-algo}
 --------
 
-Note: This pragma appends [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=].
+Note: This pragma *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=].
 
 1. If the <{meta}> element is not a child of a <{head}> element, then return.
 2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
@@ -174,7 +174,6 @@ Note: This pragma appends [=client hints token=]s to the [=environment settings 
 7. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
 8. Parse |acceptCHValue| according to the [=Accept-CH=] header parsing rules, as a [=field-name=].
      [=set/Append=] each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
-9. [=Add a new Accept-CH cache entry=] with |settingsObject|'s [=/origin=], and |settingsObject|'s [=environment settings object/client hints set=].
 
 
 Integration with HTML {#html}
