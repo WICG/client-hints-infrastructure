@@ -323,10 +323,10 @@ This document defines the following [=policy-controlled features=]:
 - <code><dfn export>ch-ua-arch</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-ua-model</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-ua-platform</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-ua</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-ua-mobile</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-ua</dfn></code> which has a [=default allowlist=] of `'*'`
+- <code><dfn export>ch-ua-mobile</dfn></code> which has a [=default allowlist=] of `'*'`
 
-Issue: Should Save-data really have an allowlist of '*'? If so, is it because it's somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?
+Issue: Should we tie low-entropy-ness to allowlists, generally?
 
 
 Low entropy hint table {#low-entropy-table}
