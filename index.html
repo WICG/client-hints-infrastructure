@@ -1175,7 +1175,7 @@ Possible extra rowspan handling
 		   1. When table < content column, centers table in column.
 		   2. When content < table < available, left-aligns.
 		   3. When table > available, fills available + scroll bar.
-		*/ 
+		*/
 		display: grid;
 		grid-template-columns: minmax(0, 50em);
 	}
@@ -1222,9 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version d2959a41, updated Fri Apr 24 17:44:40 2020 -0700" name="generator">
+  <meta content="Bikeshed version 76c0936a, updated Fri Jun 12 19:44:53 2020 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="0568e9dae5ba06c375c08617a45a3864e7778274" name="document-revision">
+  <meta content="cf01b857c7682ee2533ba9a5e8b0aca281854244" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -1417,7 +1417,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-04-29">29 April 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2020-06-15">15 June 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1750,11 +1750,11 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
     <li data-md>
      <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-platform">ch-ua-platform<a class="self-link" href="#ch-ua-platform"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist①⓪">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua">ch-ua<a class="self-link" href="#ch-ua"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist①①">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua">ch-ua<a class="self-link" href="#ch-ua"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist①①">default allowlist</a> of <code>'*'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-mobile">ch-ua-mobile<a class="self-link" href="#ch-ua-mobile"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist①②">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-mobile">ch-ua-mobile<a class="self-link" href="#ch-ua-mobile"></a></dfn></code> which has a <a data-link-type="dfn" href="https://wicg.github.io/feature-policy/#default-allowlist" id="ref-for-default-allowlist①②">default allowlist</a> of <code>'*'</code></p>
    </ul>
-   <p class="issue" id="issue-ef477b6d"><a class="self-link" href="#issue-ef477b6d"></a> Should Save-data really have an allowlist of <a class="property" data-link-type="propdesc">*</a>? If so, is it because it’s somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?</p>
+   <p class="issue" id="issue-0277eb34"><a class="self-link" href="#issue-0277eb34"></a> Should we tie low-entropy-ness to allowlists, generally?</p>
    <h3 class="heading settled" data-level="7.3" id="low-entropy-table"><span class="secno">7.3. </span><span class="content">Low entropy hint table</span><a class="self-link" href="#low-entropy-table"></a></h3>
     The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="low-entropy-hint-table">low entropy hint table</dfn> below defines hints that are only exposing low amounts of entropy. 
    <table>
@@ -2279,7 +2279,7 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue">We need to figure out if we really want a <code>Sec-</code> prefix, and if so also exempt it from CORS.<a href="#issue-48a63eb6"> ↵ </a></div>
-   <div class="issue"> Should Save-data really have an allowlist of <a class="property" data-link-type="propdesc">*</a>? If so, is it because it’s somehow "low entropy" and should we tie low-entropy-ness to allowlists, generally?<a href="#issue-ef477b6d"> ↵ </a></div>
+   <div class="issue"> Should we tie low-entropy-ness to allowlists, generally?<a href="#issue-0277eb34"> ↵ </a></div>
    <div class="issue"> Links for image features are broken, need to actually define that and link to them.<a href="#issue-707decdc"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="client-hints-set">
