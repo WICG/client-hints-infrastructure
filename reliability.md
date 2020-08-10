@@ -33,7 +33,7 @@ This design does _not_ force the client to send a Client Hint. It still may not 
 
 Some Client Hints are optimizations, while others meaningfully change the page. For example, a site may use `Device-Memory` to serve simple and complex variants, and `Viewport-Width` for a server-side rendering optimization. If only the first request lacks `Device-Memory`, the site will jarringly switch versions between page loads. The server could try to detect this and self-redirect, but this will loop if the client declined to send the hint, or simply didn’t implement it.
 
-We move retry to the client with a new response header, `Critical-CH`, with a list of _critical_ hints. If, after processing the `Accept-CH` header, the client would have sent a critical hint, it retries the request. Otherwise, it uses the response as-is. E.g, the initial request may be:
+We move retry to the client with a new response header, [`Critical-CH`](https://tools.ietf.org/html/draft-davidben-http-client-hint-reliability-00#section-3), with a list of _critical_ hints. If, after processing the `Accept-CH` header, the client would have sent a critical hint, it retries the request. Otherwise, it uses the response as-is. E.g, the initial request may be:
 
 ```
     GET / HTTP/1.1
@@ -75,12 +75,12 @@ Here we describe one possible encoding. See below for other options. Note that w
 
 ### ACCEPT\_CH
 
-In HTTP/2 and HTTP/3, the server can send auxiliary frames such as [SETTINGS](https://httpwg.org/specs/rfc7540.html#SETTINGS) with parameters for the connection. We define an `ACCEPT_CH` frame with a list of (origin, accept-ch) tuples. When the client sends an HTTP request, if the client has received an `ACCEPT_CH` frame and the origin matches an entry in the list, it uses the matching server preferences. (See also [connection vs cache ordering](#connection-vs-cache-ordering).)
+In HTTP/2 and HTTP/3, the server can send auxiliary frames such as [SETTINGS](https://httpwg.org/specs/rfc7540.html#SETTINGS) with parameters for the connection. We define an [`ACCEPT_CH`](https://tools.ietf.org/html/draft-davidben-http-client-hint-reliability-00#section-4) frame with a list of (origin, accept-ch) tuples. When the client sends an HTTP request, if the client has received an `ACCEPT_CH` frame and the origin matches an entry in the list, it uses the matching server preferences. (See also [connection vs cache ordering](#connection-vs-cache-ordering).)
 
 
 ### Application-Layer Protocol Settings
 
-While it is [possible](#settings-in-half-rtt-data), in some modes, to send HTTP/2 frames with the ServerHello, this is not required or reliable. HTTP/2 and HTTP/3 clients do not wait for these frames before sending requests. We fix this by introducing an [Application-Layer Protocol Settings (ALPS)](https://tools.ietf.org/html/draft-vvv-tls-alps-00) extension for TLS 1.3 which lifts protocol-specific server settings into the EncryptedExtensions message. In [HTTP/2 and HTTP/3](https://tools.ietf.org/html/draft-vvv-httpbis-alps-00), we use them to carry the `ACCEPT_CH` frame and others.
+While it is [possible](#accept_ch-in-half-rtt-data), in some modes, to send HTTP/2 frames with the ServerHello, this is not required or reliable. HTTP/2 and HTTP/3 clients do not wait for these frames before sending requests. We fix this by introducing an [Application-Layer Protocol Settings (ALPS)](https://tools.ietf.org/html/draft-vvv-tls-alps-00) extension for TLS 1.3 which lifts protocol-specific server settings into the EncryptedExtensions message. In [HTTP/2 and HTTP/3](https://tools.ietf.org/html/draft-vvv-httpbis-alps-00), we use them to carry the `ACCEPT_CH` frame and others.
 
 
 ### Example
