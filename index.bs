@@ -310,7 +310,8 @@ A <dfn>client hints token</dfn> is a [=byte-lowercase=] representation of one of
 Policy-controlled features {#policy-controlled-features}
 -------------
 
-This document defines the following [=policy-controlled features=]:
+This document defines <dfn export>policy-controlled client hints features</dfn>,
+the following [=policy-controlled features=]:
 
 - <code><dfn export>ch-save-data</dfn></code> which has a [=default allowlist=] of `'*'`
 - <code><dfn export>ch-dpr</dfn></code> which has a [=default allowlist=] of `'self'`
@@ -331,7 +332,7 @@ Issue: Should Save-data really have an allowlist of '*'? If so, is it because it
 
 Low entropy hint table {#low-entropy-table}
 -------
-The <dfn>low entropy hint table</dfn> below defines hints that are only exposing low amounts of entropy.
+The <dfn export>low entropy hint table</dfn> below defines hints that are only exposing low amounts of entropy.
 
 <table>
  <thead>
