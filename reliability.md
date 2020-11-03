@@ -233,6 +233,12 @@ Finally, we could use half-RTT data, but introduce a TLS extension for the serve
 
 This could work, but it seems needlessly complex, particularly when integrated with HTTP/3. (TLS post-handshake messages in QUIC are not ordered relative to application data.) Streaming half-RTT data on the server also has some [API challenges](https://mailarchive.ietf.org/arch/msg/tls/hymweZ66b2C8nnYyXF8cwj7qopc/). Finally, while this option does not modify HTTP/2’s wire image, it modifies the I/O patterns. This still means a change in HTTP/2 implementations and the protocol itself.
 
+#### DNS
+
+We could try to get the signal even earlier, such as through the [HTTPS DNS record](https://tools.ietf.org/html/draft-ietf-dnsop-svcb-https-02). This has security and operational issues. DNS records are largely not authenticated by the origin today, so this would allow the resolver to tamper with the web page. As this is an out-of-band signal, there are also operational difficulties for servers making sure the DNS information and server preferences are in sync. Today, web developers do not need to carefully synchronize their DNS records with web content. Finally, it is likely that coverage will be incomplete. An [old experiment](https://www.imperialviolet.org/2015/01/17/notdane.html) suggested, at the time, 4–5% of users could not even fetch TXT records.
+
+A in-band signal in the connection avoids these concerns while still delivering the data before the first HTTP request.
+
 
 ### Alternate retry mechanisms
 
