@@ -237,7 +237,7 @@ This could work, but it seems needlessly complex, particularly when integrated w
 
 We could try to get the signal even earlier, such as through the [HTTPS DNS record](https://tools.ietf.org/html/draft-ietf-dnsop-svcb-https-02). This has security and operational issues. DNS records are largely not authenticated by the origin today, so this would allow the resolver to tamper with the web page. As this is an out-of-band signal, there are also operational difficulties for servers making sure the DNS information and server preferences are in sync. Today, web developers do not need to carefully synchronize their DNS records with web content. Finally, it is likely that coverage will be incomplete. An [old experiment](https://www.imperialviolet.org/2015/01/17/notdane.html) suggested, at the time, 4–5% of users could not even fetch TXT records.
 
-A in-band signal in the connection avoids these concerns while still delivering the data before the first HTTP request.
+An in-band signal in the connection avoids these concerns while still delivering the data before the first HTTP request.
 
 
 ### Alternate retry mechanisms
