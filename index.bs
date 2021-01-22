@@ -301,11 +301,11 @@ A <dfn>client hints token</dfn> is a [=byte-lowercase=] representation of one of
   `RTT`,
   `Downlink`,
   `ECT`,
-  `UA-Arch`,
-  `UA-Model`,
-  `UA-Platform`,
-  `UA` or
-  `UA-Mobile`.
+  `Sec-CH-UA-Arch`,
+  `Sec-CH-UA-Model`,
+  `Sec-CH-UA-Platform`,
+  `Sec-CH-UA` or
+  `Sec-CH-UA-Mobile`.
 
 Policy-controlled features {#policy-controlled-features}
 -------------
@@ -344,10 +344,10 @@ The <dfn export>low entropy hint table</dfn> below defines hints that are only e
   <td>`Save-Data`
   <td>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
  <tr>
-  <td>`UA`
+  <td>`Sec-CH-UA`
   <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua>UA value</a>
  <tr>
-  <td>`UA-Mobile`
+  <td>`Sec-CH-UA-Mobile`
   <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile>Mobile value</a>
 </table>
 
