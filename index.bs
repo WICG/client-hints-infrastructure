@@ -303,6 +303,9 @@ A <dfn>client hints token</dfn> is a [=byte-lowercase=] representation of one of
   `Sec-CH-UA` or
   `Sec-CH-UA-Mobile`.
 
+Note: A client hints token will also match the request header sent by the user agent when
+appropriate (as determined by the <a href="#request-processing">request processing algorithm</a>).
+
 Policy-controlled features {#policy-controlled-features}
 -------------
 
