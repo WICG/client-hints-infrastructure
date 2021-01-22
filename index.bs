@@ -244,10 +244,6 @@ if <var>request</var>'s <a for=request>header list</a>
    policy-controlled feature</a>, returns <code>false</code>, then skip the next steps and
    continue to the next <var>hintName</var>.
    [[!PERMISSIONS-POLICY]] [[!CLIENT-HINTS]]
-
-  <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
-  <div class=issue>We need to figure out if we really want a `Sec-` prefix, and if so also exempt it from CORS.</div>
-
   <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">does not
   contain</a> <var>hintName</var>, a user agent should <a for="header list">append</a>
   <var>hintName</var>/<var>value</var> to <var>request</var>'s <a for=request>header list</a>.
