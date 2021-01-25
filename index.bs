@@ -297,6 +297,7 @@ A <dfn>client hints token</dfn> is a [=byte-lowercase=] representation of one of
   `DPR`,
   `Width`,
   `Viewport-Width`,
+  `Viewport-Height`,
   `Device-Memory`,
   `RTT`,
   `Downlink`,
@@ -317,6 +318,7 @@ the following [=policy-controlled features=]:
 - <code><dfn export>ch-dpr</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-width</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-viewport-width</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-viewport-height</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-device-memory</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-rtt</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-downlink</dfn></code> which has a [=default allowlist=] of `'self'`
@@ -362,6 +364,8 @@ When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch o
   <dd>a suitable <a href>DPR value</a>
   <dt>`Viewport-Width`
   <dd>a suitable <a href>Viewport-Width value</a>
+  <dt>`Viewport-Height`
+  <dd>a suitable <a href>Viewport-Height value</a>
   <dt>`Width`
   <dd>a suitable <a href>Width value</a>
   <dt>`Device-Memory`
