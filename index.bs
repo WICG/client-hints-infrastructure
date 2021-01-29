@@ -5,7 +5,7 @@ Level: 1
 Status: CG-Draft
 Group: WICG
 URL: https://wicg.github.io/client-hints-infrastructure
-Editor: Yoav Weiss, Google, yoav@yoav.ws, https://blog.yoav.ws 
+Editor: Yoav Weiss, Google, yoav@yoav.ws, https://blog.yoav.ws
 Abstract: Specification of the Client Hints infrastructure and its integration with Fetch and HTML
 Markup Shorthands: markdown yes
 </pre>
@@ -103,7 +103,7 @@ following specifications and proposals:
             same-origin or delegated-to cross-origin requests. It also makes sure
             hints are removed from not delegated-to cross-origin requests after
             redirections.
-     - Integrates those concepts with the [[!HTML]] and [[!FETCH]] specifications, 
+     - Integrates those concepts with the [[!HTML]] and [[!FETCH]] specifications,
           by patching various concepts there.
 * W3C Permissions Policy specification (<a href="https://w3c.github.io/webappsec-permissions-policy/#should-request-be-allowed-to-use-feature">relevant section</a>)
      - In order to perform third party Client Hint delegation, Permissions Policy has
@@ -121,7 +121,7 @@ Accept-CH cache {#accept-ch-cache-definition}
 ----------------
 
 An <dfn>Accept-CH cache</dfn> is owned by the user agent and is an [=ordered map=],
-  [=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]), 
+  [=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]),
   with a value of <dfn for="accept-ch-cache">client hints set</dfn> (a [=/client hints set=]).
 
 The Accept-CH cache can effectively act as an alternative cookie store,
@@ -155,7 +155,7 @@ When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |setti
 <div class=note>
 Note, the above algorithm:
 
-* Initializes client hints set on the environment settings object based on its origin. 
+* Initializes client hints set on the environment settings object based on its origin.
 * If we are in a secure context and the navigation is a top-level navigation,
     it parses `Accept-CH` and adds the results to the environment setting object's client hints set as well as the Accept-CH cache.
     </div>
@@ -185,7 +185,7 @@ Document object initialization {#document-init}
 ----------
 
 At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>,
-after step 11, starting with "Initialize a Document's CSP list", 
+after step 11, starting with "Initialize a Document's CSP list",
 call [$initialize the Client Hints set$] with <var ignore>document</var>'s [=relevant settings object=] and |response| as inputs.
 
 Worker initialization {#worker-init}
@@ -244,10 +244,6 @@ if <var>request</var>'s <a for=request>header list</a>
    policy-controlled feature</a>, returns <code>false</code>, then skip the next steps and
    continue to the next <var>hintName</var>.
    [[!PERMISSIONS-POLICY]] [[!CLIENT-HINTS]]
-
-  <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
-  <div class=issue>We need to figure out if we really want a `Sec-` prefix, and if so also exempt it from CORS.</div>
-
   <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">does not
   contain</a> <var>hintName</var>, a user agent should <a for="header list">append</a>
   <var>hintName</var>/<var>value</var> to <var>request</var>'s <a for=request>header list</a>.
@@ -302,11 +298,14 @@ A <dfn>client hints token</dfn> is a [=byte-lowercase=] representation of one of
   `RTT`,
   `Downlink`,
   `ECT`,
-  `UA-Arch`,
-  `UA-Model`,
-  `UA-Platform`,
-  `UA` or
-  `UA-Mobile`.
+  `Sec-CH-UA-Arch`,
+  `Sec-CH-UA-Model`,
+  `Sec-CH-UA-Platform`,
+  `Sec-CH-UA` or
+  `Sec-CH-UA-Mobile`.
+
+Note: A client hints token will also match the request header sent by the user agent when
+appropriate (as determined by the <a href="#request-processing">request processing algorithm</a>).
 
 Policy-controlled features {#policy-controlled-features}
 -------------
@@ -346,10 +345,10 @@ The <dfn export>low entropy hint table</dfn> below defines hints that are only e
   <td>`Save-Data`
   <td>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
  <tr>
-  <td>`UA`
+  <td>`Sec-CH-UA`
   <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua>UA value</a>
  <tr>
-  <td>`UA-Mobile`
+  <td>`Sec-CH-UA-Mobile`
   <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile>Mobile value</a>
 </table>
 
