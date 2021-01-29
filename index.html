@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version d994f217, updated Fri Jan 22 13:58:53 2021 -0800" name="generator">
+  <meta content="Bikeshed version a895c7df, updated Thu Jan 28 10:04:00 2021 -0800" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="8a4808e028089bfe189f5950a0692ab2f3be9fa3" name="document-revision">
+  <meta content="ef01c41e1164b9f53ff8c1e3d973434b8c532abe" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -445,7 +445,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-01-25">25 January 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-01-29">29 January 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -621,7 +621,7 @@ redirections.</p>
    <h3 class="heading settled" data-level="3.1" id="concept-client-hints-set"><span class="secno">3.1. </span><span class="content">Client hints set</span><a class="self-link" href="#concept-client-hints-set"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="client-hints-set">client hints set</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set">set</a> of <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token">client hints token</a>s. </p>
    <h3 class="heading settled" data-level="3.2" id="accept-ch-cache-definition"><span class="secno">3.2. </span><span class="content">Accept-CH cache</span><a class="self-link" href="#accept-ch-cache-definition"></a></h3>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="accept-ch-cache">Accept-CH cache</dfn> is owned by the user agent and is an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">ordered map</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-key" id="ref-for-map-key">keyed</a> on <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn-type="dfn" data-noexport id="accept-ch-cache-origin">origin</dfn> (an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#concept-request-origin" id="ref-for-concept-request-origin">origin</a>), 
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="accept-ch-cache">Accept-CH cache</dfn> is owned by the user agent and is an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">ordered map</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-key" id="ref-for-map-key">keyed</a> on <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn-type="dfn" data-noexport id="accept-ch-cache-origin">origin</dfn> (an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#concept-request-origin" id="ref-for-concept-request-origin">origin</a>),
   with a value of <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn-type="dfn" data-noexport id="accept-ch-cache-client-hints-set">client hints set</dfn> (a <a data-link-type="dfn" href="#client-hints-set" id="ref-for-client-hints-set">client hints set</a>).</p>
    <p>The Accept-CH cache can effectively act as an alternative cookie store,
 since sites can use each of the hints as a bit set on the client, and that information will be
@@ -692,7 +692,7 @@ it parses <code>Accept-CH</code> and adds the results to the environment setting
    <p>This specification integrates with the <a data-link-type="biblio" href="#biblio-html">[HTML]</a> specification by patching the algorithms below:</p>
    <h3 class="heading settled" data-level="4.1" id="document-init"><span class="secno">4.1. </span><span class="content">Document object initialization</span><a class="self-link" href="#document-init"></a></h3>
    <p>At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>,
-after step 11, starting with "Initialize a Document’s CSP list", 
+after step 11, starting with "Initialize a Document’s CSP list",
 call <a data-link-type="abstract-op" href="#abstract-opdef-initialize-the-client-hints-set" id="ref-for-abstract-opdef-initialize-the-client-hints-set">initialize the Client Hints set</a> with <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a> and <var>response</var> as inputs.</p>
    <h3 class="heading settled" data-level="4.2" id="worker-init"><span class="secno">4.2. </span><span class="content">Worker initialization</span><a class="self-link" href="#worker-init"></a></h3>
     At <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
@@ -726,9 +726,6 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
    policy-controlled feature</a>, returns <code>false</code>, then skip the next steps and
    continue to the next <var>hintName</var>. <a data-link-type="biblio" href="#biblio-permissions-policy">[PERMISSIONS-POLICY]</a> <a data-link-type="biblio" href="#biblio-client-hints">[CLIENT-HINTS]</a> </p>
     <li>
-     <p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>. </p>
-     <div class="issue" id="issue-48a63eb6"><a class="self-link" href="#issue-48a63eb6"></a>We need to figure out if we really want a <code>Sec-</code> prefix, and if so also exempt it from CORS.</div>
-    <li>
      <p>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list②">header list</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains①">does not
   contain</a> <var>hintName</var>, a user agent should <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-append" id="ref-for-concept-header-list-append①">append</a> <var>hintName</var>/<var>value</var> to <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list③">header list</a>. </p>
    </ol>
@@ -756,7 +753,9 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
   New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
   User Agents can implement some of those features without implementing others.</p>
    <h3 class="heading settled" data-level="7.1" id="client-hints-token-definition"><span class="secno">7.1. </span><span class="content">Client hints token</span><a class="self-link" href="#client-hints-token-definition"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="client-hints-token">client hints token</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-lowercase" id="ref-for-byte-lowercase">byte-lowercase</a> representation of one of <code>Save-Data</code>, <code>DPR</code>, <code>Width</code>, <code>Viewport-Width</code>, <code>Viewport-Height</code>, <code>Device-Memory</code>, <code>RTT</code>, <code>Downlink</code>, <code>ECT</code>, <code>UA-Arch</code>, <code>UA-Model</code>, <code>UA-Platform</code>, <code>UA</code> or <code>UA-Mobile</code>.</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="client-hints-token">client hints token</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-lowercase" id="ref-for-byte-lowercase">byte-lowercase</a> representation of one of <code>Save-Data</code>, <code>DPR</code>, <code>Width</code>, <code>Viewport-Width</code>, <code>Viewport-Height</code>, <code>Device-Memory</code>, <code>RTT</code>, <code>Downlink</code>, <code>ECT</code>, <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, <code>Sec-CH-UA</code> or <code>Sec-CH-UA-Mobile</code>.</p>
+   <p class="note" role="note"><span>Note:</span> A client hints token will also match the request header sent by the user agent when
+appropriate (as determined by the <a href="#request-processing">request processing algorithm</a>).</p>
    <h3 class="heading settled" data-level="7.2" id="policy-controlled-features"><span class="secno">7.2. </span><span class="content">Policy-controlled features</span><a class="self-link" href="#policy-controlled-features"></a></h3>
    <p>This document defines <dfn data-dfn-type="dfn" data-export id="policy-controlled-client-hints-features">policy-controlled client hints features<a class="self-link" href="#policy-controlled-client-hints-features"></a></dfn>,
 the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature" id="ref-for-policy-controlled-feature">policy-controlled features</a>:</p>
@@ -803,10 +802,10 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
       <td><code>Save-Data</code> 
       <td>a suitable <a href="https://wicg.github.io/savedata/#save-data-request-header-field">Save-Data value</a> 
      <tr>
-      <td><code>UA</code> 
+      <td><code>Sec-CH-UA</code> 
       <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua">UA value</a> 
      <tr>
-      <td><code>UA-Mobile</code> 
+      <td><code>Sec-CH-UA-Mobile</code> 
       <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile">Mobile value</a> 
    </table>
    <h3 class="heading settled" data-level="7.4" id="find-client-hint-value-section"><span class="secno">7.4. </span><span class="content">Find client hint value</span><a class="self-link" href="#find-client-hint-value-section"></a></h3>
@@ -1200,7 +1199,6 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue">We need to figure out if we really want a <code>Sec-</code> prefix, and if so also exempt it from CORS.<a href="#issue-48a63eb6"> ↵ </a></div>
    <div class="issue"> Should we tie low-entropy-ness to allowlists, generally?<a href="#issue-0277eb34"> ↵ </a></div>
    <div class="issue"> Links for image features are broken, need to actually define that and link to them.<a href="#issue-707decdc"> ↵ </a></div>
   </div>
