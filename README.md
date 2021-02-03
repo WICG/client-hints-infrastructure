@@ -9,15 +9,15 @@ delegation mechanism:
   enables servers to request delivery of specific hints, in order to enable
   optimized and automated selection of resources based on a user's device,
   conditions and preferences, and lets clients decide which hint requests they
-  want to grant, with per-hint and per-origin granularity.  
+  want to grant, with per-hint and per-origin granularity.
 * Integration of said mechanism with web concepts (defined in this
   [specification](https://wicg.github.io/client-hints-infrastructure))
   specification) enables browsers to benefit from content adaptation, and have it
-  play nicely with current web restrictions (e.g. same-origin policy). 
+  play nicely with current web restrictions (e.g. same-origin policy).
 * The opt-in nature of the mechanism enables browsers to advertise requested
   hint data (e.g. user agent and device characteristics) selectively to
   secure-transport origins, instead of appending such data on every outgoing
-  request.  
+  request.
 * Origin opt-in applies to same-origin assets only and delivery to third-party
   origins is subject to explicit first party delegation via Feature Policy,
   enabling tight control over which third party origins can access requested
@@ -57,7 +57,7 @@ receiving.
 
 When an `Accept-CH` opt-in is received on the top-level navigation, same-origin
 subresource requests on that page will receive the requested hints, unless the
-client has reasons to avoid sending that information to the server. 
+client has reasons to avoid sending that information to the server.
 
 #### Example
 
@@ -77,7 +77,7 @@ Why are these limitations important?
 
 As mentioned before, we don't want the mechanism to be used to increase
 fingerprinting on the web.  The information that Client Hints provide should
-generally be available through Javascript APIs (see the 
+generally be available through Javascript APIs (see the
 [Privacy Considerations](#privacy-considerations) section for more details).
 
 That means that for *active* resources (e.g. HTML), Client Hints does not
@@ -209,14 +209,6 @@ certain privacy-related precautions are being taken:
   - Browsers are free to take privacy-enhancing heuristics into account when
     deciding to respect the server's opt-in to receive them. Similar heuristics
     can also be used when deciding what values to send.
-* Accept-CH-Lifetime persistence should not outlast other types of origin state
-  - Browsers typically provide their users with means to clear state regarding
-    certain origins: for example, ways to delete the cache for an origin or
-    clear its cookies. When users take such an action, it is likely that they
-    want to get rid of all of the implicit state that the browser may hold
-    regarding that origin. Since the `Accept-CH-Lifetime` opt-in holds origin
-    state in the browser for a a period of predetermined time, its associated
-    state needs to be similarly evicted when users take such actions.
 
 # Motivation and trade-offs
 
@@ -234,7 +226,7 @@ the web in examples like `<picture>`, `srcset`, `<video>`, etc.
 At the same time, there are some use-cases where it is not sufficient.
 Transformation and adaptation of the page's subresources in a manner that is
 independent from the page's markup can result in more scalable solutions, that
-don't have to be assimilated into markup related workflows. 
+don't have to be assimilated into markup related workflows.
 
 By decoupling the resource selection from markup, we can enable external
 services to perform those transformations automatically. We can also provide a
@@ -245,11 +237,11 @@ form of markup bloat.
 There are many potential dimensions by which we'd want the content adapted to
 the user:
 
-* Device characteristics 
+* Device characteristics
    - Screen dimensions
    - Screen density
    - Memory and CPU capabilities
-   - Range of colors the screen can display 
+   - Range of colors the screen can display
 * Browser characteristics
    - User Agent major or full version
    - Device model, OS version and platform
