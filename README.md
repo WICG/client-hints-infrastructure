@@ -209,14 +209,6 @@ certain privacy-related precautions are being taken:
   - Browsers are free to take privacy-enhancing heuristics into account when
     deciding to respect the server's opt-in to receive them. Similar heuristics
     can also be used when deciding what values to send.
-* Accept-CH-Lifetime persistence should not outlast other types of origin state
-  - Browsers typically provide their users with means to clear state regarding
-    certain origins: for example, ways to delete the cache for an origin or
-    clear its cookies. When users take such an action, it is likely that they
-    want to get rid of all of the implicit state that the browser may hold
-    regarding that origin. Since the `Accept-CH-Lifetime` opt-in holds origin
-    state in the browser for a a period of predetermined time, its associated
-    state needs to be similarly evicted when users take such actions.
 
 # Motivation and trade-offs
 
