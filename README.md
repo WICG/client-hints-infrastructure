@@ -5,7 +5,7 @@ privacy-preserving, proactive content negotiation with an explicit third-party
 delegation mechanism:
 
 * Proactive content negotiation at the HTTP layer (defined in the
-  [IETF I-D](https://httpwg.org/http-extensions/client-hints.html))
+  [IETF RFC](https://tools.ietf.org/html/rfc8942))
   enables servers to request delivery of specific hints, in order to enable
   optimized and automated selection of resources based on a user's device,
   conditions and preferences, and lets clients decide which hint requests they
