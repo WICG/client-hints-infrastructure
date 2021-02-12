@@ -120,8 +120,12 @@ since sites can use each of the hints as a bit set on the client, and that infor
 communicated to them on every request. As such, a user agent MUST evict that
 cache whenever the user clears their cookies or when session cookies expire.
 
+Note: A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH`
+header in a response. This sets the origin's |client hints set| to an empty set.
+
 To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
-given an [=accept-ch-cache/origin=] |origin| and a [=/client hints set=] |client hints set|, [=map/set=] [=Accept-CH cache=][|origin|] to |client hints set|.
+given an [=accept-ch-cache/origin=] |origin| and a [=/client hints set=] |client hints set|,
+[=map/set=] [=Accept-CH cache=][|origin|] to |client hints set|.
 
 To <dfn>retrieve the client hints set</dfn> given an |origin|:
 
