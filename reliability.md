@@ -8,7 +8,7 @@
 
 ## Introduction
 
-[HTTP Client Hints](https://httpwg.org/http-extensions/client-hints.html) can replace passive fingerprinting surfaces with server-requested (and [potentially deniable](https://github.com/bslassey/privacy-budget)) client headers. However, the client may have out-of-date information on the server preferences when it sends a request. On the first page load, the client may not know to send any hints at all. This document describes a pair of mechanisms to fix this:
+[HTTP Client Hints](https://www.rfc-editor.org/rfc/rfc8942.html) can replace passive fingerprinting surfaces with server-requested (and [potentially deniable](https://github.com/bslassey/privacy-budget)) client headers. However, the client may have out-of-date information on the server preferences when it sends a request. On the first page load, the client may not know to send any hints at all. This document describes a pair of mechanisms to fix this:
 
 1. an HTTP-header-based retry to ensure critical Client Hints are reliably available
 1. a connection-level optimization to avoid the performance hit of a retry in most cases
