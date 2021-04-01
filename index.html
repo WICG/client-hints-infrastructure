@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version abfe9661, updated Fri Feb 5 17:27:03 2021 -0800" name="generator">
+  <meta content="Bikeshed version 21986e339, updated Wed Mar 24 10:25:03 2021 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="525ff7a1c6c61ae6d7a3671b9eae2e762d92a172" name="document-revision">
+  <meta content="f8be43e453febbc95b32e4b3c677502665fb952d" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -445,7 +445,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-02-17">17 February 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-04-01">1 April 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -752,7 +752,7 @@ if <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatw
   New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
   User Agents can implement some of those features without implementing others.</p>
    <h3 class="heading settled" data-level="7.1" id="client-hints-token-definition"><span class="secno">7.1. </span><span class="content">Client hints token</span><a class="self-link" href="#client-hints-token-definition"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="client-hints-token">client hints token</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-lowercase" id="ref-for-byte-lowercase">byte-lowercase</a> representation of one of <code>Save-Data</code>, <code>DPR</code>, <code>Width</code>, <code>Viewport-Width</code>, <code>Viewport-Height</code>, <code>Device-Memory</code>, <code>RTT</code>, <code>Downlink</code>, <code>ECT</code>, <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, <code>Sec-CH-UA</code> or <code>Sec-CH-UA-Mobile</code>.</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="client-hints-token">client hints token</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-lowercase" id="ref-for-byte-lowercase">byte-lowercase</a> representation of one of <code>Save-Data</code>, <code>DPR</code>, <code>Width</code>, <code>Viewport-Width</code>, <code>Viewport-Height</code>, <code>Device-Memory</code>, <code>RTT</code>, <code>Downlink</code>, <code>ECT</code>, <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Bitness</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, <code>Sec-CH-UA-Platform-Version</code>, <code>Sec-CH-UA</code> or <code>Sec-CH-UA-Mobile</code>.</p>
    <p class="note" role="note"><span>Note:</span> A client hints token will also match the request header sent by the user agent when
 appropriate (as determined by the <a href="#request-processing">request processing algorithm</a>).</p>
    <h3 class="heading settled" data-level="7.2" id="policy-controlled-features"><span class="secno">7.2. </span><span class="content">Policy-controlled features</span><a class="self-link" href="#policy-controlled-features"></a></h3>
@@ -780,13 +780,17 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
     <li data-md>
      <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-arch">ch-ua-arch<a class="self-link" href="#ch-ua-arch"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist⑨">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-model">ch-ua-model<a class="self-link" href="#ch-ua-model"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①⓪">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-bitness">ch-ua-bitness<a class="self-link" href="#ch-ua-bitness"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①⓪">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-platform">ch-ua-platform<a class="self-link" href="#ch-ua-platform"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①①">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-model">ch-ua-model<a class="self-link" href="#ch-ua-model"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①①">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua">ch-ua<a class="self-link" href="#ch-ua"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①②">default allowlist</a> of <code>'*'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-platform">ch-ua-platform<a class="self-link" href="#ch-ua-platform"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①②">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-mobile">ch-ua-mobile<a class="self-link" href="#ch-ua-mobile"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①③">default allowlist</a> of <code>'*'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-platform-version">ch-ua-platform-version<a class="self-link" href="#ch-ua-platform-version"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①③">default allowlist</a> of <code>'self'</code></p>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua">ch-ua<a class="self-link" href="#ch-ua"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①④">default allowlist</a> of <code>'*'</code></p>
+    <li data-md>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-mobile">ch-ua-mobile<a class="self-link" href="#ch-ua-mobile"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①⑤">default allowlist</a> of <code>'*'</code></p>
    </ul>
    <p class="issue" id="issue-0277eb34"><a class="self-link" href="#issue-0277eb34"></a> Should we tie low-entropy-ness to allowlists, generally?</p>
    <h3 class="heading settled" data-level="7.3" id="low-entropy-table"><span class="secno">7.3. </span><span class="content">Low entropy hint table</span><a class="self-link" href="#low-entropy-table"></a></h3>
@@ -830,10 +834,14 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
     <dd>a suitable <a href="https://wicg.github.io/netinfo/#ect-request-header-field">ECT value</a> 
     <dt><code>UA-Arch</code> 
     <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-arch">Arch value</a> 
+    <dt><code>UA-Bitness</code> 
+    <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-bitness">Bitness value</a> 
     <dt><code>UA-Model</code> 
     <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-model">Model value</a> 
     <dt><code>UA-Platform</code> 
     <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform">Platform value</a> 
+    <dt><code>UA-Platform Version</code> 
+    <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform-version">Platform-Version value</a> 
     <dt><code>UA</code> 
     <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua">UA value</a> 
     <dt><code>UA-Mobile</code> 
@@ -903,9 +911,11 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
    <li><a href="#ch-save-data">ch-save-data</a><span>, in §7.2</span>
    <li><a href="#ch-ua">ch-ua</a><span>, in §7.2</span>
    <li><a href="#ch-ua-arch">ch-ua-arch</a><span>, in §7.2</span>
+   <li><a href="#ch-ua-bitness">ch-ua-bitness</a><span>, in §7.2</span>
    <li><a href="#ch-ua-mobile">ch-ua-mobile</a><span>, in §7.2</span>
    <li><a href="#ch-ua-model">ch-ua-model</a><span>, in §7.2</span>
    <li><a href="#ch-ua-platform">ch-ua-platform</a><span>, in §7.2</span>
+   <li><a href="#ch-ua-platform-version">ch-ua-platform-version</a><span>, in §7.2</span>
    <li><a href="#ch-viewport-height">ch-viewport-height</a><span>, in §7.2</span>
    <li><a href="#ch-viewport-width">ch-viewport-width</a><span>, in §7.2</span>
    <li><a href="#ch-width">ch-width</a><span>, in §7.2</span>
@@ -1120,7 +1130,7 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
   <aside class="dfn-panel" data-for="term-for-default-allowlist">
    <a href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist">https://w3c.github.io/webappsec-permissions-policy/#default-allowlist</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-default-allowlist">7.2. Policy-controlled features</a> <a href="#ref-for-default-allowlist①">(2)</a> <a href="#ref-for-default-allowlist②">(3)</a> <a href="#ref-for-default-allowlist③">(4)</a> <a href="#ref-for-default-allowlist④">(5)</a> <a href="#ref-for-default-allowlist⑤">(6)</a> <a href="#ref-for-default-allowlist⑥">(7)</a> <a href="#ref-for-default-allowlist⑦">(8)</a> <a href="#ref-for-default-allowlist⑧">(9)</a> <a href="#ref-for-default-allowlist⑨">(10)</a> <a href="#ref-for-default-allowlist①⓪">(11)</a> <a href="#ref-for-default-allowlist①①">(12)</a> <a href="#ref-for-default-allowlist①②">(13)</a> <a href="#ref-for-default-allowlist①③">(14)</a>
+    <li><a href="#ref-for-default-allowlist">7.2. Policy-controlled features</a> <a href="#ref-for-default-allowlist①">(2)</a> <a href="#ref-for-default-allowlist②">(3)</a> <a href="#ref-for-default-allowlist③">(4)</a> <a href="#ref-for-default-allowlist④">(5)</a> <a href="#ref-for-default-allowlist⑤">(6)</a> <a href="#ref-for-default-allowlist⑥">(7)</a> <a href="#ref-for-default-allowlist⑦">(8)</a> <a href="#ref-for-default-allowlist⑧">(9)</a> <a href="#ref-for-default-allowlist⑨">(10)</a> <a href="#ref-for-default-allowlist①⓪">(11)</a> <a href="#ref-for-default-allowlist①①">(12)</a> <a href="#ref-for-default-allowlist①②">(13)</a> <a href="#ref-for-default-allowlist①③">(14)</a> <a href="#ref-for-default-allowlist①④">(15)</a> <a href="#ref-for-default-allowlist①⑤">(16)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-policy-controlled-feature">
@@ -1194,7 +1204,7 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc8942">[RFC8942]
-   <dd>I. Grigorik; Y. Weiss. <a href="https://tools.ietf.org/html/rfc8942">HTTP Client Hints</a>. February 2021. Experimental. URL: <a href="https://tools.ietf.org/html/rfc8942">https://tools.ietf.org/html/rfc8942</a>
+   <dd>I. Grigorik; Y. Weiss. <a href="https://datatracker.ietf.org/doc/html/rfc8942">HTTP Client Hints</a>. February 2021. Experimental. URL: <a href="https://datatracker.ietf.org/doc/html/rfc8942">https://datatracker.ietf.org/doc/html/rfc8942</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
