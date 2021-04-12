@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 21986e339, updated Wed Mar 24 10:25:03 2021 -0700" name="generator">
+  <meta content="Bikeshed version 132fff3bd, updated Mon Apr 5 17:14:30 2021 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="f8be43e453febbc95b32e4b3c677502665fb952d" name="document-revision">
+  <meta content="1dd3a1138116e4f039c22e71041e596821223c14" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -445,7 +445,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-04-01">1 April 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-04-12">12 April 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -810,6 +810,9 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
      <tr>
       <td><code>Sec-CH-UA-Mobile</code> 
       <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile">Mobile value</a> 
+     <tr>
+      <td><code>Sec-CH-UA-Platform</code> 
+      <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform">Platform value</a> 
    </table>
    <h3 class="heading settled" data-level="7.4" id="find-client-hint-value-section"><span class="secno">7.4. </span><span class="content">Find client hint value</span><a class="self-link" href="#find-client-hint-value-section"></a></h3>
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="find-client-hint-value">find client hint value</dfn>, given <var>hint</var> as input, switch on <var>hint</var> and return the result:</p>
