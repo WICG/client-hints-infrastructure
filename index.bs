@@ -217,17 +217,15 @@ When asked to <dfn abstract-op>append client hints to request</dfn> with |reques
 
 Let |hintSet| be an empty [=client hints set=].
 
-For each [=client hints token=] in the registry's [=low entropy hint table=] (|lowEntropyHint|), [=set/append=] |lowEntropyHint| to |hintSet|.
+For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=], [=set/append=] |lowEntropyHint| to |hintSet|.
 
-If |request|'s [=request/client=] is not null, then for each [=client hints token=] |hintName| in |request|'s [=environment settings object/client hints set=] |hintName|:
+If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in |request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to |hintSet|.
 
-  1. If |request| is a [=subresource request=] and the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given |request| and |hintName|'s associated feature in [[#policy-controlled-features]] returns `false`, skip the next step and continue to the next |hintName|.
-
-  2. Append |hintName| to |hintSet|.
+For each |possibleHint| in |hintSet|, if |request| is a [=subresource request=] and the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given |request| and |possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`, [=list/remove=] |possibleHint| from |hintSet|.
 
 For each |hintName| in |hintSet|, if the |request|'s [=request/header list=] [=header list/does not contain=] |hintName|:
 
-  1. Let |value| be the result of running [[#find-client-hint-value]] with |hintName|.
+  1. Let |value| be the result of running [=find client hint value=] with |hintName|.
 
   2. [=header list/append=] |hintName|/|value| to the [=request/header list=]
 
