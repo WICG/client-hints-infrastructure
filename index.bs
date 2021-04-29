@@ -213,35 +213,29 @@ Request processing {#request-processing}
 ===========
 
 
-When asked to <dfn abstract-op>append client hints to request</dfn> with |request| as input, run the following steps:
+When asked to <dfn abstract-op>append client hints to request</dfn> with |request| as input, run the
+following steps:
 
-<p>For each <a for=/>header</a> <a for=header>name</a> (<var>hintName</var>) in the registry's [=low entropy hint table=],
-if <var>request</var>'s <a for=request>header list</a>
-<a for="header list">does not contain</a> <var>hintName</var>, then
-<a for="header list">append</a>
-<var>hintName</var>/the corresponding value to
-<var>request</var>'s <a for=request>header list</a>.
+Let |hintSet| be an empty [=client hints set=].
 
-<p>If <var>request</var>'s <a for="request">client</a> is not null,
-  then <a for=list>for each</a> [=client hints token=] <var>hintName</var>
-  of <var>request</var>'s <a for="request">client</a>'s
-  <a for="environment settings object">client hints set</a>:
+For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=],
+[=set/append=] |lowEntropyHint| to |hintSet|.
 
-<ol>
-  <li>
-   <p>Let <var>value</var> be the return value of running <a>find client hint value</a>, given <var>hintName</var> as input.
+If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
+|request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
+|hintSet|.
 
+For each |possibleHint| in |hintSet|, if |request| is a [=subresource request=] and the result of
+running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given |request| and
+|possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`,
+[=list/remove=] |possibleHint| from |hintSet|.
 
-  <li><p>If <var>request</var> is a <a>subresource request</a> and the result of running
-   <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature">Should request be allowed to use feature?</a>,
-   given <var>request</var> and <var>hintName</var>’s
-   <a href="#policy-controlled-features">associated policy-controlled feature</a>, returns
-   <code>false</code>, then skip the next steps and continue to the next <var>hintName</var>.
-   [[!PERMISSIONS-POLICY]]
-  <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">does not
-  contain</a> <var>hintName</var>, a user agent should <a for="header list">append</a>
-  <var>hintName</var>/<var>value</var> to <var>request</var>'s <a for=request>header list</a>.
-</ol>
+For each |hintName| in |hintSet|, if the |request|'s [=request/header list=] [=header list/does not
+contain=] |hintName|:
+
+  1. Let |value| be the result of running [=find client hint value=] with |hintName|.
+
+  2. [=header list/append=] |hintName|/|value| to the [=request/header list=]
 
 When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn> with |request| as input, run the following steps:
 
