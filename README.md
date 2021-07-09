@@ -118,7 +118,7 @@ the desired hints.
 ### Example
 
 A first-party server sending the following header `Feature-Policy: ch-example
-foo.com bar.com; ch-example-2 foobar.org` at part of a top-level navigation
+foo.com bar.com; ch-example-2 foobar.org` as part of a top-level navigation
 response will delegate the `example` hint to the "foo.com" and "bar.com"
 origins and `example-2` to the "foobar.org" origin.  So, the client would know
 that it had explicit permission from the first party to send these hints to
@@ -133,7 +133,7 @@ origins?
 Since we're treating Client Hints as an active fingerprinting equivalent, we
 are comfortable with the information it exposes to first-party servers, as the same
 information is already freely available in the equivalent Javascript APIs.
-Similarly, third party delegation is safe because first partties are already able to use
+Similarly, third party delegation is safe because first parties are already able to use
 other means (such as link decoration), to achieve the same information sharing
 with third parties, in less convenient and performant ways.
 
