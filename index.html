@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 3d6a6fcbb, updated Wed Jun 16 16:19:39 2021 -0700" name="generator">
+  <meta content="Bikeshed version 59d067506, updated Fri Jul 23 15:43:29 2021 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="85463a41e80569c01858605c9f048f17108568b7" name="document-revision">
+  <meta content="0b3b31435dfb2c46479b9d41955e01cae8c2cf14" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -445,7 +445,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-07-09">9 July 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-07-27">27 July 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -752,7 +752,7 @@ contain</a> <var>hintName</var>:</p>
   New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
   User Agents can implement some of those features without implementing others.</p>
    <h3 class="heading settled" data-level="7.1" id="client-hints-token-definition"><span class="secno">7.1. </span><span class="content">Client hints token</span><a class="self-link" href="#client-hints-token-definition"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="client-hints-token">client hints token</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-lowercase" id="ref-for-byte-lowercase">byte-lowercase</a> representation of one of <code>Save-Data</code>, <code>DPR</code>, <code>Width</code>, <code>Viewport-Width</code>, <code>Viewport-Height</code>, <code>Device-Memory</code>, <code>RTT</code>, <code>Downlink</code>, <code>ECT</code>, <code>Sec-CH-UA</code>, <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Bitness</code>, <code>Sec-CH-UA-Full-Version</code>, <code>Sec-CH-UA-Mobile</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, or <code>Sec-CH-UA-Platform-Version</code>,</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="client-hints-token">client hints token</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-lowercase" id="ref-for-byte-lowercase">byte-lowercase</a> representation of one of <code>Sec-CH-Save-Data</code>, <code>Sec-CH-DPR</code>, <code>Sec-CH-Width</code>, <code>Sec-CH-Viewport-Width</code>, <code>Sec-CH-Viewport-Height</code>, <code>Sec-CH-Device-Memory</code>, <code>Sec-CH-RTT</code>, <code>Sec-CH-Downlink</code>, <code>Sec-CH-ECT</code>, <code>Sec-CH-UA</code>, <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Bitness</code>, <code>Sec-CH-UA-Full-Version</code>, <code>Sec-CH-UA-Mobile</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, or <code>Sec-CH-UA-Platform-Version</code>,</p>
    <p class="note" role="note"><span>Note:</span> A client hints token will also match the request header sent by the user agent when
 appropriate (as determined by the <a href="#request-processing">request processing algorithm</a>).</p>
    <h3 class="heading settled" data-level="7.2" id="policy-controlled-features"><span class="secno">7.2. </span><span class="content">Policy-controlled features</span><a class="self-link" href="#policy-controlled-features"></a></h3>
@@ -1210,9 +1210,9 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
    <dt id="biblio-permissions-policy">[PERMISSIONS-POLICY]
    <dd>Ian Clelland. <a href="https://w3c.github.io/webappsec-permissions-policy/">Permissions Policy</a>. URL: <a href="https://w3c.github.io/webappsec-permissions-policy/">https://w3c.github.io/webappsec-permissions-policy/</a>
    <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-rfc8942">[RFC8942]
-   <dd>I. Grigorik; Y. Weiss. <a href="https://datatracker.ietf.org/doc/html/rfc8942">HTTP Client Hints</a>. February 2021. Experimental. URL: <a href="https://datatracker.ietf.org/doc/html/rfc8942">https://datatracker.ietf.org/doc/html/rfc8942</a>
+   <dd>I. Grigorik; Y. Weiss. <a href="https://www.rfc-editor.org/rfc/rfc8942">HTTP Client Hints</a>. February 2021. Experimental. URL: <a href="https://www.rfc-editor.org/rfc/rfc8942">https://www.rfc-editor.org/rfc/rfc8942</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
