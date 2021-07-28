@@ -162,14 +162,16 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
 
 1. If the <{meta}> element is not a child of a <{head}> element, then return.
 2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
-3. Let |settingsObject| be the <{meta}> element's [=relevant settings object=].
-4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
-5. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
-6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-7. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
-8. Parse |acceptCHValue| according to the <a href="https://w3c.github.io/webappsec-permissions-policy/#ascii-serialization">`serialized permission policy`</a> parsing rules
-     while limiting <a href="https://w3c.github.io/webappsec-permissions-policy/#ascii-serialization">`feature-identifier`</a>s to [=client hints token=]s.
-     [=set/Append=] each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
+3. If the <{meta}> element below any <{link}> or <{script}> element, then return.
+4. Let |settingsObject| be the <{meta}> element's [=relevant settings object=].
+5. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
+6. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
+7. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+8. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
+9. Parse |acceptCHValue| according to the <a href="https://w3c.github.io/webappsec-permissions-policy/#ascii-serialization">`serialized permission policy`</a> parsing rules
+     while limiting <a href="https://w3c.github.io/webappsec-permissions-policy/#ascii-serialization">`feature-identifier`</a>s to [=client hints token=]s and disallowing 
+     <a href="https://w3c.github.io/webappsec-permissions-policy/#ascii-serialization">`allow-list-value`</a> to be `*`. [=set/Append=] each parsed [=client hints token=]
+     to |settingsObject|'s [=environment settings object/client hints set=].
 
 
 Integration with HTML {#html}
