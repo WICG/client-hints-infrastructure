@@ -168,10 +168,10 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
 6. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
 7. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 8. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
-9. Parse |acceptCHValue| according to the <a href="https://w3c.github.io/webappsec-permissions-policy/#ascii-serialization">`serialized permission policy`</a> parsing rules
-     while limiting <a href="https://w3c.github.io/webappsec-permissions-policy/#ascii-serialization">`feature-identifier`</a>s to [=client hints token=]s and disallowing 
-     <a href="https://w3c.github.io/webappsec-permissions-policy/#ascii-serialization">`allow-list-value`</a> to be `*`. [=set/Append=] each parsed [=client hints token=]
-     to |settingsObject|'s [=environment settings object/client hints set=].
+9. Parse |acceptCHValue| according to the [[PERMISSIONS-POLICY|`serialized permission policy`]]'s parsing rules
+     while limiting [[PERMISSIONS-POLICY|`feature-identifier`]]s to [=client hints token=]s and disallowing [[PERMISSIONS-POLICY|`allow-list-value`]]s
+     to be `*` (`*` can still be inherited from the default policy or HTTP header permissions policy). [=set/Append=] each parsed `feature-identifier`
+     and their corosponding `allow-list-value` to |settingsObject|'s [=environment settings object/client hints set=].
 
 
 Integration with HTML {#html}
