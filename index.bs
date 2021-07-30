@@ -331,7 +331,7 @@ The <dfn export>low entropy hint table</dfn> below defines hints that are only e
   <th><a for=header>Value</a>
  <tbody>
  <tr>
-  <td>`Save-Data`
+  <td>`Sec-CH-Save-Data`
   <td>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
  <tr>
   <td>`Sec-CH-UA`
