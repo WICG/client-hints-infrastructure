@@ -170,10 +170,10 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
 8. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
 9. Parse |acceptCHValue| according to the [[PERMISSIONS-POLICY|`serialized permission policy`]]'s parsing rules
      while limiting [[PERMISSIONS-POLICY|`feature-identifier`]]s to [=client hints token=]s and disallowing [[PERMISSIONS-POLICY|`allow-list-value`]]s
-     to be `*` (`*` can still be inherited from the default policy or HTTP header permissions policy). [=set/Append=] each parsed `feature-identifier`
-     to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] each parsed `serialized permission policy` to the
-     corresponding [[PERMISSIONS-POLICY|permission policy]].
+     to be `*`. [=set/Append=] each parsed `feature-identifier` to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=]
+     each parsed `serialized permission policy` to the corresponding [[PERMISSIONS-POLICY|permission policy]].
 
+Note: `*` can still be inherited from the default policy or HTTP header permissions policy.
 
 Integration with HTML {#html}
 ===========
