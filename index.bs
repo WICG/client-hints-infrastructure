@@ -171,9 +171,9 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
 9. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 10. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=origin=] of the |metaElement|'s node document.
 11. For each |feature|->|allowlist| of |policyDirective|:
-  1. If |feature| is not a [=client hints token=], then continue.
-  2. If |allowlist| is the special value `*`, then continue.
-  3. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allowList| to |permissionsPolicy[feature]|'s [[PERMISSIONS-POLICY|permissions policy]].
+    1. If |feature| is not a [=client hints token=], then continue.
+    2. If |allowlist| is the special value `*`, then continue.
+    3. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allowList| to |permissionsPolicy[feature]|'s [[PERMISSIONS-POLICY|permissions policy]].
 
 Note: `*` can still be inherited from the default policy or HTTP header permissions policy.
 
