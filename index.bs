@@ -155,21 +155,27 @@ Note, the above algorithm:
     it parses `Accept-CH` and adds the results to the environment setting object's client hints set as well as the Accept-CH cache.
     </div>
 
-<dfn>Accept-CH state</dfn> (`http-equiv="accept-ch"`) {#accept-ch-state-algo}
+<dfn>Accept-CH state</dfn> (`name="accept-ch"`) {#accept-ch-state-algo}
 --------
 
-Note: This pragma *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=].
+Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=]. After this algorithm runs once, no further modification to the [=environment settings object/client hints set=] can occur without reloading the page.
 
-1. If the <{meta}> element is not a child of a <{head}> element, then return.
-2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
-3. Let |settingsObject| be the <{meta}> element's [=relevant settings object=].
-4. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
-5. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
-6. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-7. Let |acceptCHValue| be the <{meta}> element's <{meta/content}> attribute's value.
-8. Parse |acceptCHValue| according to the [=Accept-CH=] header parsing rules, as a [=field-name=].
-     [=set/Append=] each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
+1. Let |metaElement| be the <{meta}> element.
+2. If |metaElement| is not a child of a <{head}> element, then return.
+3. If |metaElement| has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
+4. If |metaElement| has any <a href="https://dom.spec.whatwg.org/#concept-tree-preceding">preceding</a> <a href="https://dom.spec.whatwg.org/#concept-tree-sibling">sibling</a> <{link}> or <{script}> elements (or if any <{link}> or <{script}> elements have begun to execute), then return.
+5. Let |settingsObject| be |metaElement|'s [=relevant settings object=].
+6. Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=]
+7. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
+8. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
+9. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+10. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=origin=] of the |metaElement|'s node document.
+11. For each |feature|->|allowlist| of |policyDirective|:
+  1. If |feature| is not a [=client hints token=], then continue.
+  2. If |allowlist| is the special value `*`, then continue.
+  3. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allowList| to |permissionsPolicy[feature]|'s [[PERMISSIONS-POLICY|permissions policy]].
 
+Note: `*` can still be inherited from the default policy or HTTP header permissions policy.
 
 Integration with HTML {#html}
 ===========
@@ -189,19 +195,10 @@ At <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-
 after step 6, add the following step:
 1. Set |settingsObject|'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
 
-http-equiv attributes {#http-equiv-attributes}
--------------
-
-<div class=non-normative>
-*This section is non-normative.*
-
-In the table on <a href="https://html.spec.whatwg.org/multipage/#attributes-3">attributes</a>, add "accept-ch" in the line which attribute is "http-equiv".
-</div>
-
-Pragma directives {#pragma-directives}
+Standard metadata names {#standard-metadata-names}
 ------------
-For the table in <a href="https://html.spec.whatwg.org/multipage/#pragma-directives">pragma directives</a>,
-add a line with a "State" value of [=Accept-CH state|Accept-CH=] and a "Keyword" value of <dfn>accept-ch</dfn>.
+For the section <a href="https://html.spec.whatwg.org/multipage/#standard-metadata-names">standard metadata names</a>,
+add a subsection named `accept-ch` with the [=Accept-CH state|outlined explanation=].
 
 Extending environment settings object {#extending-environment-settings-object}
 -------------
