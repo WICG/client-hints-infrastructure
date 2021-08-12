@@ -158,7 +158,7 @@ Note, the above algorithm:
 <dfn>Accept-CH state</dfn> (`name="accept-ch"`) {#accept-ch-state-algo}
 --------
 
-Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=].
+Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=]. After this algorithm runs once, no further modification to the [=environment settings object/client hints set=] can occur without reloading the page.
 
 1. If the <{meta}> element is not a child of a <{head}> element, then return.
 2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
@@ -173,7 +173,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
   1. If |feature| is not a [=client hints token=], then continue.
   2. For each |allow| of |allowlist|:
     1. If |allow| is the special value `*`, then continue.
-    2. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allow| to |permissionsPolicy|'s [[PERMISSIONS-POLICY|permissions policy]].
+    2. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allow| to |permissionsPolicy[feature]|'s [[PERMISSIONS-POLICY|permissions policy]].
 
 Note: `*` can still be inherited from the default policy or HTTP header permissions policy.
 
