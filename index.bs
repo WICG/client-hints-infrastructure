@@ -160,15 +160,16 @@ Note, the above algorithm:
 
 Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=]. After this algorithm runs once, no further modification to the [=environment settings object/client hints set=] can occur without reloading the page.
 
-1. If the <{meta}> element is not a child of a <{head}> element, then return.
-2. If the <{meta}> element has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
-3. If the <{meta}> element has any <a href="https://dom.spec.whatwg.org/#concept-tree-preceding">preceding</a> <a href="https://dom.spec.whatwg.org/#concept-tree-sibling">sibling</a> <{link}> or <{script}> elements (or if any <{link}> or <{script}> elements have begun to execute), then return.
-4. Let |settingsObject| be the <{meta}> element's [=relevant settings object=].
-5. Let |permissionsPolicy| be the <{meta}> element's node document's [=Document/permissions policy=]
+1. Let |metaElement| be the <{meta}> element.
+1. If |metaElement| is not a child of a <{head}> element, then return.
+2. If |metaElement| has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
+3. If |metaElement| has any <a href="https://dom.spec.whatwg.org/#concept-tree-preceding">preceding</a> <a href="https://dom.spec.whatwg.org/#concept-tree-sibling">sibling</a> <{link}> or <{script}> elements (or if any <{link}> or <{script}> elements have begun to execute), then return.
+4. Let |settingsObject| be |metaElement|'s [=relevant settings object=].
+5. Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=]
 6. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
 7. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
 8. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-9. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=origin=] of the <{meta}> element's node document.
+9. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=origin=] of the |metaElement|'s node document.
 10. For each |feature|->|allowlist| of |policyDirective|:
   1. If |feature| is not a [=client hints token=], then continue.
   2. For each |allow| of |allowlist|:
