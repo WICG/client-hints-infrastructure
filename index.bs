@@ -172,7 +172,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
   1. If |feature| is not a [=client hints token=], then continue.
   2. For each |allow| of |allowlist|:
     1. If |allow| is the special value `*`, then continue.
-    2. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allow| to the corresponding [[PERMISSIONS-POLICY|permission policy]].
+    2. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allow| to the corresponding [[PERMISSIONS-POLICY|permissions policy]].
 
 Note: `*` can still be inherited from the default policy or HTTP header permissions policy.
 
