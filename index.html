@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="535762fb3f5f00efb64f90bb5024c202feec1c96" name="document-revision">
+  <meta content="bf5a0db01a222505995d0a81f554786d22d82845" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -693,12 +693,14 @@ it parses <code>Accept-CH</code> and adds the results to the environment setting
      <p>Let <var>policyDirective</var> be the result of running [$ parse-policy-directive $] on <var>acceptCHValue</var> and the <a data-link-type="dfn">origin</a> of the <var>metaElement</var>’s node document.</p>
     <li data-md>
      <p>For each <var>feature</var>-><var>allowlist</var> of <var>policyDirective</var>:</p>
-    <li data-md>
-     <p>If <var>feature</var> is not a <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token③">client hints token</a>, then continue.</p>
-    <li data-md>
-     <p>If <var>allowlist</var> is the special value <code>*</code>, then continue.</p>
-    <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append②">Append</a> <var>feature</var> to <var>settingsObject</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set⑤">client hints set</a> and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append③">Append</a> <var>allowList</var> to |permissionsPolicy[feature]|'s <a data-link-type="biblio" href="#biblio-permissions-policy">permissions policy</a>.</p>
+     <ol>
+      <li data-md>
+       <p>If <var>feature</var> is not a <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token③">client hints token</a>, then continue.</p>
+      <li data-md>
+       <p>If <var>allowlist</var> is the special value <code>*</code>, then continue.</p>
+      <li data-md>
+       <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append②">Append</a> <var>feature</var> to <var>settingsObject</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set⑤">client hints set</a> and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append③">Append</a> <var>allowList</var> to |permissionsPolicy[feature]|'s <a data-link-type="biblio" href="#biblio-permissions-policy">permissions policy</a>.</p>
+     </ol>
    </ol>
    <p class="note" role="note"><span>Note:</span> <code>*</code> can still be inherited from the default policy or HTTP header permissions policy.</p>
    <h2 class="heading settled" data-level="4" id="html"><span class="secno">4. </span><span class="content">Integration with HTML</span><a class="self-link" href="#html"></a></h2>
@@ -722,9 +724,9 @@ add a subsection named <code>accept-ch</code> with the <a data-link-type="dfn" h
    <h2 class="heading settled" data-level="5" id="request-processing"><span class="secno">5. </span><span class="content">Request processing</span><a class="self-link" href="#request-processing"></a></h2>
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export id="abstract-opdef-append-client-hints-to-request">append client hints to request</dfn> with <var>request</var> as input, run the
 following steps:</p>
-   <p>Let <var>hintSet</var> be an empty <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set⑧">client hints set</a>.</p>
+   <p>Let <var>hintSet</var> be an empty <a data-link-type="dfn" href="#accept-ch-cache-client-hints-set" id="ref-for-accept-ch-cache-client-hints-set①">client hints set</a>.</p>
    <p>For each <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token④">client hints token</a> <var>lowEntropyHint</var> in the registry’s <a data-link-type="dfn" href="#low-entropy-hint-table" id="ref-for-low-entropy-hint-table">low entropy hint table</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append④">append</a> <var>lowEntropyHint</var> to <var>hintSet</var>.</p>
-   <p>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a> is not null, then for each <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token⑤">client hints token</a> <var>requestHint</var> in <var>request</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set⑨">client hints set</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append⑤">append</a> <var>requestHint</var> to <var>hintSet</var>.</p>
+   <p>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a> is not null, then for each <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token⑤">client hints token</a> <var>requestHint</var> in <var>request</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set⑧">client hints set</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append⑤">append</a> <var>requestHint</var> to <var>hintSet</var>.</p>
    <p>For each <var>possibleHint</var> in <var>hintSet</var>, if <var>request</var> is a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#subresource-request" id="ref-for-subresource-request">subresource request</a> and the result of
 running <a href="https://www.w3.org/TR/permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.11 Should request be allowed to use feature?</a> given <var>request</var> and <var>possibleHint</var>’s associated feature in <a href="#policy-controlled-features">§ 7.2 Policy-controlled features</a> returns <code>false</code>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-remove" id="ref-for-list-remove">remove</a> <var>possibleHint</var> from <var>hintSet</var>.</p>
    <p>For each <var>hintName</var> in <var>hintSet</var>, if the <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list">header list</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#header-list-contains" id="ref-for-header-list-contains">does not
@@ -738,7 +740,7 @@ contain</a> <var>hintName</var>:</p>
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export id="abstract-opdef-remove-client-hints-from-redirect-if-needed">remove client hints from redirect if needed</dfn> with <var>request</var> as input, run the following steps:</p>
    <ol>
     <li>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client②">client</a> is null, then abort these steps. 
-    <li>Let <var>clientHintsSet</var> be <var>request</var>’s <var>client</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set①⓪">client hints set</a>. 
+    <li>Let <var>clientHintsSet</var> be <var>request</var>’s <var>client</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set⑨">client hints set</a>. 
     <li>
      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate">For each</a> <var>hintName</var> of <var>clientHintsSet</var>: </p>
      <ol>
@@ -1270,6 +1272,7 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
    <b><a href="#accept-ch-cache-client-hints-set">#accept-ch-cache-client-hints-set</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-accept-ch-cache-client-hints-set">3.2. Accept-CH cache</a>
+    <li><a href="#ref-for-accept-ch-cache-client-hints-set①">5. Request processing</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="add-a-new-accept-ch-cache-entry">
@@ -1302,7 +1305,7 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
     <li><a href="#ref-for-environment-settings-object-client-hints-set">3.3. Initialize Client Hints set</a> <a href="#ref-for-environment-settings-object-client-hints-set①">(2)</a> <a href="#ref-for-environment-settings-object-client-hints-set②">(3)</a>
     <li><a href="#ref-for-environment-settings-object-client-hints-set③">3.4. Accept-CH state (name="accept-ch")</a> <a href="#ref-for-environment-settings-object-client-hints-set④">(2)</a> <a href="#ref-for-environment-settings-object-client-hints-set⑤">(3)</a>
     <li><a href="#ref-for-environment-settings-object-client-hints-set⑥">4.2. Worker initialization</a> <a href="#ref-for-environment-settings-object-client-hints-set⑦">(2)</a>
-    <li><a href="#ref-for-environment-settings-object-client-hints-set⑧">5. Request processing</a> <a href="#ref-for-environment-settings-object-client-hints-set⑨">(2)</a> <a href="#ref-for-environment-settings-object-client-hints-set①⓪">(3)</a>
+    <li><a href="#ref-for-environment-settings-object-client-hints-set⑧">5. Request processing</a> <a href="#ref-for-environment-settings-object-client-hints-set⑨">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="abstract-opdef-append-client-hints-to-request">
