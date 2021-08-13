@@ -283,6 +283,7 @@ A <dfn export>client hints token</dfn> is a [=byte-lowercase=] representation of
   `Sec-CH-RTT`,
   `Sec-CH-Downlink`,
   `Sec-CH-ECT`,
+  `Sec-CH-Prefers-Color-Scheme`,
   `Sec-CH-UA`,
   `Sec-CH-UA-Arch`,
   `Sec-CH-UA-Bitness`,
