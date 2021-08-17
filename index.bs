@@ -283,6 +283,7 @@ A <dfn export>client hints token</dfn> is a [=byte-lowercase=] representation of
   `Sec-CH-RTT`,
   `Sec-CH-Downlink`,
   `Sec-CH-ECT`,
+  `Sec-CH-Prefers-Color-Scheme`,
   `Sec-CH-UA`,
   `Sec-CH-UA-Arch`,
   `Sec-CH-UA-Bitness`,
@@ -310,6 +311,7 @@ the following [=policy-controlled features=]:
 - <code><dfn export>ch-rtt</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-downlink</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-ect</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-prefers-color-scheme</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-ua</dfn></code> which has a [=default allowlist=] of `'*'`
 - <code><dfn export>ch-ua-arch</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-ua-bitness</dfn></code> which has a [=default allowlist=] of `'self'`
@@ -369,6 +371,8 @@ When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch o
   <dd>a suitable <a href=https://wicg.github.io/netinfo/#downlink-request-header-field>Downlink value</a>
   <dt>`ECT`
   <dd>a suitable <a href=https://wicg.github.io/netinfo/#ect-request-header-field>ECT value</a>
+  <dt>`Prefers-Color-Scheme`
+  <dd>a suitable <a href=https://wicg.github.io/user-preference-media-features-headers/#sec-ch-prefers-color-scheme>color theme value</a>
   <dt>`UA`
   <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua>UA value</a>
   <dt>`UA-Arch`
