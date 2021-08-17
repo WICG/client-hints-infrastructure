@@ -346,9 +346,6 @@ The <dfn export>low entropy hint table</dfn> below defines hints that are only e
  <tr>
   <td>`Sec-CH-UA-Platform`
   <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform>Platform value</a>
- <tr>
-  <td>`Sec-CH-Prefers-Color-Scheme`
-  <td>a suitable <a href=https://wicg.github.io/user-preference-media-features-headers/#sec-ch-prefers-color-scheme>color theme value</a>
 </table>
 
 Find client hint value {#find-client-hint-value-section}
