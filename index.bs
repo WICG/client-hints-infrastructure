@@ -318,7 +318,7 @@ the following [=policy-controlled features=]:
 - <code><dfn export>ch-ua-full-version</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-ua-mobile</dfn></code> which has a [=default allowlist=] of `'*'`
 - <code><dfn export>ch-ua-model</dfn></code> which has a [=default allowlist=] of `'self'`
-- <code><dfn export>ch-ua-platform</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-ua-platform</dfn></code> which has a [=default allowlist=] of `'*'`
 - <code><dfn export>ch-ua-platform-version</dfn></code> which has a [=default allowlist=] of `'self'`
 
 Issue: Should we tie low-entropy-ness to allowlists, generally?
