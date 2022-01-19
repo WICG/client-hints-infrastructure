@@ -123,6 +123,8 @@ cache whenever the user clears their cookies or when session cookies expire.
 Note: A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH`
 header in a response. This sets the origin's |client hints set| to an empty set.
 
+Note: As the cache can only be modified by the top-level frame, it is considered to be partitioned.
+
 To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
 given an [=accept-ch-cache/origin=] |origin| and a [=/client hints set=] |client hints set|,
 [=map/set=] [=Accept-CH cache=][|origin|] to |client hints set|.
