@@ -211,36 +211,31 @@ An [=environment settings object=] has a <dfn for="environment settings object">
 Request processing {#request-processing}
 ===========
 
-
 When asked to <dfn abstract-op>append client hints to request</dfn> with |request| as input, run the
 following steps:
 
-Let |hintSet| be an empty [=client hints set=].
-
-For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=],
-[=set/append=] |lowEntropyHint| to |hintSet|.
-
-If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
+<ol>
+ <li>Let |hintSet| be an empty [=client hints set=].
+ <li>For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=], [=set/append=] |lowEntropyHint| to |hintSet|.
+ <li>If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
 |request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
 |hintSet|.
-
-For each |possibleHint| in |hintSet|, if |request| is a [=subresource request=] and the result of
+ <li>For each |possibleHint| in |hintSet|, if |request| is a [=subresource request=] and the result of
 running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given |request| and
 |possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`,
 [=list/remove=] |possibleHint| from |hintSet|.
-
-For each |hintName| in |hintSet|, if the |request|'s [=request/header list=] [=header list/does not
+ <li>For each |hintName| in |hintSet|, if the |request|'s [=request/header list=] [=header list/does not
 contain=] |hintName|:
-
-  1. Let |value| be the result of running [=find client hint value=] with |hintName|.
-
-  2. [=header list/append=] |hintName|/|value| to the [=request/header list=]
+ <ol>
+  <li>Let |value| be the result of running [=find client hint value=] with |hintName|.
+  <li>[=header list/append=] |hintName|/|value| to the [=request/header list=]
+ </ol>
+</ol>
 
 When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn> with |request| as input, run the following steps:
 
 <ol>
  <li>If |request|'s [=client=] is null, then abort these steps.
-
  <li>Let |clientHintsSet| be the set of all client hints.
  <li><p><a for=list>For each</a> <var>hintName</var> of |clientHintsSet|:
  <ol>
