@@ -236,7 +236,7 @@ When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn>
 
 <ol>
  <li>If |request|'s [=client=] is null, then abort these steps.
- <li>Let |clientHintsSet| be the set of all client hints.
+ <li>Let |clientHintsSet| be the set of all client hints supported by the [=user agent=].
  <li><p><a for=list>For each</a> <var>hintName</var> of |clientHintsSet|:
  <ol>
   <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
