@@ -241,19 +241,13 @@ When asked to <dfn abstract-op>update client hints from redirect if needed</dfn>
  <ol>
   <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
   <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">contains</a>
-  <var>hintName</var> and if the result of running <a
-  href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature">Should
-  request be allowed to use feature?</a>, given <var>request</var> and <var>hintName</var>’s
-  <a href="#policy-controlled-features">associated
-  policy-controlled feature</a>, returns <code>false</code>, then remove <var>hintName</var> from
-  <a for=request>header list</a>.
+  <var>hintName</var> and if the result of running [=Permissions Policy/Should request be allowed to use feature?=],
+  given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
+  policy-controlled feature</a>, returns <code>false</code>, then remove <var>hintName</var> from |request|'s [=request/header list=].
   <li><p>Else if <var>request</var>'s <a for=request>header list</a> <a for="header list">doesn't contain</a>
-  <var>hintName</var> and if the result of running <a
-  href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature">Should
-  request be allowed to use feature?</a>, given <var>request</var> and <var>hintName</var>’s
-  <a href="#policy-controlled-features">associated
-  policy-controlled feature</a>, returns <code>true</code>, then add <var>hintName</var> to
-  <a for=request>header list</a>.
+  <var>hintName</var> and if the result of running [=Permissions Policy/Should request be allowed to use feature?=],
+  given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
+  policy-controlled feature</a>, returns <code>true</code>, then add <var>hintName</var> to |request|'s [=request/header list=].
  </ol>
 </ol>
 
