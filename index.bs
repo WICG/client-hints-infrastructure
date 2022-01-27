@@ -129,6 +129,9 @@ To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
 given an [=accept-ch-cache/origin=] |origin| and a [=/client hints set=] |client hints set|,
 [=map/set=] [=Accept-CH cache=][|origin|] to |client hints set|.
 
+Retrieve Client Hints set {#retrieve-accept-ch-cache}
+----------------
+
 To <dfn>retrieve the client hints set</dfn> given an |origin|:
 
 1. Let |clientHintsSet| be an empty [=ordered set=].
@@ -136,9 +139,9 @@ To <dfn>retrieve the client hints set</dfn> given an |origin|:
 3. For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |clientHintsSet|.
 4. Return |clientHintsSet|.
 
-Initialize Client Hints set {#initialize-ch-set}
+Update Client Hints set {#update-accept-ch-cache}
 -----------------------
-When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |settingsObject| and |response| as inputs, run the following steps:
+When asked to <dfn abstract-op>update the Client Hints set</dfn> with |settingsObject| and |response|, run the following steps:
 
 1. Let |clientHintsSet| be the result of running [=retrieve the client hints set=] with |settingsObject|'s [=environment settings object/origin=].
 2. For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
@@ -147,15 +150,7 @@ When asked to <dfn abstract-op>initialize the Client Hints set</dfn> with |setti
 5. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 6. If |response|'s `Accept-CH` header is present, parse the header field value according to the
     `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
-7. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=] as inputs.
-
-<div class=note>
-Note, the above algorithm:
-
-* Initializes client hints set on the environment settings object based on its origin.
-* If we are in a secure context and the navigation is a top-level navigation,
-    it parses `Accept-CH` and adds the results to the environment setting object's client hints set as well as the Accept-CH cache.
-    </div>
+7. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=].
 
 <dfn>Accept-CH state</dfn> (`name="accept-ch"`) {#accept-ch-state-algo}
 --------
@@ -184,12 +179,15 @@ Integration with HTML {#html}
 
 This specification integrates with the [[!HTML]] specification by patching the algorithms below:
 
-Document object initialization {#document-init}
+Navigation fetch {#navigation-fetch}
 ----------
 
-At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object">Create and initialize a Document object</a>,
-after step 11, starting with "Initialize a Document's CSP list",
-call [$initialize the Client Hints set$] with <var ignore>document</var>'s [=relevant settings object=] and |response| as inputs.
+At [=process a navigate fetch=], after step 13.4 call [$retrieve the Client Hints set$] with <var ignore>currentURL's origin</var> as input.
+
+Navigation response {#navigation-response}
+----------
+
+At [=process a navigate response=], after step 7 call [$update the Client Hints set$] with the [=relevant settings object=] and |response| as inputs.
 
 Worker initialization {#worker-init}
 -----------
