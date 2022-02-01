@@ -19,7 +19,7 @@ spec:html; type:element; text:script
 spec:fetch; type:dfn; for:/; text:fetch
 spec:fetch; type:dfn; for:Request; text:request
 spec:fetch; type:dfn; text:client
-spec:url; type:dfn; for:/; text:origin
+spec:url; type:dfn; for:url; text:origin
 </pre>
 
 <pre class=biblio>
@@ -113,7 +113,7 @@ Accept-CH cache {#accept-ch-cache-definition}
 ----------------
 
 An <dfn>Accept-CH cache</dfn> is owned by the user agent and is an [=ordered map=],
-[=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]),
+[=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=url/origin=]),
 with a value of <dfn for="accept-ch-cache">client hints set</dfn> (a [=/client hints set=]).
 
 The Accept-CH cache can effectively act as an alternative cookie store,
@@ -145,7 +145,7 @@ When asked to <dfn abstract-op>update the Client Hints set</dfn> given a |settin
 4. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 5. If |response|'s `Accept-CH` header is present, parse the header field value according to the
     `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
-6. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=].
+6. [=Add a new Accept-CH cache entry=] with |response|'s [=url/origin=] and |settingsObject|'s [=environment settings object/client hints set=].
 
 <dfn>Accept-CH state</dfn> (`name="accept-ch"`) {#accept-ch-state-algo}
 --------
@@ -162,7 +162,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
 8. If the result of executing [=Is an environment settings object contextually secure?=] on |settingsObject| is `"Not Secure"`, then return.
 9. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
 10. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-11. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=/origin=] of the |metaElement|'s node document.
+11. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=url/origin=] of the |metaElement|'s node document.
 12. For each |feature|->|allowList| of |policyDirective|:
     1. If |feature| is not a [=client hints token=], then continue.
     2. If |allowList| is the special value `*`, then continue.
