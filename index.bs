@@ -31,7 +31,6 @@ spec:fetch; type:dfn; text:client
         "title": "Permissions Policy"
     }
 }
-
 </pre>
 
 <style>
@@ -112,8 +111,8 @@ Accept-CH cache {#accept-ch-cache-definition}
 ----------------
 
 An <dfn>Accept-CH cache</dfn> is owned by the user agent and is an [=ordered map=],
-  [=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]),
-  with a value of <dfn for="accept-ch-cache">client hints set</dfn> (a [=/client hints set=]).
+[=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]),
+with a value of <dfn for="accept-ch-cache">client hints set</dfn> (a [=/client hints set=]).
 
 The Accept-CH cache can effectively act as an alternative cookie store,
 since sites can use each of the hints as a bit set on the client, and that information will be
@@ -252,32 +251,32 @@ Feature Registry {#registry}
 ==========
 
 Note: This section contains feature-specific definitions.
-  New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
-  User Agents can implement some of those features without implementing others.
+New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
+User Agents can implement some of those features without implementing others.
 
 Client hints token {#client-hints-token-definition}
 ----------
 
 A <dfn export>client hints token</dfn> is a [=byte-lowercase=] representation of one of
-  `Sec-CH-Save-Data`,
-  `Sec-CH-DPR`,
-  `Sec-CH-Width`,
-  `Sec-CH-Viewport-Width`,
-  `Sec-CH-Viewport-Height`,
-  `Sec-CH-Device-Memory`,
-  `Sec-CH-RTT`,
-  `Sec-CH-Downlink`,
-  `Sec-CH-ECT`,
-  `Sec-CH-Prefers-Color-Scheme`,
-  `Sec-CH-UA`,
-  `Sec-CH-UA-Arch`,
-  `Sec-CH-UA-Bitness`,
-  `Sec-CH-UA-Full-Version`,
-  `Sec-CH-UA-Full-Version-List`,
-  `Sec-CH-UA-Mobile`,
-  `Sec-CH-UA-Model`,
-  `Sec-CH-UA-Platform`, or
-  `Sec-CH-UA-Platform-Version`,
+`Sec-CH-Save-Data`,
+`Sec-CH-DPR`,
+`Sec-CH-Width`,
+`Sec-CH-Viewport-Width`,
+`Sec-CH-Viewport-Height`,
+`Sec-CH-Device-Memory`,
+`Sec-CH-RTT`,
+`Sec-CH-Downlink`,
+`Sec-CH-ECT`,
+`Sec-CH-Prefers-Color-Scheme`,
+`Sec-CH-UA`,
+`Sec-CH-UA-Arch`,
+`Sec-CH-UA-Bitness`,
+`Sec-CH-UA-Full-Version`,
+`Sec-CH-UA-Full-Version-List`,
+`Sec-CH-UA-Mobile`,
+`Sec-CH-UA-Model`,
+`Sec-CH-UA-Platform`, or
+`Sec-CH-UA-Platform-Version`,
 
 Note: A client hints token will also match the request header sent by the user agent when
 appropriate (as determined by the <a href="#request-processing">request processing algorithm</a>).
@@ -309,7 +308,6 @@ the following [=policy-controlled features=]:
 - <code><dfn export>ch-ua-platform-version</dfn></code> which has a [=default allowlist=] of `'self'`
 
 Issue: Should we tie low-entropy-ness to allowlists, generally?
-
 
 Low entropy hint table {#low-entropy-table}
 -------
