@@ -129,19 +129,14 @@ To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
 given an [=accept-ch-cache/origin=] |origin| and a [=/client hints set=] |client hints set|,
 [=map/set=] [=Accept-CH cache=][|origin|] to |client hints set|.
 
-Retrieve Client Hints set {#retrieve-accept-ch-cache}
-----------------
-
-To <dfn>retrieve the client hints set</dfn> given a |settingsObject|:
+When asked to <dfn>retrieve the client hints set</dfn> given a |settingsObject|:
 
 1. Let |clientHintsSet| be an empty [=ordered set=].
 2. Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |settingsObject|'s [=environment settings object/origin=].
 3. For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |clientHintsSet|.
 4. Store |clientHintsSet| to |settingsObject|'s [=environment settings object/client hints set=].
 
-Update Client Hints set {#update-accept-ch-cache}
------------------------
-When asked to <dfn abstract-op>update the Client Hints set</dfn> with |settingsObject| and |response|, run the following steps:
+When asked to <dfn abstract-op>update the Client Hints set</dfn> given a |settingsObject| and |response|:
 
 1. Run [=retrieve the client hints set=] with |settingsObject|.
 2. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, abort these steps.
