@@ -132,41 +132,49 @@ given an [=accept-ch-cache/origin=] |origin| and a [=/client hints set=] |hintSe
 
 When asked to <dfn>retrieve the client hints set</dfn> given a |settingsObject|:
 
-1. Let |hintSet| be an empty [=ordered set=].
-2. Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |settingsObject|'s [=environment settings object/origin=].
-3. For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |hintSet|.
-4. For each |hint| in |hintSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
+<ol>
+ <li>Let |hintSet| be an empty [=ordered set=].
+ <li>Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |settingsObject|'s [=environment settings object/origin=].
+ <li>For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |hintSet|.
+ <li>For each |hint| in |hintSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
+</ol>
 
 When asked to <dfn abstract-op>update the Client Hints set</dfn> given a |settingsObject| and |response|:
 
-1. Run [=retrieve the client hints set=] with |settingsObject|.
-2. If the result of executing [=Is an environment settings object contextually secure?=] on |settingsObject| is `"Not Secure"`, abort these steps.
-3. Let |browsingContext| be |settingsObject|'s [=environment settings object/global object=]'s [=Window/browsing context=].
-4. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-5. If |response|'s `Accept-CH` header is present, parse the header field value according to the
-    `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
-6. [=Add a new Accept-CH cache entry=] with |response|'s [=url/origin=] and |settingsObject|'s [=environment settings object/client hints set=].
+<ol>
+ <li>Run [=retrieve the client hints set=] with |settingsObject|.
+ <li>If the result of executing [=Is an environment settings object contextually secure?=] on |settingsObject| is `"Not Secure"`, abort these steps.
+ <li>Let |browsingContext| be |settingsObject|'s [=environment settings object/global object=]'s [=Window/browsing context=].
+ <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+ <li>If |response|'s `Accept-CH` header is present, parse the header field value according to the
+ `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
+ <li>[=Add a new Accept-CH cache entry=] with |response|'s [=url/origin=] and |settingsObject|'s [=environment settings object/client hints set=].
+</ol>
 
 <dfn>Accept-CH state</dfn> (`name="accept-ch"`) {#accept-ch-state-algo}
 --------
 
 Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=]. After this algorithm runs once, no further modification to the [=environment settings object/client hints set=] can occur without reloading the page.
 
-1. Let |metaElement| be the <{meta}> element.
-2. If |metaElement| is not a child of a <{head}> element, then return.
-3. If |metaElement| has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
-4. If |metaElement| has any <a href="https://dom.spec.whatwg.org/#concept-tree-preceding">preceding</a> <a href="https://dom.spec.whatwg.org/#concept-tree-sibling">sibling</a> <{link}> or <{script}> elements (or if any <{link}> or <{script}> elements have begun to execute), then return.
-5. Let |acceptCHValue| be the value of |metaElement|'s <{meta/content}> attreibute.
-6. Let |settingsObject| be |metaElement|'s [=relevant settings object=].
-7. Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=]
-8. If the result of executing [=Is an environment settings object contextually secure?=] on |settingsObject| is `"Not Secure"`, then return.
-9. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
-10. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-11. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=url/origin=] of the |metaElement|'s node document.
-12. For each |feature|->|allowList| of |policyDirective|:
-    1. If |feature| is not a [=client hints token=], then continue.
-    2. If |allowList| is the special value `*`, then continue.
-    3. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allowList| to |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]].
+<ol>
+ <li>Let |metaElement| be the <{meta}> element.
+ <li>If |metaElement| is not a child of a <{head}> element, then return.
+ <li>If |metaElement| has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
+ <li>If |metaElement| has any <a href="https://dom.spec.whatwg.org/#concept-tree-preceding">preceding</a> <a href="https://dom.spec.whatwg.org/#concept-tree-sibling">sibling</a> <{link}> or <{script}> elements (or if any <{link}> or <{script}> elements have begun to execute), then return.
+ <li>Let |acceptCHValue| be the value of |metaElement|'s <{meta/content}> attreibute.
+ <li>Let |settingsObject| be |metaElement|'s [=relevant settings object=].
+ <li>Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=]
+ <li>If the result of executing [=Is an environment settings object contextually secure?=] on |settingsObject| is `"Not Secure"`, then return.
+ <li>Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
+ <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+ <li>Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=url/origin=] of the |metaElement|'s node document.
+ <ol>
+  <li>For each |feature|->|allowList| of |policyDirective|:
+  <li>If |feature| is not a [=client hints token=], then continue.
+  <li>If |allowList| is the special value `*`, then continue.
+  <li>[=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allowList| to |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]].
+ </ol>
+</ol>
 
 Note: `*` can still be inherited from the default policy or HTTP header permissions policy.
 
