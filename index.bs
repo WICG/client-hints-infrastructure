@@ -134,7 +134,7 @@ When asked to <dfn>retrieve the client hints set</dfn> given a |settingsObject|:
 1. Let |clientHintsSet| be an empty [=ordered set=].
 2. Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |settingsObject|'s [=environment settings object/origin=].
 3. For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |clientHintsSet|.
-4. Store |clientHintsSet| to |settingsObject|'s [=environment settings object/client hints set=].
+4. For each |hint| in |clientHintsSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
 
 When asked to <dfn abstract-op>update the Client Hints set</dfn> given a |settingsObject| and |response|:
 
