@@ -154,16 +154,17 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
 2. If |metaElement| is not a child of a <{head}> element, then return.
 3. If |metaElement| has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
 4. If |metaElement| has any <a href="https://dom.spec.whatwg.org/#concept-tree-preceding">preceding</a> <a href="https://dom.spec.whatwg.org/#concept-tree-sibling">sibling</a> <{link}> or <{script}> elements (or if any <{link}> or <{script}> elements have begun to execute), then return.
-5. Let |settingsObject| be |metaElement|'s [=relevant settings object=].
-6. Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=]
-7. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
-8. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
-9. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-10. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=origin=] of the |metaElement|'s node document.
-11. For each |feature|->|allowlist| of |policyDirective|:
+5. Let |acceptCHValue| be the value of |metaElement|'s <{meta/content}> attreibute.
+6. Let |settingsObject| be |metaElement|'s [=relevant settings object=].
+7. Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=]
+8. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
+9. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
+10. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
+11. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=origin=] of the |metaElement|'s node document.
+12. For each |feature|->|allowlist| of |policyDirective|:
     1. If |feature| is not a [=client hints token=], then continue.
-    2. If |allowlist| is the special value `*`, then continue.
-    3. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allowList| to |permissionsPolicy[feature]|'s [[PERMISSIONS-POLICY|permissions policy]].
+    2. If |allowList| is the special value `*`, then continue.
+    3. [=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allowList| to |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]].
 
 Note: `*` can still be inherited from the default policy or HTTP header permissions policy.
 
