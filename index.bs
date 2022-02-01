@@ -14,12 +14,12 @@ Markup Shorthands: markdown yes
 spec:infra; type:dfn; for:/; text:list
 spec:infra; type:dfn; for:list; text:append
 spec:infra; type:dfn; for:set; text:append
-spec:html; type:dfn; for:/; text:origin
 spec:html; type:element; text:link
 spec:html; type:element; text:script
 spec:fetch; type:dfn; for:/; text:fetch
 spec:fetch; type:dfn; for:Request; text:request
 spec:fetch; type:dfn; text:client
+spec:url; type:dfn; for:/; text:origin
 </pre>
 
 <pre class=biblio>
