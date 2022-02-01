@@ -14,7 +14,9 @@ Markup Shorthands: markdown yes
 spec:infra; type:dfn; for:/; text:list
 spec:infra; type:dfn; for:list; text:append
 spec:infra; type:dfn; for:set; text:append
-spec:html; type:dfn; for:/; text:concept-origin
+spec:html; type:dfn; for:/; text:origin
+spec:html; type:element; text:link
+spec:html; type:element; text:script
 spec:fetch; type:dfn; for:/; text:fetch
 spec:fetch; type:dfn; for:Request; text:request
 spec:fetch; type:dfn; text:client
@@ -111,7 +113,7 @@ Accept-CH cache {#accept-ch-cache-definition}
 ----------------
 
 An <dfn>Accept-CH cache</dfn> is owned by the user agent and is an [=ordered map=],
-[=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=/concept-origin=]),
+[=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=/origin=]),
 with a value of <dfn for="accept-ch-cache">client hints set</dfn> (a [=/client hints set=]).
 
 The Accept-CH cache can effectively act as an alternative cookie store,
@@ -138,12 +140,12 @@ When asked to <dfn>retrieve the client hints set</dfn> given a |settingsObject|:
 When asked to <dfn abstract-op>update the Client Hints set</dfn> given a |settingsObject| and |response|:
 
 1. Run [=retrieve the client hints set=] with |settingsObject|.
-2. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, abort these steps.
+2. If the result of executing [=Is an environment settings object contextually secure?=] on |settingsObject| is `"Not Secure"`, abort these steps.
 3. Let |browsingContext| be |settingsObject|'s [=environment settings object/global object=]'s [=Window/browsing context=].
 4. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
 5. If |response|'s `Accept-CH` header is present, parse the header field value according to the
     `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
-6. [=Add a new Accept-CH cache entry=] with |response|'s [=/concept-origin=] and |settingsObject|'s [=environment settings object/client hints set=].
+6. [=Add a new Accept-CH cache entry=] with |response|'s [=/origin=] and |settingsObject|'s [=environment settings object/client hints set=].
 
 <dfn>Accept-CH state</dfn> (`name="accept-ch"`) {#accept-ch-state-algo}
 --------
@@ -157,10 +159,10 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
 5. Let |acceptCHValue| be the value of |metaElement|'s <{meta/content}> attreibute.
 6. Let |settingsObject| be |metaElement|'s [=relevant settings object=].
 7. Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=]
-8. If the result of executing [$Is an environment settings object contextually secure?$] on |settingsObject| is `"Not Secure"`, then return.
+8. If the result of executing [=Is an environment settings object contextually secure?=] on |settingsObject| is `"Not Secure"`, then return.
 9. Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
 10. If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
-11. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=origin=] of the |metaElement|'s node document.
+11. Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=/origin=] of the |metaElement|'s node document.
 12. For each |feature|->|allowList| of |policyDirective|:
     1. If |feature| is not a [=client hints token=], then continue.
     2. If |allowList| is the special value `*`, then continue.
@@ -232,7 +234,7 @@ When asked to <dfn abstract-op>update client hints from redirect if needed</dfn>
   <var>hintName</var> and if the result of running [=Should request be allowed to use feature?=],
   given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
   policy-controlled feature</a>, returns <code>false</code>, then remove <var>hintName</var> from |request|'s [=request/header list=].
-  <li><p>Else if <var>request</var>'s <a for=request>header list</a> <a for="header list">doesn't contain</a>
+  <li><p>Else if <var>request</var>'s <a for=request>header list</a> doesn't <a for="header list">contain</a>
   <var>hintName</var> and if the result of running [=Should request be allowed to use feature?=],
   given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
   policy-controlled feature</a>, returns <code>true</code>, then add <var>hintName</var> to |request|'s [=request/header list=].
