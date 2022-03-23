@@ -183,9 +183,13 @@ Integration with HTML {#html}
 
 This specification integrates with the [[!HTML]] specification by patching the algorithms below:
 
+Speculative HTML parsing {#speculative-html-parsing}
+----------
+At [=speculative fetch=], after the sub-step for the meta element "viewport" step add a new sub-step with the following:
+"A meta element whose name attribute is an ASCII case-insensitive match for "accept-ch" (only if this element is in the root Document and has not been modified by any script execution)."
+
 Navigation response {#navigation-response}
 ----------
-
 At [=process a navigate response=], after step 7 call [$update the Client Hints set$] with the [=relevant settings object=] and |response| as inputs.
 
 Worker initialization {#worker-init}
@@ -197,13 +201,12 @@ after step 6, add the following step:
 Standard metadata names {#standard-metadata-names}
 ------------
 For the section <a href="https://html.spec.whatwg.org/multipage/#standard-metadata-names">standard metadata names</a>,
-add a subsection named `accept-ch` with the [=Accept-CH state|outlined explanation=].
+add a subsection named `accept-ch` with the [=Accept-CH state|outlined explanation=]. Note that this should be run exactly once,
+and only on an element in the root Document which has not been modified by any script execution.
 
 Extending environment settings object {#extending-environment-settings-object}
 -------------
-
 An [=environment settings object=] has a <dfn for="environment settings object">client hints set</dfn>: a [=/client hints set=], initially the empty set, used for [=fetches=] performed using the [=environment settings object=] as a [=request=] [=client=].
-
 
 Request processing {#request-processing}
 ===========
