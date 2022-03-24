@@ -344,7 +344,7 @@ The <dfn export>low entropy hint table</dfn> below defines hints that are only e
   <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform>Platform value</a>
 </table>
 
-Note: If the value transmitted by `Save-Data` is false (`?0`) the header will be ommitted entirely.
+Note: If the value transmitted by `Save-Data` is the empty string, the header will be ommitted entirely.
 This is done to reduce redundant header information sent by default.
 
 Find client hint value {#find-client-hint-value-section}
