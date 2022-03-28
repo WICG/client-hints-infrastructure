@@ -187,7 +187,7 @@ This specification integrates with the [[!HTML]] specification by patching the a
 
 Speculative HTML parsing {#speculative-html-parsing}
 ----------
-At [=speculative html parsing=], after the sub-step for the meta element "viewport" step add a new sub-step with the following:
+At [=speculative HTML parser=], after the sub-step for the meta element "viewport" step add a new sub-step with the following:
 "A meta element whose name attribute is an ASCII case-insensitive match for "accept-ch"."
 
 Navigation response {#navigation-response}
