@@ -154,10 +154,12 @@ When asked to <dfn abstract-op>update the Client Hints set</dfn> given a |settin
 <dfn>Accept-CH state</dfn> (`name="accept-ch"`) {#accept-ch-state-algo}
 --------
 
-Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=]. After this algorithm runs once, no further modification to the [=environment settings object/client hints set=] can occur without reloading the page.
+Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=] and *does not* add those hints to the [=Accept-CH cache=].
 
 <ol>
+ <li>If [=environment settings object/client hints set=] has already been modified by this algorithm, then return.
  <li>Let |metaElement| be the <{meta}> element.
+ <li>If |metaElement| is not in the root document, then return.
  <li>If |metaElement| is not a child of a <{head}> element, then return.
  <li>If |metaElement| has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
  <li>If |metaElement| has any <a href="https://dom.spec.whatwg.org/#concept-tree-preceding">preceding</a> <a href="https://dom.spec.whatwg.org/#concept-tree-sibling">sibling</a> <{link}> or <{script}> elements (or if any <{link}> or <{script}> elements have begun to execute), then return.
