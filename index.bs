@@ -143,7 +143,7 @@ When asked to <dfn abstract-op>update the Client Hints set</dfn> given a |settin
 
 <ol>
  <li>Run [=retrieve the client hints set=] with |settingsObject|.
- <li>If the result of executing [=Is an environment settings object contextually secure?=] on |settingsObject| is `"Not Secure"`, abort these steps.
+ <li>If |settingsObject| is a [=non-secure context=], abort these steps.
  <li>Let |browsingContext| be |settingsObject|'s [=environment settings object/global object=]'s [=Window/browsing context=].
  <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
  <li>If |response|'s `Accept-CH` header is present, parse the header field value according to the
@@ -164,7 +164,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
  <li>Let |acceptCHValue| be the value of |metaElement|'s <{meta/content}> attribute.
  <li>Let |settingsObject| be |metaElement|'s [=relevant settings object=].
  <li>Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=]
- <li>If the result of executing [=Is an environment settings object contextually secure?=] on |settingsObject| is `"Not Secure"`, then return.
+ <li>If |settingsObject| is a [=non-secure context=], abort these steps.
  <li>Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
  <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
  <li>Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=url/origin=] of the |metaElement|'s node document.
