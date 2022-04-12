@@ -19,7 +19,7 @@ spec:html; type:element; text:script
 spec:fetch; type:dfn; for:/; text:fetch
 spec:fetch; type:dfn; for:Request; text:request
 spec:fetch; type:dfn; text:client
-spec:service-workers; type:dfn; text:ServiceWorkerGlobalScope
+spec:ServiceWorker; type:dfn; text:ServiceWorkerGlobalScope
 spec:url; type:dfn; for:url; text:origin
 </pre>
 
