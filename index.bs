@@ -218,7 +218,7 @@ following steps:
  <li>If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
 |request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
 |hintSet|.
- <li>For each |possibleHint| in |hintSet|, if |request| is a [=subresource request=] and the result of
+ <li>For each |possibleHint| in |hintSet|, if |request| is a [=subresource request=] or a [=non subresource request=] (except "serviceworker", "sharedworker", or "worker") and the result of
 running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given |request| and
 |possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`,
 [=list/remove=] |possibleHint| from |hintSet|.
