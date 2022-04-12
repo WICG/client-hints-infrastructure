@@ -212,16 +212,15 @@ When asked to <dfn abstract-op>append client hints to request</dfn> with |settin
 following steps:
 
 <ol>
+ <li>If |request| is a [=non-subresource request=] for a "sharedworker" or "worker" exit without appending any hints to the [=request/header list=].
  <li>Let |hintSet| be an empty [=/client hints set=].
  <li>Run [=retrieve the client hints set=] with |settingsObject|.
  <li>For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=], [=set/append=] |lowEntropyHint| to |hintSet|.
  <li>If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
 |request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
 |hintSet|.
- <li>For each |possibleHint| in |hintSet|, if |request| is a [=subresource request=] or a [=non-subresource request=] (except "sharedworker" and "worker") and the result of
-running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given |request| and
-|possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`,
-[=list/remove=] |possibleHint| from |hintSet|.
+ <li>For each |possibleHint| in |hintSet|, if the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given
+ |request| and |possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`, [=list/remove=] |possibleHint| from |hintSet|.
  <li>For each |hintName| in |hintSet|, if the |request|'s [=request/header list=] [=header list/does not
 contain=] |hintName|:
  <ol>
