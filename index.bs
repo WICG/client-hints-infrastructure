@@ -167,7 +167,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
  <li>If |settingsObject| is a [=non-secure context=], abort these steps.
  <li>Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
  <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
- <li>Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=url/origin=] of the |metaElement|'s node document.
+ <li>Let |policyDirective| be the result of running [[permissions-policy#algo-parse-policy-directive]] on |acceptCHValue| and the [=url/origin=] of the |metaElement|'s node document.
  <ol>
   <li>For each |feature|->|allowList| of |policyDirective|:
   <li>If |feature| is not a [=client hints token=], then continue.
