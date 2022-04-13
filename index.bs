@@ -167,7 +167,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
  <li>If |settingsObject| is a [=non-secure context=], abort these steps.
  <li>Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
  <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
- <li>Let |policyDirective| be the result of running [[permissions-policy#algo-parse-policy-directive]] on |acceptCHValue| and the [=url/origin=] of the |metaElement|'s node document.
+ <li>Let |policyDirective| be the result of running [$PERMISSIONS-POLICY/parse-policy-directive$] on |acceptCHValue| and the [=url/origin=] of the |metaElement|'s node document.
  <ol>
   <li>For each |feature|->|allowList| of |policyDirective|:
   <li>If |feature| is not a [=client hints token=], then continue.
@@ -219,7 +219,7 @@ following steps:
 |request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
 |hintSet|.
  <li>For each |possibleHint| in |hintSet|, if |request| is a [=subresource request=] and the result of
-running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given |request| and
+running [$should-request-be-allowed-to-use-feature$] given |request| and
 |possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`,
 [=list/remove=] |possibleHint| from |hintSet|.
  <li>For each |hintName| in |hintSet|, if the |request|'s [=request/header list=] [=header list/does not
@@ -239,11 +239,11 @@ When asked to <dfn abstract-op>update client hints from redirect if needed</dfn>
  <ol>
   <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
   <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">contains</a>
-  <var>hintName</var> and if the result of running [=Should request be allowed to use feature?=],
+  <var>hintName</var> and if the result of running [$PERMISSIONS-POLICY/should-request-be-allowed-to-use-feature$],
   given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
   policy-controlled feature</a>, returns <code>false</code>, then remove <var>hintName</var> from |request|'s [=request/header list=].
   <li><p>Else if <var>request</var>'s <a for=request>header list</a> doesn't <a for="header list">contain</a>
-  <var>hintName</var> and if the result of running [=Should request be allowed to use feature?=],
+  <var>hintName</var> and if the result of running [$PERMISSIONS-POLICY/should-request-be-allowed-to-use-feature$],
   given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
   policy-controlled feature</a>, returns <code>true</code>, then add <var>hintName</var> to |request|'s [=request/header list=].
  </ol>
