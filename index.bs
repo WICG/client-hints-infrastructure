@@ -225,7 +225,7 @@ following steps:
  <li>For each |hintName| in |hintSet|:
  <ol>
    <li>If |request| is not a [=navigation request=] for a "document" and if the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
-   given |request| and |possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`, then continue to next |hintName|.
+   given |request| and |hintName|'s associated feature in [[#policy-controlled-features]] returns `false`, then continue to next |hintName|.
    <li>Let |value| be the result of running [=find client hint value=] with |hintName|.
    <li>[=header list/append=] |hintName|/|value| to the [=request/header list=].
  </ol>
