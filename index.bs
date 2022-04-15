@@ -194,7 +194,7 @@ Service Worker initialization {#service-worker-init}
 At <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
 after step 6, add the following step:
 <ol>
- <li>If <var ignore>worker global scope</var> implements {{ServiceWorkerGlobalScope}}, then set |settingsObject|'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
+ <li>If <var ignore>worker global scope</var> implements {{ServiceWorkerGlobalScope}}, then set |settings object|'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
 </ol>
 
 Standard metadata names {#standard-metadata-names}
