@@ -232,22 +232,13 @@ contain=] |hintName|:
  </ol>
 </ol>
 
-When asked to <dfn abstract-op>update client hints from redirect if needed</dfn> with |request| as input, run the following steps:
+When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn> with |request| as input, run the following steps:
 
 <ol>
- <li>If |request|'s [=request/client=] is null, then abort these steps.
- <li>Let |clientHintsSet| be |request|'s <var ignore>client</var>'s [=environment settings object/client hints set=].
- <li><p><a for=list>For each</a> <var>hintName</var> of |clientHintsSet|:
+ <li><p><a for=list>For each</a> <var>hintToken</var> in the list of [=client hints token=]s:
  <ol>
-  <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
   <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">contains</a>
-  <var>hintName</var> and if the result of running [=Should request be allowed to use feature?=],
-  given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
-  policy-controlled feature</a>, returns <code>false</code>, then remove <var>hintName</var> from |request|'s [=request/header list=].
-  <li><p>Else if <var>request</var>'s <a for=request>header list</a> doesn't <a for="header list">contain</a>
-  <var>hintName</var> and if the result of running [=Should request be allowed to use feature?=],
-  given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
-  policy-controlled feature</a>, returns <code>true</code>, then add <var>hintName</var> to |request|'s [=request/header list=].
+  <var>hintName</var>, then remove <var>hintName</var> from |request|'s [=request/header list=].
  </ol>
 </ol>
 
@@ -256,9 +247,9 @@ Integration with Fetch {#fetch}
 
 This specification integrates with the [[!FETCH]] specification by patching the algorithms below:
 
-In [=Fetching=], after step 1.6, run [$append client hints to request$] with the [=relevant settings object=] and |request| as input.
+In [=main fetch=], after step 9, run [$append client hints to request$] with the [=relevant settings object=] and |request| as input.
 
-In [=HTTP-redirect fetch=], after step 7, run [$update client hints from redirect if needed$] with |request| as input.
+In [=HTTP-redirect fetch=], after step 11, run [$remove client hints from redirect if needed$] with |request| as input.
 
 Feature Registry {#registry}
 ==========
