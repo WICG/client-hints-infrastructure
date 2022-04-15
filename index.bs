@@ -247,7 +247,7 @@ Integration with Fetch {#fetch}
 
 This specification integrates with the [[!FETCH]] specification by patching the algorithms below:
 
-In [=Main fetch=], after step 9, run [$append client hints to request$] with the [=relevant settings object=] and |request| as input.
+In [=concept-main-fetch=], after step 9, run [$append client hints to request$] with the [=relevant settings object=] and |request| as input.
 
 In [=HTTP-redirect fetch=], after step 11, run [$remove client hints from redirect if needed$] with |request| as input.
 
