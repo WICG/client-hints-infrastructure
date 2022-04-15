@@ -222,13 +222,12 @@ following steps:
  <li>If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
 |request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
 |hintSet|.
- <li>For each |possibleHint| in |hintSet|, if the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given
- |request| and |possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`, [=list/remove=] |possibleHint| from |hintSet|.
- <li>For each |hintName| in |hintSet|, if the |request|'s [=request/header list=] [=header list/does not
-contain=] |hintName|:
+ <li>For each |hintName| in |hintSet|:
  <ol>
-  <li>Let |value| be the result of running [=find client hint value=] with |hintName|.
-  <li>[=header list/append=] |hintName|/|value| to the [=request/header list=]
+   <li>If the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given
+   |request| and |possibleHint|'s associated feature in [[#policy-controlled-features]], then continue to next |hintName|.
+   <li>Let |value| be the result of running [=find client hint value=] with |hintName|.
+   <li>[=header list/append=] |hintName|/|value| to the [=request/header list=].
  </ol>
 </ol>
 
@@ -247,7 +246,7 @@ Integration with Fetch {#fetch}
 
 This specification integrates with the [[!FETCH]] specification by patching the algorithms below:
 
-In [=concept-main-fetch=], after step 9, run [$append client hints to request$] with the [=relevant settings object=] and |request| as input.
+In [=Main fetch=], after step 9, run [$append client hints to request$] with the [=relevant settings object=] and |request| as input.
 
 In [=HTTP-redirect fetch=], after step 11, run [$remove client hints from redirect if needed$] with |request| as input.
 
