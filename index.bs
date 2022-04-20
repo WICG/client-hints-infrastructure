@@ -19,6 +19,7 @@ spec:html; type:element; text:script
 spec:fetch; type:dfn; for:/; text:fetch
 spec:fetch; type:dfn; for:Request; text:request
 spec:fetch; type:dfn; text:client
+spec:ServiceWorker; type:dfn; for:/; text:
 spec:url; type:dfn; for:url; text:origin
 </pre>
 
@@ -188,11 +189,13 @@ Navigation response {#navigation-response}
 
 At [=process a navigate response=], after step 7 call [$update the Client Hints set$] with the [=relevant settings object=] and |response| as inputs.
 
-Worker initialization {#worker-init}
+Service Worker initialization {#service-worker-init}
 -----------
 At <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
 after step 6, add the following step:
-1. Set |settingsObject|'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
+<ol>
+ <li>If <var ignore>worker global scope</var> implements {{ServiceWorkerGlobalScope}}, then set |settings object|'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
+</ol>
 
 Standard metadata names {#standard-metadata-names}
 ------------
@@ -212,40 +215,29 @@ When asked to <dfn abstract-op>append client hints to request</dfn> with |settin
 following steps:
 
 <ol>
+ <li>If |request| is a [=non-subresource request=] for a "sharedworker" or "worker" [=request/destination=], exit without appending any hints to the [=request/header list=].
  <li>Let |hintSet| be an empty [=/client hints set=].
  <li>Run [=retrieve the client hints set=] with |settingsObject|.
  <li>For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=], [=set/append=] |lowEntropyHint| to |hintSet|.
  <li>If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
 |request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
 |hintSet|.
- <li>For each |possibleHint| in |hintSet|, if |request| is a [=subresource request=] and the result of
-running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given |request| and
-|possibleHint|'s associated feature in [[#policy-controlled-features]] returns `false`,
-[=list/remove=] |possibleHint| from |hintSet|.
- <li>For each |hintName| in |hintSet|, if the |request|'s [=request/header list=] [=header list/does not
-contain=] |hintName|:
+ <li>For each |hintName| in |hintSet|:
  <ol>
-  <li>Let |value| be the result of running [=find client hint value=] with |hintName|.
-  <li>[=header list/append=] |hintName|/|value| to the [=request/header list=]
+   <li>If |request| is not a [=navigation request=] for a "document" [=request/destination=] and if the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
+   given |request| and |hintName|'s associated feature in [[#policy-controlled-features]] returns `false`, then continue to next |hintName|.
+   <li>Let |value| be the result of running [=find client hint value=] with |hintName|.
+   <li>[=header list/append=] |hintName|/|value| to the [=request/header list=].
  </ol>
 </ol>
 
-When asked to <dfn abstract-op>update client hints from redirect if needed</dfn> with |request| as input, run the following steps:
+When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn> with |request| as input, run the following steps:
 
 <ol>
- <li>If |request|'s [=request/client=] is null, then abort these steps.
- <li>Let |clientHintsSet| be |request|'s <var ignore>client</var>'s [=environment settings object/client hints set=].
- <li><p><a for=list>For each</a> <var>hintName</var> of |clientHintsSet|:
+ <li><p><a for=list>For each</a> <var>hintToken</var> in the list of [=client hints token=]s:
  <ol>
-  <li><p>Set <var>hintName</var> to "Sec-" concatenated with <var>hintName</var>.
   <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">contains</a>
-  <var>hintName</var> and if the result of running [=Should request be allowed to use feature?=],
-  given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
-  policy-controlled feature</a>, returns <code>false</code>, then remove <var>hintName</var> from |request|'s [=request/header list=].
-  <li><p>Else if <var>request</var>'s <a for=request>header list</a> doesn't <a for="header list">contain</a>
-  <var>hintName</var> and if the result of running [=Should request be allowed to use feature?=],
-  given <var>request</var> and <var>hintName</var>’s <a href="#policy-controlled-features">associated
-  policy-controlled feature</a>, returns <code>true</code>, then add <var>hintName</var> to |request|'s [=request/header list=].
+  <var>hintName</var>, then remove <var>hintName</var> from |request|'s [=request/header list=].
  </ol>
 </ol>
 
@@ -254,9 +246,9 @@ Integration with Fetch {#fetch}
 
 This specification integrates with the [[!FETCH]] specification by patching the algorithms below:
 
-In [=Fetching=], after step 1.6, run [$append client hints to request$] with the [=relevant settings object=] and |request| as input.
+In <a spec=FETCH>Main Fetch</a>, after step 9, run [$append client hints to request$] with the [=relevant settings object=] and |request| as input.
 
-In [=HTTP-redirect fetch=], after step 7, run [$update client hints from redirect if needed$] with |request| as input.
+In [=HTTP-redirect fetch=], after step 11, run [$remove client hints from redirect if needed$] with |request| as input.
 
 Feature Registry {#registry}
 ==========
