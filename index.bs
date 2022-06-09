@@ -169,12 +169,16 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
  <li>Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=].
  <li>Let |delegateCHValue| be the value of |metaElement|'s <{meta/content}> attribute.
  <li>Let |policyDirective| be the result of running [$PERMISSIONS-POLICY/parse-policy-directive$] on |delegateCHValue| and the [=url/origin=] of the |metaElement|'s node document.
+ <li>For each |feature|->|allowList| of |policyDirective|:
  <ol>
-  <li>For each |feature|->|allowList| of |policyDirective|:
   <li>If |feature| is not a [=client hints token=], then continue.
   <li>If |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]] is `*`, then continue.
-  <li>If |allowList| is not an [=url/origin=], then continue.
-  <li>[=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allowList| to |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]].
+  <li>Let |filteredAllowList| be an empty [=set=].
+  <li>For each |item| in |allowList|:
+  <ol>
+    <li>If |item| is [=url/origin=] then [=set/Append=] |item| to |filteredAllowList|.
+  </ol>
+  <li>[=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |filteredAllowList| to |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]].
  </ol>
 </ol>
 
