@@ -152,31 +152,32 @@ When asked to <dfn abstract-op>update the Client Hints set</dfn> given a |settin
  <li>[=Add a new Accept-CH cache entry=] with |response|'s [=url/origin=] and |settingsObject|'s [=environment settings object/client hints set=].
 </ol>
 
-<dfn>Delegate-CH</dfn> {#delegate-ch-algo}
+<dfn>Accept-CH state</dfn> (`name="accept-ch"`) {#accept-ch-state-algo}
 --------
 
-Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=].
+Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=]. After this algorithm runs once, no further modification to the [=environment settings object/client hints set=] can occur without reloading the page.
 
 <ol>
  <li>Let |metaElement| be the <{meta}> element.
- <li>If any <{link}> or <{script}> elements have begun to execute, then return.
- <li>If |metaElement| has no <{meta/name}> attribute, or if that attribute's value is not `delegate-ch`, then return.
+ <li>If |metaElement| is not a child of a <{head}> element, then return.
  <li>If |metaElement| has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
+ <li>If |metaElement| has any <a href="https://dom.spec.whatwg.org/#concept-tree-preceding">preceding</a> <a href="https://dom.spec.whatwg.org/#concept-tree-sibling">sibling</a> <{link}> or <{script}> elements (or if any <{link}> or <{script}> elements have begun to execute), then return.
+ <li>Let |acceptCHValue| be the value of |metaElement|'s <{meta/content}> attribute.
  <li>Let |settingsObject| be |metaElement|'s [=relevant settings object=].
+ <li>Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=]
  <li>If |settingsObject| is a [=non-secure context=], abort these steps.
  <li>Let |browsingContext| be |settingsObject|'s  [=environment settings object/global object=]'s [=Window/browsing context=].
  <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
- <li>Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=].
- <li>Let |delegateCHValue| be the value of |metaElement|'s <{meta/content}> attribute.
- <li>Let |policyDirective| be the result of running [$PERMISSIONS-POLICY/parse-policy-directive$] on |delegateCHValue| and the [=url/origin=] of the |metaElement|'s node document.
+ <li>Let |policyDirective| be the result of running [$ parse-policy-directive $] on |acceptCHValue| and the [=url/origin=] of the |metaElement|'s node document.
  <ol>
   <li>For each |feature|->|allowList| of |policyDirective|:
   <li>If |feature| is not a [=client hints token=], then continue.
-  <li>If |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]] is `*`, then continue.
-  <li>If |allowList| is not an [=url/origin=], then continue.
+  <li>If |allowList| is the special value `*`, then continue.
   <li>[=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |allowList| to |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]].
  </ol>
 </ol>
+
+Note: `*` can still be inherited from the default policy or HTTP header permissions policy.
 
 Integration with HTML {#html}
 ===========
@@ -199,7 +200,7 @@ after step 6, add the following step:
 Standard metadata names {#standard-metadata-names}
 ------------
 For the section <a href="https://html.spec.whatwg.org/multipage/#standard-metadata-names">standard metadata names</a>,
-add a subsection named `delegate-ch` with the [=Delegate-CH|outlined explanation=].
+add a subsection named `accept-ch` with the [=Accept-CH state|outlined explanation=].
 
 Extending environment settings object {#extending-environment-settings-object}
 -------------
@@ -394,5 +395,4 @@ Terms {#terms}
 
 The following terms are defined in the HTTP specifications:
 <dfn href="https://tools.ietf.org/html/rfc7230#section-3.2">field-name</dfn>
-
 
