@@ -168,7 +168,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
  <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
  <li>Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=].
  <li>Let |delegateCHValue| be the value of |metaElement|'s <{meta/content}> attribute.
- <li>Let |policyDirective| be the result of running [[[permissions-policy#algo-parse-policy-directive]] on |delegateCHValue| and the [=url/origin=] of the |metaElement|'s node document.
+ <li>Let |policyDirective| be the result of running [[permissions-policy#algo-parse-policy-directive]] on |delegateCHValue| and the [=url/origin=] of the |metaElement|'s node document.
  <li>For each |feature|->|allowList| of |policyDirective|:
  <ol>
   <li>If |feature| is not a [=client hints token=], then continue.
