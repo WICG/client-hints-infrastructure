@@ -168,12 +168,12 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
  <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
  <li>Let |permissionsPolicy| be |metaElement|'s node document's [=Document/permissions policy=].
  <li>Let |delegateCHValue| be the value of |metaElement|'s <{meta/content}> attribute.
- <li>Let |policyDirective| be the result of running [[[permissions-policy#parse-policy-directive]] on |delegateCHValue| and the [=url/origin=] of the |metaElement|'s node document.
+ <li>Let |policyDirective| be the result of running [[[permissions-policy#algo-parse-policy-directive]] on |delegateCHValue| and the [=url/origin=] of the |metaElement|'s node document.
  <li>For each |feature|->|allowList| of |policyDirective|:
  <ol>
   <li>If |feature| is not a [=client hints token=], then continue.
   <li>If |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]] is `*`, then continue.
-  <li>Let |filteredAllowList| be an empty [=set=].
+  <li>Let |filteredAllowList| be an empty [=infra/set=].
   <li>For each |item| in |allowList|:
   <ol>
     <li>If |item| is [=url/origin=] then [=set/Append=] |item| to |filteredAllowList|.
@@ -197,7 +197,7 @@ Service Worker initialization {#service-worker-init}
 At <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
 after step 6, add the following step:
 <ol>
- <li>If <var ignore>worker global scope</var> implements {{ServiceWorkerGlobalScope}}, then set |settings object|'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
+ <li>If <var ignore>worker global scope</var> implements {{ServiceWorkerGlobalScope}}, then set settings object's [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
 </ol>
 
 Standard metadata names {#standard-metadata-names}
@@ -240,7 +240,7 @@ When asked to <dfn abstract-op>remove client hints from redirect if needed</dfn>
  <li><p><a for=list>For each</a> <var>hintToken</var> in the list of [=client hints token=]s:
  <ol>
   <li><p>If <var>request</var>'s <a for=request>header list</a> <a for="header list">contains</a>
-  <var>hintName</var>, then remove <var>hintName</var> from |request|'s [=request/header list=].
+  <var>hintToken</var>, then remove <var>hintToken</var> from |request|'s [=request/header list=].
  </ol>
 </ol>
 
