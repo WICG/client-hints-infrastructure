@@ -8,6 +8,7 @@ URL: https://wicg.github.io/client-hints-infrastructure
 Editor: Yoav Weiss, Google, yoav@yoav.ws, https://blog.yoav.ws
 Abstract: Specification of the Client Hints infrastructure and its integration with Fetch and HTML
 Markup Shorthands: markdown yes
+Repository: WICG/client-hints-infrastructure
 </pre>
 
 <pre class="link-defaults">
