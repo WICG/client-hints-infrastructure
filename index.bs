@@ -182,7 +182,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
  </ol>
 </ol>
      
-Issue(client-hints-infrastructure/issues#110): Clarify detection of <{link}>, <{style}>, or <{script}> element execution.
+Issue(110): Clarify detection of <{link}>, <{style}>, or <{script}> element execution.
 
 Integration with HTML {#html}
 ===========
