@@ -159,7 +159,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
 
 <ol>
  <li>Let |metaElement| be the <{meta}> element.
- <li>Issue(client-hints-infrastructure/issues#110): If any <{link}>, <{style}>, or <{script}> elements have begun to execute, then return.
+ <li>If any <{link}>, <{style}>, or <{script}> elements have begun to execute, then return.
  <li>If |metaElement| has no <{meta/name}> attribute, or if that attribute's value is not `delegate-ch`, then return.
  <li>If |metaElement| has no <{meta/content}> attribute, or if that attribute's value is the empty string, then return.
  <li>Let |settingsObject| be |metaElement|'s [=relevant settings object=].
@@ -181,6 +181,8 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
   <li>[=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |filteredAllowList| to |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]].
  </ol>
 </ol>
+     
+Issue(client-hints-infrastructure/issues#110): Clarify detection of <{link}>, <{style}>, or <{script}> element execution.
 
 Integration with HTML {#html}
 ===========
