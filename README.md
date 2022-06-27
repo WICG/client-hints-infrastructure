@@ -55,23 +55,31 @@ browser. The header's value is a comma separated list, where each value in that
 list represents a request header hint that the server is interested in
 receiving.
 
-When an `Accept-CH` opt-in is received on the top-level navigation, same-origin
-subresource requests on that page will receive the requested hints, unless the
-client has reasons to avoid sending that information to the server.
-
-#### Example
-
 If a server's response to a navigation request includes the `Accept-CH:
 foo, bar` header, same-origin subresource requests on the page will include the
-`Sec-Foo: foo-value` and `Sec-Bar: bar-value` request headers.
+`Sec-Foo: foo-value` and `Sec-Bar: bar-value` request headers unless the
+client has reasons to avoid sending that information to the server.
+
+### `Delegate-CH`
+
+The `Delegate-CH` `<meta>` HTML tag enables top level frames to request specific hints
+from the browser. The header's value is a semi-colon separated list, where each value in that
+list represents a request header hint that the server is interested in
+receiving.
+
+If the HTML response to a navigation request includes the `<meta http-equiv="Delegate-CH"
+value="Sec-Foo; Sec-Bar">` tag, same-origin subresource requests on the page will include
+the `Sec-Foo: foo-value` and `Sec-Bar: bar-value` request headers, unless the
+client has reasons to avoid sending that information to the server.
 
 ## Same-Origin Policy
 
-There are two important restrictions on the opt-in mechanism description above:
+There are three important restrictions on the opt-in mechanism description above:
 
 - opt-ins will only be granted when the opt-in headers are received with a
   top-level navigation resource
 - after the opt-in, hints will only be sent with same-origin requests
+- any `Delegate-CH` `<meta>` HTML tags injected by javascript will be ignored
 
 Why are these limitations important?
 
@@ -95,9 +103,9 @@ first party. And we certainly don't want them to be able to exfiltrate it for
 the entire third-party origin, beyond the lifetime of the current navigation.
 
 Therefore, by default, Client Hints opt-in is only valid when delivered on
-top-level navigation requests, and, by default, applies only to same-origin
-resources.  Cross-origin requests must only receive hints when explicit
-permission is given by the first-party origin.
+top-level navigation requests before any scripts execute, and, by default,
+applies only to same-origin resources. Cross-origin requests must only receive
+hints when explicit permission is given by the first-party origin.
 
 ## Cross-origin hint delegation
 
@@ -110,19 +118,25 @@ resource-specific, first-party sub-domains), cross-origin support is a vital
 part of Client Hints.
 
 In order to support these use-cases, we have defined delegation of Client Hints
-to specific cross-origin hosts, using Feature Policy.
+to specific cross-origin hosts, using a HTTP Permissions Policy or HTML Feature Policy.
 
-Servers can opt-in to such delegation by applying `ch-` prefixed feature policies for
-the desired hints.
+### HTTP Example
 
-### Example
-
-A first-party server sending the following header `Feature-Policy: ch-example
-foo.com bar.com; ch-example-2 foobar.org` as part of a top-level navigation
+A first-party server sending the following header `Permissions-Policy: ch-example=(
+"foo.com" "bar.com"), ch-example-2="foobar.org"` as part of a top-level navigation
 response will delegate the `example` hint to the "foo.com" and "bar.com"
-origins and `example-2` to the "foobar.org" origin.  So, the client would know
+origins and `example-2` to the "foobar.org" origin. So, the client would know
 that it had explicit permission from the first party to send these hints to
 these third parties, so that these third parties could perform content
+adaptation based on them.
+
+### HTML Example
+
+A top level frame sending the following `<meta>` HTML tag: `<meta accept-ch="Delegate-CH"
+value="sec-ch-example foo.com bar.com; sec-ch-example-2 foobar.org">` will delegate the
+`example` hint to the "foo.com" and "bar.com" origins and `example-2` to the "foobar.org"
+origin. So, the client would know that it had explicit permission from the first party to
+send these hints to these third parties, so that these third parties could perform content
 adaptation based on them.
 
 ### Privacy implications
@@ -136,6 +150,10 @@ information is already freely available in the equivalent Javascript APIs.
 Similarly, third party delegation is safe because first parties are already able to use
 other means (such as link decoration), to achieve the same information sharing
 with third parties, in less convenient and performant ways.
+
+Further, the HTML delegation can only occur when the `<meta>` HTML tag is not injected
+via javascript, ensuring third parties cannot delegate hints in ways the first-party
+did not permit.
 
 In short, first parties already have the power to share information about the
 client with third parties. Third party delegation of Client Hints provides a
