@@ -19,8 +19,8 @@ delegation mechanism:
   secure-transport origins, instead of appending such data on every outgoing
   request.
 * Origin opt-in applies to same-origin assets only and delivery to third-party
-  origins is subject to explicit first party delegation via Feature Policy,
-  enabling tight control over which third party origins can access requested
+  origins is subject to explicit third-party delegation via Feature Policy,
+  enabling tight control over which third-party origins can access requested
   hint data.
 
 The goal of Client Hints is to **reduce passive fingerprinting** on the web
@@ -100,7 +100,7 @@ ultimate control over which servers get what information.
 Client Hints also allow this information to be collected on *passive*
 sub-resources (e.g.  images). We don't want third parties to be able to
 exfiltrate data about the client/user without explicit permission from the
-first party. And we certainly don't want them to be able to exfiltrate it for
+first-party origin. And we certainly don't want them to be able to exfiltrate it for
 the entire third-party origin, beyond the lifetime of the current navigation.
 
 Therefore, by default, Client Hints opt-in is only valid when delivered on
@@ -114,7 +114,7 @@ Why do we need cross-origin Client Hints?
 
 As the purpose of for client hints is to enable content negotiation at scale, and
 as many optimization services are offered over different origins than the main
-page's origin(e.g., CDNs, resource-specific hosting services, or dedicated,
+page's origin (e.g., CDNs, resource-specific hosting services, or dedicated,
 resource-specific, first-party sub-domains), cross-origin support is a vital
 part of Client Hints.
 
@@ -127,7 +127,7 @@ A server sending the following header `Permissions-Policy: ch-example=(
 "foo.com" "bar.com"), ch-example-2="foobar.org"` as part of a top-level navigation
 response will delegate the `example` hint to the "foo.com" and "bar.com"
 origins and `example-2` to the "foobar.org" origin. So, the client would know
-that it had explicit permission from the first party to send these hints to
+that it had explicit permission from the first-party to send these hints to
 these third parties, so that these third parties could perform content
 adaptation based on them.
 
@@ -136,28 +136,28 @@ adaptation based on them.
 A top level frame containing the following `<meta>` HTML tag: `<meta accept-ch="Delegate-CH"
 value="sec-ch-example foo.com bar.com; sec-ch-example-2 foobar.org">` will delegate the
 `example` hint to the "foo.com" and "bar.com" origins and `example-2` to the "foobar.org"
-origin. So, the client would know that it had explicit permission from the first party to
+origin. So, the client would know that it had explicit permission from the first-party origin to
 send these hints to these third parties, so that these third parties could perform content
 adaptation based on them.
 
 ### Privacy implications
 
-Why is it privacy-safe for pages to delegate hints to certain third party
+Why is it privacy-safe for pages to delegate hints to certain third-party
 origins?
 
 Since we're treating Client Hints as an active fingerprinting equivalent, we
 are comfortable with the information it exposes to first-party servers, as the same
 information is already freely available in the equivalent Javascript APIs.
-Similarly, third party delegation is safe because first parties are already able to use
+Similarly, third-party delegation is safe because first parties are already able to use
 other means (such as link decoration), to achieve the same information sharing
 with third parties, in less convenient and performant ways.
 
 Further, the HTML delegation can only occur when the `<meta>` HTML tag is not injected
-via javascript, ensuring third parties cannot delegate hints in ways the first-party
+via javascript, ensuring third parties cannot delegate hints in ways the first-party origin
 did not permit.
 
 In short, first parties already have the power to share information about the
-client with third parties. Third party delegation of Client Hints provides a
+client with third parties. Third-party delegation of Client Hints provides a
 cleaner pathway for that sharing, and ensures that first parties, and
 ultimately clients, are aware and in control of what is being shared with who.
 
@@ -199,8 +199,8 @@ of Client Hints:
 * Server opt-ins must be delivered on a top-level navigation request, over a
   secure connection.
 * Hints are only delivered with same-origin requests, over a secure connection.
-* If the first party wants hints to be delivered to certain third-party origins,
-  the first-party can explicitly delegate specific hints to specific origins.
+* If the first-party origin wants hints to be delivered to certain third-party origins,
+  the first-party origin can explicitly delegate specific hints to specific origins.
 * Hints are `Sec-` prefixed, to provide servers with more confidence regarding
   the values they deliver, as well as to avoid legacy server bugs.
 
