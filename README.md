@@ -63,8 +63,9 @@ client has reasons to avoid sending that information to the server.
 ### `Delegate-CH`
 
 The `Delegate-CH` `<meta>` HTML tag enables top level frames to request specific hints
-from the browser. The header's value is a semi-colon separated list, where each value in that
-list represents a request header hint that the server is interested in
+from the browser. The header's value is a semi-colon separated list (akin to the
+[Permissions Policy syntax](https://www.w3.org/TR/permissions-policy/#algo-parse-policy-directive)),
+where each value in that list represents a request header hint that the server is interested in
 receiving.
 
 If the HTML response to a navigation request includes the `<meta http-equiv="Delegate-CH"
