@@ -123,7 +123,7 @@ to specific third-party origins, using a HTTP Permissions Policy or HTML Feature
 
 ### HTTP Example
 
-A first-party server sending the following header `Permissions-Policy: ch-example=(
+A server sending the following header `Permissions-Policy: ch-example=(
 "foo.com" "bar.com"), ch-example-2="foobar.org"` as part of a top-level navigation
 response will delegate the `example` hint to the "foo.com" and "bar.com"
 origins and `example-2` to the "foobar.org" origin. So, the client would know
