@@ -153,8 +153,8 @@ other means (such as link decoration), to achieve the same information sharing
 with third parties, in less convenient and performant ways.
 
 Further, the HTML delegation can only occur when the `<meta>` HTML tag is not injected
-via javascript, ensuring third parties cannot delegate hints in ways the first-party origin
-did not permit.
+via javascript, ensuring scripts cannot delegate hints in ways that relax the restrictions
+the top-level content author did not permit.
 
 In short, first parties already have the power to share information about the
 client with third parties. Third-party delegation of Client Hints provides a
