@@ -106,7 +106,7 @@ the entire third-party origin, beyond the lifetime of the current navigation.
 Therefore, by default, Client Hints opt-in is only valid when delivered on
 top-level navigation requests before any scripts execute, and, by default,
 applies only to same-origin resources. Cross-origin requests must only receive
-hints when explicit permission is given by the first-party origin.
+hints when explicit permission is given by the top-level document's origin.
 
 ## Cross-origin hint delegation
 
@@ -119,7 +119,7 @@ resource-specific, first-party sub-domains), cross-origin support is a vital
 part of Client Hints.
 
 In order to support these use-cases, we have defined delegation of Client Hints
-to specific cross-origin hosts, using a HTTP Permissions Policy or HTML Feature Policy.
+to specific third-party origins, using a HTTP Permissions Policy or HTML Feature Policy.
 
 ### HTTP Example
 
@@ -199,8 +199,8 @@ of Client Hints:
 * Server opt-ins must be delivered on a top-level navigation request, over a
   secure connection.
 * Hints are only delivered with same-origin requests, over a secure connection.
-* If the first party wants hints to be delivered to certain third-party hosts,
-  the first-party can explicitly delegate specific hints to specific hostnames.
+* If the first party wants hints to be delivered to certain third-party origins,
+  the first-party can explicitly delegate specific hints to specific origins.
 * Hints are `Sec-` prefixed, to provide servers with more confidence regarding
   the values they deliver, as well as to avoid legacy server bugs.
 
