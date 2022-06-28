@@ -133,7 +133,7 @@ adaptation based on them.
 
 ### HTML Example
 
-A top level frame sending the following `<meta>` HTML tag: `<meta accept-ch="Delegate-CH"
+A top level frame containing the following `<meta>` HTML tag: `<meta accept-ch="Delegate-CH"
 value="sec-ch-example foo.com bar.com; sec-ch-example-2 foobar.org">` will delegate the
 `example` hint to the "foo.com" and "bar.com" origins and `example-2` to the "foobar.org"
 origin. So, the client would know that it had explicit permission from the first party to
