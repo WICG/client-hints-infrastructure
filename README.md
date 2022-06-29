@@ -1,7 +1,7 @@
 # Explainer
 
 Client Hints is collection of HTTP and user-agent features that enables
-privacy-preserving, proactive content negotiation with an explicit third-party
+privacy-preserving, proactive content negotiation with an explicit cross-origin
 delegation mechanism:
 
 * Proactive content negotiation at the HTTP layer (defined in the
@@ -18,9 +18,9 @@ delegation mechanism:
   hint data (e.g. user agent and device characteristics) selectively to
   secure-transport origins, instead of appending such data on every outgoing
   request.
-* Origin opt-in applies to same-origin assets only and delivery to third-party
-  origins is subject to explicit third-party delegation via Feature Policy,
-  enabling tight control over which third-party origins can access requested
+* Origin opt-in applies to same-origin assets only and delivery to cross-origin
+  origins is subject to explicit cross-origin delegation via Feature Policy,
+  enabling tight control over which cross-origin origins can access requested
   hint data.
 
 The goal of Client Hints is to **reduce passive fingerprinting** on the web
@@ -98,10 +98,10 @@ content-negotiation purposes and ensures that authors and user agents have
 ultimate control over which servers get what information.
 
 Client Hints also allow this information to be collected on *passive*
-sub-resources (e.g.  images). We don't want third parties to be able to
+sub-resources (e.g.  images). We don't want cross-origin origins to be able to
 exfiltrate data about the client/user without explicit permission from the
-first-party origin. And we certainly don't want them to be able to exfiltrate it for
-the entire third-party origin, beyond the lifetime of the current navigation.
+top-level origin. And we certainly don't want them to be able to exfiltrate it
+cross-origin, beyond the lifetime of the current navigation.
 
 Therefore, by default, Client Hints opt-in is only valid when delivered on
 top-level navigation requests before any scripts execute, and, by default,
@@ -119,7 +119,7 @@ resource-specific, first-party sub-domains), cross-origin support is a vital
 part of Client Hints.
 
 In order to support these use-cases, we have defined delegation of Client Hints
-to specific third-party origins, using a HTTP Permissions Policy or HTML Feature Policy.
+cross-origin, using a HTTP Permissions Policy or HTML Feature Policy.
 
 ### HTTP Example
 
@@ -127,8 +127,8 @@ A server sending the following header `Permissions-Policy: ch-example=(
 "foo.com" "bar.com"), ch-example-2="foobar.org"` as part of a top-level navigation
 response will delegate the `example` hint to the "foo.com" and "bar.com"
 origins and `example-2` to the "foobar.org" origin. So, the client would know
-that it had explicit permission from the first-party to send these hints to
-these third parties, so that these third parties could perform content
+that it had explicit permission from the top-level origin to send these hints
+cross-origin, so that these cross-origin origins could perform content
 adaptation based on them.
 
 ### HTML Example
@@ -136,29 +136,28 @@ adaptation based on them.
 A top level frame containing the following `<meta>` HTML tag: `<meta accept-ch="Delegate-CH"
 value="sec-ch-example foo.com bar.com; sec-ch-example-2 foobar.org">` will delegate the
 `example` hint to the "foo.com" and "bar.com" origins and `example-2` to the "foobar.org"
-origin. So, the client would know that it had explicit permission from the first-party origin to
-send these hints to these third parties, so that these third parties could perform content
+origin. So, the client would know that it had explicit permission from the top-level origin to
+send these hints cross-origin, so that these cross-origin origins could perform content
 adaptation based on them.
 
 ### Privacy implications
 
-Why is it privacy-safe for pages to delegate hints to certain third-party
-origins?
+Why is it privacy-safe for pages to delegate hints to certain cross-origin origins?
 
 Since we're treating Client Hints as an active fingerprinting equivalent, we
-are comfortable with the information it exposes to first-party servers, as the same
+are comfortable with the information it exposes to the top-level origin, as the same
 information is already freely available in the equivalent Javascript APIs.
-Similarly, third-party delegation is safe because first parties are already able to use
+Similarly, cross-origin delegation is safe because top-level origin are already able to use
 other means (such as link decoration), to achieve the same information sharing
-with third parties, in less convenient and performant ways.
+cross-origin, in less convenient and performant ways.
 
 Further, the HTML delegation can only occur when the `<meta>` HTML tag is not injected
 via javascript, ensuring scripts cannot delegate hints in ways that relax the restrictions
 the top-level content author did not permit.
 
-In short, first parties already have the power to share information about the
-client with third parties. Third-party delegation of Client Hints provides a
-cleaner pathway for that sharing, and ensures that first parties, and
+In short, top-level origins already have the power to share information about the
+client cross-origin. Cross-origin delegation of Client Hints provides a
+cleaner pathway for that sharing, and ensures that top-level origin, and
 ultimately clients, are aware and in control of what is being shared with who.
 
 ## `Sec-` prefix
@@ -199,8 +198,8 @@ of Client Hints:
 * Server opt-ins must be delivered on a top-level navigation request, over a
   secure connection.
 * Hints are only delivered with same-origin requests, over a secure connection.
-* If the first-party origin wants hints to be delivered to certain third-party origins,
-  the first-party origin can explicitly delegate specific hints to specific origins.
+* If the top-level origin wants hints to be delivered to certain cross-origin origins,
+  the top-level origin can explicitly delegate specific hints to specific origins.
 * Hints are `Sec-` prefixed, to provide servers with more confidence regarding
   the values they deliver, as well as to avoid legacy server bugs.
 
