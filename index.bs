@@ -330,16 +330,16 @@ The <dfn export>low entropy hint table</dfn> below defines hints that are only e
  <tbody>
  <tr>
   <td>`Save-Data`
-  <td>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
+  <td>a suitable <a href="https://wicg.github.io/savedata/#save-data-request-header-field">Save-Data value</a>
  <tr>
   <td>`Sec-CH-UA`
-  <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua>UA value</a>
+  <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua">UA value</a>
  <tr>
   <td>`Sec-CH-UA-Mobile`
-  <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile>Mobile value</a>
+  <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile">Mobile value</a>
  <tr>
   <td>`Sec-CH-UA-Platform`
-  <td>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform>Platform value</a>
+  <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform">Platform value</a>
 </table>
 
 Note: If the value transmitted by `Save-Data` is the empty string, the header will be omitted entirely.
@@ -351,7 +351,7 @@ Find client hint value {#find-client-hint-value-section}
 When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch on |hint| and return the result:
  <dl class=switch>
   <dt>`Save-Data`
-  <dd>a suitable <a href=https://wicg.github.io/savedata/#save-data-request-header-field>Save-Data value</a>
+  <dd>a suitable <a href="https://wicg.github.io/savedata/#save-data-request-header-field">Save-Data value</a>
   <dt>`DPR`
   <dd>a suitable <a href>DPR value</a>
   <dt>`Viewport-Width`
@@ -361,33 +361,33 @@ When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch o
   <dt>`Width`
   <dd>a suitable <a href>Width value</a>
   <dt>`Device-Memory`
-  <dd>a suitable <a href=https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header>Device-Memory value</a>
+  <dd>a suitable <a href="https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header">Device-Memory value</a>
   <dt>`RTT`
-  <dd>a suitable <a href=https://wicg.github.io/netinfo/#rtt-request-header-field>RTT value</a>
+  <dd>a suitable <a href="https://wicg.github.io/netinfo/#rtt-request-header-field">RTT value</a>
   <dt>`Downlink`
-  <dd>a suitable <a href=https://wicg.github.io/netinfo/#downlink-request-header-field>Downlink value</a>
+  <dd>a suitable <a href="https://wicg.github.io/netinfo/#downlink-request-header-field">Downlink value</a>
   <dt>`ECT`
-  <dd>a suitable <a href=https://wicg.github.io/netinfo/#ect-request-header-field>ECT value</a>
+  <dd>a suitable <a href="https://wicg.github.io/netinfo/#ect-request-header-field">ECT value</a>
   <dt>`Prefers-Color-Scheme`
-  <dd>a suitable <a href=https://wicg.github.io/user-preference-media-features-headers/#sec-ch-prefers-color-scheme>color theme value</a>
+  <dd>a suitable <a href="https://wicg.github.io/user-preference-media-features-headers/#sec-ch-prefers-color-scheme">color theme value</a>
   <dt>`UA`
-  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua>UA value</a>
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua">UA value</a>
   <dt>`UA-Arch`
-  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-arch>Arch value</a>
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-arch">Arch value</a>
   <dt>`UA-Bitness`
-  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-bitness>Bitness value</a>
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-bitness">Bitness value</a>
   <dt>`UA-Full-Version`
-  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-full-version>Full-Version value</a>
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-full-version">Full-Version value</a>
   <dt>`UA-Full-Version-List`
-  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-full-version-list>Full-Version-List value</a>
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-full-version-list">Full-Version-List value</a>
   <dt>`UA-Mobile`
-  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile>Mobile value</a>
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-mobile">Mobile value</a>
   <dt>`UA-Model`
-  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-model>Model value</a>
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-model">Model value</a>
   <dt>`UA-Platform`
-  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform>Platform value</a>
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform">Platform value</a>
   <dt>`UA-Platform-Version`
-  <dd>a suitable <a href=https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform-version>Platform-Version value</a>
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform-version">Platform-Version value</a>
  </dl>
 
 Issue: Links for image features are broken, need to actually define that and link to them.
