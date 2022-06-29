@@ -23,7 +23,7 @@ spec:fetch; type:dfn; text:client
 spec:ServiceWorker; type:dfn; for:/; text:
 spec:url; type:dfn; for:url; text:origin
 </pre>
- 
+
 <pre class=biblio>
 {
     "PERMISSIONS-POLICY": {
