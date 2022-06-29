@@ -12,9 +12,6 @@ Repository: WICG/client-hints-infrastructure
 </pre>
 
 <pre class="link-defaults">
-spec:infra; type:dfn; for:/; text:list
-spec:infra; type:dfn; for:list; text:append
-spec:infra; type:dfn; for:set; text:append
 spec:html; type:element; text:link
 spec:html; type:element; text:script
 spec:fetch; type:dfn; for:/; text:fetch
@@ -22,6 +19,7 @@ spec:fetch; type:dfn; for:Request; text:request
 spec:fetch; type:dfn; text:client
 spec:ServiceWorker; type:dfn; for:/; text:
 spec:url; type:dfn; for:url; text:origin
+spec:html; type:element; text:style
 </pre>
 
 <pre class=biblio>
@@ -174,7 +172,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
  <ol>
   <li>If |feature| is not a [=client hints token=], then continue.
   <li>If |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]] is `*`, then continue.
-  <li>Let |filteredAllowList| be an empty [=infra/set=].
+  <li>Let |filteredAllowList| be an empty [=ordered set=].
   <li>For each |item| in |allowList|:
   <ol>
     <li>If |item| is [=url/origin=] then [=set/Append=] |item| to |filteredAllowList|.
@@ -200,7 +198,7 @@ Service Worker initialization {#service-worker-init}
 At <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
 after step 6, add the following step:
 <ol>
- <li>If <var ignore>worker global scope</var> implements {{ServiceWorkerGlobalScope}}, then set |settings object|'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
+ <li>If <var ignore>worker global scope</var> implements {{ServiceWorkerGlobalScope}}, then set <var ignore="">settings object</var>'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
 </ol>
 
 Standard metadata names {#standard-metadata-names}
