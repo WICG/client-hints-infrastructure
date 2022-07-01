@@ -224,7 +224,7 @@ following steps:
  <li>Run [=retrieve the client hints set=] with |settingsObject|.
  <li>For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=], [=set/append=] |lowEntropyHint| to |hintSet|.
  <li>If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
-|request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
+|settingsObject|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
 |hintSet|.
  <li>For each |hintName| in |hintSet|:
  <ol>
@@ -392,7 +392,10 @@ Issue: Links for image features are broken, need to actually define that and lin
 
 Security and Privacy considerations {#privacy}
 ===========
-See [[!RFC8942]].
+
+A [=user agent=] is able to decide which hints it provides, and can provide an empty string or refuse to return a hint entirely.
+
+For more information see [[!RFC8942]].
 
 Terms {#terms}
 ====
