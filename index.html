@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 37b7e7e68, updated Fri May 27 15:08:11 2022 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="5251c9b8bdb23a8dc9fd7675bfef14655f4d9459" name="document-revision">
+  <meta content="6bd54dd53f7a69722f927d3c415f25a493ac9977" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -455,7 +455,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-06-29">29 June 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-07-06">6 July 2022</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -707,12 +707,14 @@ following steps:</p>
     <li>Let <var>hintSet</var> be an empty <a data-link-type="dfn" href="#client-hints-set" id="ref-for-client-hints-set④">client hints set</a>. 
     <li>Run <a data-link-type="dfn" href="#retrieve-the-client-hints-set" id="ref-for-retrieve-the-client-hints-set①">retrieve the client hints set</a> with <var>settingsObject</var>. 
     <li>For each <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token④">client hints token</a> <var>lowEntropyHint</var> in the registry’s <a data-link-type="dfn" href="#low-entropy-hint-table" id="ref-for-low-entropy-hint-table">low entropy hint table</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append⑤">append</a> <var>lowEntropyHint</var> to <var>hintSet</var>. 
-    <li>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a> is not null, then for each <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token⑤">client hints token</a> <var>requestHint</var> in <var>request</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set⑦">client hints set</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append⑥">append</a> <var>requestHint</var> to <var>hintSet</var>. 
+    <li>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a> is not null, then for each <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token⑤">client hints token</a> <var>requestHint</var> in <var>settingsObject</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set⑦">client hints set</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append⑥">append</a> <var>requestHint</var> to <var>hintSet</var>. 
     <li>
      For each <var>hintName</var> in <var>hintSet</var>: 
      <ol>
       <li>If <var>request</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> for a "document" <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> and if the result of running <a href="https://www.w3.org/TR/permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.11 Should request be allowed to use feature?</a> given <var>request</var> and <var>hintName</var>’s associated feature in <a href="#policy-controlled-features">§ 7.2 Policy-controlled features</a> returns <code>false</code>, then continue to next <var>hintName</var>. 
+      <li>If the user agent decides, in an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined">implementation-defined</a> way (see <a href="#privacy">§ 8 Security and Privacy considerations</a>), to omit this hint then continue. 
       <li>Let <var>value</var> be the result of running <a data-link-type="dfn" href="#find-client-hint-value" id="ref-for-find-client-hint-value">find client hint value</a> with <var>hintName</var>. 
+      <li>If the user agent decides, in an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined①">implementation-defined</a> way (see <a href="#privacy">§ 8 Security and Privacy considerations</a>), to modify <var>value</var> then do so. 
       <li><a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list-append" id="ref-for-concept-header-list-append">append</a> <var>hintName</var>/<var>value</var> to the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-header-list" id="ref-for-concept-request-header-list①">header list</a>. 
      </ol>
    </ol>
@@ -848,7 +850,9 @@ This is done to reduce redundant header information sent by default.</p>
    </dl>
    <p class="issue" id="issue-707decdc"><a class="self-link" href="#issue-707decdc"></a> Links for image features are broken, need to actually define that and link to them.</p>
    <h2 class="heading settled" data-level="8" id="privacy"><span class="secno">8. </span><span class="content">Security and Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
-    See <a data-link-type="biblio" href="#biblio-rfc8942">[RFC8942]</a>. 
+   <p>This specification exposes information regarding the user’s preferences and agent, which can be used as an active fingerprinting vector. <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#user-agent" id="ref-for-user-agent">User agents</a> implementing this specification need to be aware of that, and take that into consideration when deciding whether to implement specific hints,
+modify their returned values for a given hint, or omit the hint entirely.</p>
+   <p>For example, the user might have a site specific setting to override or disable specific client hints to reduce the potential for fingerprinting.</p>
    <h2 class="heading settled" data-level="9" id="terms"><span class="secno">9. </span><span class="content">Terms</span><a class="self-link" href="#terms"></a></h2>
    <p>The following terms are defined in the HTTP specifications: <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport href="https://tools.ietf.org/html/rfc7230#section-3.2" id="field-name">field-name</dfn></p>
   </main>
@@ -1145,6 +1149,12 @@ This is done to reduce redundant header information sent by default.</p>
     <li><a href="#ref-for-list-iterate">5. Request processing</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-implementation-defined">
+   <a href="https://infra.spec.whatwg.org/#implementation-defined">https://infra.spec.whatwg.org/#implementation-defined</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-implementation-defined">5. Request processing</a> <a href="#ref-for-implementation-defined①">(2)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-map-key">
    <a href="https://infra.spec.whatwg.org/#map-key">https://infra.spec.whatwg.org/#map-key</a><b>Referenced in:</b>
    <ul>
@@ -1169,6 +1179,12 @@ This is done to reduce redundant header information sent by default.</p>
    <a href="https://infra.spec.whatwg.org/#map-set">https://infra.spec.whatwg.org/#map-set</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-map-set">3.2. Accept-CH cache</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-user-agent">
+   <a href="https://infra.spec.whatwg.org/#user-agent">https://infra.spec.whatwg.org/#user-agent</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-user-agent">8. Security and Privacy considerations</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-default-allowlist">
@@ -1242,10 +1258,12 @@ This is done to reduce redundant header information sent by default.</p>
      <li><span class="dfn-paneled" id="term-for-byte-lowercase">byte-lowercase</span>
      <li><span class="dfn-paneled" id="term-for-list-clone">clone</span>
      <li><span class="dfn-paneled" id="term-for-list-iterate">for each</span>
+     <li><span class="dfn-paneled" id="term-for-implementation-defined">implementation-defined</span>
      <li><span class="dfn-paneled" id="term-for-map-key">key</span>
      <li><span class="dfn-paneled" id="term-for-ordered-map">ordered map</span>
      <li><span class="dfn-paneled" id="term-for-ordered-set">ordered set</span>
      <li><span class="dfn-paneled" id="term-for-map-set">set <small>(for map)</small></span>
+     <li><span class="dfn-paneled" id="term-for-user-agent">user agent</span>
     </ul>
    <li>
     <a data-link-type="biblio">[permissions-policy]</a> defines the following terms:
