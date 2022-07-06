@@ -230,9 +230,9 @@ following steps:
  <ol>
    <li>If |request| is not a [=navigation request=] for a "document" [=request/destination=] and if the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
    given |request| and |hintName|'s associated feature in [[#policy-controlled-features]] returns `false`, then continue to next |hintName|.
-   <li>If |hintName| should be ommitted (see [[#privacy]]) then continue.
+   <li>If the user agent decides, in an [=implementation defined=] way (see [[#privacy]]), to omit this hint then continue.
    <li>Let |value| be the result of running [=find client hint value=] with |hintName|.
-   <li>If |hintName| should be lied about (see [[#privacy]]) then let |value| equal that lie.
+   <li>If the user agent decides, in an [=implementation defined=] way (see [[#privacy]]), to modify |value| then do so.
    <li>[=header list/append=] |hintName|/|value| to the [=request/header list=].
  </ol>
 </ol>
@@ -397,9 +397,9 @@ Security and Privacy considerations {#privacy}
 
 This specification exposes information regarding the user's preferences and agent, which can be used as an active fingerprinting vector.
 [=User agents=] implementing this specification need to be aware of that, and take that into consideration when deciding whether to implement specific hints,
-lie in the value returned for a given hint, or ommit the hint entirely.
+modify their returned values for a given hint, or omit the hint entirely.
 
-For example, [=user agents=] may decide to omit or lie about the user's preferences when the user is in a private browsing mode.
+For example, the user might have a site specific setting to override or disable specific client hints to reduce the potential for fingerprinting.
 
 Terms {#terms}
 ====
