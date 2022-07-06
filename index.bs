@@ -224,13 +224,15 @@ following steps:
  <li>Run [=retrieve the client hints set=] with |settingsObject|.
  <li>For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=], [=set/append=] |lowEntropyHint| to |hintSet|.
  <li>If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
-|request|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
+|settingsObject|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
 |hintSet|.
  <li>For each |hintName| in |hintSet|:
  <ol>
    <li>If |request| is not a [=navigation request=] for a "document" [=request/destination=] and if the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
    given |request| and |hintName|'s associated feature in [[#policy-controlled-features]] returns `false`, then continue to next |hintName|.
+   <li>If the user agent decides, in an [=implementation-defined=] way (see [[#privacy]]), to omit this hint then continue.
    <li>Let |value| be the result of running [=find client hint value=] with |hintName|.
+   <li>If the user agent decides, in an [=implementation-defined=] way (see [[#privacy]]), to modify |value| then do so.
    <li>[=header list/append=] |hintName|/|value| to the [=request/header list=].
  </ol>
 </ol>
@@ -392,7 +394,12 @@ Issue: Links for image features are broken, need to actually define that and lin
 
 Security and Privacy considerations {#privacy}
 ===========
-See [[!RFC8942]].
+
+This specification exposes information regarding the user's preferences and agent, which can be used as an active fingerprinting vector.
+[=User agents=] implementing this specification need to be aware of that, and take that into consideration when deciding whether to implement specific hints,
+modify their returned values for a given hint, or omit the hint entirely.
+
+For example, the user might have a site specific setting to override or disable specific client hints to reduce the potential for fingerprinting.
 
 Terms {#terms}
 ====
