@@ -320,9 +320,13 @@ the following [=policy-controlled features=]:
 
 Issue: Should we tie low-entropy-ness to allowlists, generally?
 
-Low entropy hint table {#low-entropy-table}
+Low-entropy hint table {#low-entropy-table}
 -------
-The <dfn export>low entropy hint table</dfn> below defines hints that are only exposing low amounts of entropy.
+The <dfn export lt="low-entropy hint table|low entropy hint table">low-entropy hint table</dfn>
+below defines hints that are only exposing low amounts of entropy.
+
+A <dfn export>high-entropy client hint</dfn> is a client hint that is not in the
+<a>low-entropy hint table</a>.
 
 <table>
  <thead>
