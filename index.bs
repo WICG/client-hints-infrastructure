@@ -285,8 +285,9 @@ A <dfn export>client hints token</dfn> is a [=byte-lowercase=] representation of
 `Sec-CH-UA-Full-Version-List`,
 `Sec-CH-UA-Mobile`,
 `Sec-CH-UA-Model`,
-`Sec-CH-UA-Platform`, or
-`Sec-CH-UA-Platform-Version`,
+`Sec-CH-UA-Platform`,
+`Sec-CH-UA-Platform-Version`, or
+`Sec-CH-UA-WoW64`.
 
 Note: A client hints token will also match the request header sent by the user agent when
 appropriate (as determined by the <a href="#request-processing">request processing algorithm</a>).
@@ -317,6 +318,7 @@ the following [=policy-controlled features=]:
 - <code><dfn export>ch-ua-model</dfn></code> which has a [=default allowlist=] of `'self'`
 - <code><dfn export>ch-ua-platform</dfn></code> which has a [=default allowlist=] of `'*'`
 - <code><dfn export>ch-ua-platform-version</dfn></code> which has a [=default allowlist=] of `'self'`
+- <code><dfn export>ch-ua-wow64</dfn></code> which has a [=default allowlist=] of `'self'`
 
 Issue: Should we tie low-entropy-ness to allowlists, generally?
 
@@ -396,6 +398,8 @@ When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch o
   <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform">Platform value</a>
   <dt>`UA-Platform-Version`
   <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform-version">Platform-Version value</a>
+  <dt>`UA-WoW64`
+  <dd>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-wow64">WoW64 value</a>
  </dl>
 
 Issue: Links for image features are broken, need to actually define that and link to them.
