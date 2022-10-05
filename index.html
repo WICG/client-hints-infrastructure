@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 44af0bf3e, updated Fri Jul 29 17:05:16 2022 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="9c77cbaabd819d345b504c75aca5f16a416fc6e6" name="document-revision">
+  <meta content="2846a0a312dc7f39c754a3bc59ebcf51078e1184" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -455,7 +455,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-09-30">30 September 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-10-05">5 October 2022</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -729,7 +729,7 @@ following steps:</p>
    </ol>
    <h2 class="heading settled" data-level="6" id="fetch"><span class="secno">6. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch"></a></h2>
    <p>This specification integrates with the <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> specification by patching the algorithms below:</p>
-   <p>In <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-main-fetch" id="ref-for-concept-main-fetch">Main Fetch</a>, after step 9, run <a data-link-type="abstract-op" href="#abstract-opdef-append-client-hints-to-request" id="ref-for-abstract-opdef-append-client-hints-to-request">append client hints to request</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object②">relevant settings object</a> and <var>request</var> as input.</p>
+   <p>In <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-http-network-or-cache-fetch" id="ref-for-concept-http-network-or-cache-fetch">HTTP-network-or-cache fetch</a>, within step 8, after substep 23, run <a data-link-type="abstract-op" href="#abstract-opdef-append-client-hints-to-request" id="ref-for-abstract-opdef-append-client-hints-to-request">append client hints to request</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object②">relevant settings object</a> and <var>request</var> as input.</p>
    <p>In <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-http-redirect-fetch" id="ref-for-concept-http-redirect-fetch">HTTP-redirect fetch</a>, after step 11, run <a data-link-type="abstract-op" href="#abstract-opdef-remove-client-hints-from-redirect-if-needed" id="ref-for-abstract-opdef-remove-client-hints-from-redirect-if-needed">remove client hints from redirect if needed</a> with <var>request</var> as input.</p>
    <h2 class="heading settled" data-level="7" id="registry"><span class="secno">7. </span><span class="content">Feature Registry</span><a class="self-link" href="#registry"></a></h2>
    <p class="note" role="note"><span>Note:</span> This section contains feature-specific definitions.
@@ -991,16 +991,16 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
     <li><a href="#ref-for-concept-request-header-list">5. Request processing</a> <a href="#ref-for-concept-request-header-list①">(2)</a> <a href="#ref-for-concept-request-header-list②">(3)</a> <a href="#ref-for-concept-request-header-list③">(4)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-http-network-or-cache-fetch">
+   <a href="https://fetch.spec.whatwg.org/#concept-http-network-or-cache-fetch">https://fetch.spec.whatwg.org/#concept-http-network-or-cache-fetch</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-http-network-or-cache-fetch">6. Integration with Fetch</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-http-redirect-fetch">
    <a href="https://fetch.spec.whatwg.org/#concept-http-redirect-fetch">https://fetch.spec.whatwg.org/#concept-http-redirect-fetch</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-http-redirect-fetch">6. Integration with Fetch</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-main-fetch">
-   <a href="https://fetch.spec.whatwg.org/#concept-main-fetch">https://fetch.spec.whatwg.org/#concept-main-fetch</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-main-fetch">6. Integration with Fetch</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-header-name">
@@ -1236,8 +1236,8 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="term-for-concept-request-destination">destination</span>
      <li><span class="dfn-paneled" id="term-for-concept-fetch">fetch</span>
      <li><span class="dfn-paneled" id="term-for-concept-request-header-list">header list</span>
+     <li><span class="dfn-paneled" id="term-for-concept-http-network-or-cache-fetch">http-network-or-cache fetch</span>
      <li><span class="dfn-paneled" id="term-for-concept-http-redirect-fetch">http-redirect fetch</span>
-     <li><span class="dfn-paneled" id="term-for-concept-main-fetch">main fetch</span>
      <li><span class="dfn-paneled" id="term-for-concept-header-name">name</span>
      <li><span class="dfn-paneled" id="term-for-navigation-request">navigation request</span>
      <li><span class="dfn-paneled" id="term-for-non-subresource-request">non-subresource request</span>
