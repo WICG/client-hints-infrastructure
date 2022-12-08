@@ -20,6 +20,7 @@ spec:fetch; type:dfn; text:client
 spec:ServiceWorker; type:dfn; for:/; text:
 spec:url; type:dfn; for:url; text:origin
 spec:html; type:element; text:style
+spec:infra; type:dfn; text:user agent
 </pre>
 
 <pre class=biblio>
@@ -191,7 +192,8 @@ This specification integrates with the [[!HTML]] specification by patching the a
 Navigation response {#navigation-response}
 ----------
 
-At [=process a navigate response=], after step 7 call [$update the Client Hints set$] with the [=relevant settings object=] and |response| as inputs.
+At <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#populating-a-session-history-entry">Populating a session history entry</a>,
+within step 6 and after substep 7 call [$update the Client Hints set$] with the [=relevant settings object=] and |response| as inputs.
 
 Service Worker initialization {#service-worker-init}
 -----------
