@@ -25,7 +25,7 @@ spec:infra; type:dfn; text:user agent
 
 <pre class="anchors">
 spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/browsing-the-web.html
-    type: dfn; text: process a navigate response; url: process-a-navigate-response
+    type: dfn; text: populating a session history entry; url: populating-a-session-history-entry
 </pre>
 
 <pre class=biblio>
@@ -197,7 +197,7 @@ This specification integrates with the [[!HTML]] specification by patching the a
 Navigation response {#navigation-response}
 ----------
 
-At [=process a navigate response=], after substep 7 call [$update the Client Hints set$] with the [=relevant settings object=] and |response| as inputs.
+At [=populating a session history entry=], in step 6 after substep 7 call [$update the Client Hints set$] with the [=relevant settings object=] and |response| as inputs.
 
 Service Worker initialization {#service-worker-init}
 -----------
