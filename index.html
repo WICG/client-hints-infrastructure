@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 44af0bf3e, updated Fri Jul 29 17:05:16 2022 -0700" name="generator">
+  <meta content="Bikeshed version 26e85e599, updated Thu Dec 8 15:29:31 2022 -0800" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="2846a0a312dc7f39c754a3bc59ebcf51078e1184" name="document-revision">
+  <meta content="e4b5a5820ed2cd822cff69b37a19bb495285ee2c" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -299,6 +299,14 @@ a.self-link:hover {
 .heading > a.self-link {
     font-size: 83%;
 }
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
 li > a.self-link {
     left: calc(-1 * (3.5rem - 26px) - 2em);
 }
@@ -455,7 +463,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-10-05">5 October 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-12-09">9 December 2022</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -576,7 +584,7 @@ the HTTP and user agent levels.</p>
 following specifications and proposals:</p>
    <ul>
     <li data-md>
-     <p>IETF <a data-link-type="biblio" href="#biblio-rfc8942">[RFC8942]</a></p>
+     <p>IETF <a data-link-type="biblio" href="#biblio-rfc8942" title="HTTP Client Hints">[RFC8942]</a></p>
      <ul>
       <li data-md>
        <p>Provides the motivation for Client Hints.</p>
@@ -614,7 +622,7 @@ hints are removed from not delegated-to cross-origin requests after
 redirections.</p>
        </ul>
       <li data-md>
-       <p>Integrates those concepts with the <a data-link-type="biblio" href="#biblio-html">[HTML]</a> and <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> specifications,
+       <p>Integrates those concepts with the <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a> and <a data-link-type="biblio" href="#biblio-fetch" title="Fetch Standard">[FETCH]</a> specifications,
   by patching various concepts there.</p>
      </ul>
     <li data-md>
@@ -642,7 +650,7 @@ given an <a data-link-type="dfn" href="#accept-ch-cache-origin" id="ref-for-acce
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="retrieve-the-client-hints-set">retrieve the client hints set</dfn> given a <var>settingsObject</var>:</p>
    <ol>
     <li>Let <var>hintSet</var> be an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set①">ordered set</a>. 
-    <li>Let <var>originMatchingEntries</var> be the entries in the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache②">Accept-CH cache</a> whose <a data-link-type="dfn" href="#accept-ch-cache-origin" id="ref-for-accept-ch-cache-origin①">origin</a> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a>. 
+    <li>Let <var>originMatchingEntries</var> be the entries in the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache②">Accept-CH cache</a> whose <a data-link-type="dfn" href="#accept-ch-cache-origin" id="ref-for-accept-ch-cache-origin①">origin</a> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a>. 
     <li>For each entry in <var>originMatchingEntries</var>, for each token in its <a data-link-type="dfn" href="#accept-ch-cache-client-hints-set" id="ref-for-accept-ch-cache-client-hints-set">client hints set</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append">append</a> the token to <var>hintSet</var>. 
     <li>For each <var>hint</var> in <var>hintSet</var>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append①">append</a> <var>hint</var> to <var>settingsObject</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set">client hints set</a>. 
    </ol>
@@ -650,8 +658,8 @@ given an <a data-link-type="dfn" href="#accept-ch-cache-origin" id="ref-for-acce
    <ol>
     <li>Run <a data-link-type="dfn" href="#retrieve-the-client-hints-set" id="ref-for-retrieve-the-client-hints-set">retrieve the client hints set</a> with <var>settingsObject</var>. 
     <li>If <var>settingsObject</var> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context" id="ref-for-non-secure-context">non-secure context</a>, abort these steps. 
-    <li>Let <var>browsingContext</var> be <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#window-bc" id="ref-for-window-bc">browsing context</a>. 
-    <li>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a> does not equal <var>browsingContext</var>, abort these steps. 
+    <li>Let <var>browsingContext</var> be <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-bc" id="ref-for-window-bc">browsing context</a>. 
+    <li>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a> does not equal <var>browsingContext</var>, abort these steps. 
     <li>If <var>response</var>’s <code>Accept-CH</code> header is present, parse the header field value according to the <code>Accept-CH</code> header parsing rules, as a <a data-link-type="dfn" href="#field-name" id="ref-for-field-name">field-name</a>. Add each parsed <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token①">client hints token</a> to <var>settingsObject</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set①">client hints set</a>. 
     <li><a data-link-type="dfn" href="#add-a-new-accept-ch-cache-entry" id="ref-for-add-a-new-accept-ch-cache-entry">Add a new Accept-CH cache entry</a> with <var>response</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin①">origin</a> and <var>settingsObject</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set②">client hints set</a>. 
    </ol>
@@ -664,8 +672,8 @@ given an <a data-link-type="dfn" href="#accept-ch-cache-origin" id="ref-for-acce
     <li>If <var>metaElement</var> has no <code><a data-link-type="element-sub" href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content" id="ref-for-attr-meta-content">content</a></code> attribute, or if that attribute’s value is the empty string, then return. 
     <li>Let <var>settingsObject</var> be <var>metaElement</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>. 
     <li>If <var>settingsObject</var> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context" id="ref-for-non-secure-context①">non-secure context</a>, abort these steps. 
-    <li>Let <var>browsingContext</var> be <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global①">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#window-bc" id="ref-for-window-bc①">browsing context</a>. 
-    <li>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> does not equal <var>browsingContext</var>, abort these steps. 
+    <li>Let <var>browsingContext</var> be <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global①">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-bc" id="ref-for-window-bc①">browsing context</a>. 
+    <li>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a> does not equal <var>browsingContext</var>, abort these steps. 
     <li>Let <var>permissionsPolicy</var> be <var>metaElement</var>’s node document’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/dom.html#concept-document-permissions-policy" id="ref-for-concept-document-permissions-policy">permissions policy</a>. 
     <li>Let <var>delegateCHValue</var> be the value of <var>metaElement</var>’s <code><a data-link-type="element-sub" href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content" id="ref-for-attr-meta-content①">content</a></code> attribute. 
     <li>Let <var>policyDirective</var> be the result of running <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-parse-policy-directive"><cite>Permissions Policy</cite> § 9.3 Parse policy directive</a> on <var>delegateCHValue</var> and the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin②">origin</a> of the <var>metaElement</var>’s node document. 
@@ -673,21 +681,21 @@ given an <a data-link-type="dfn" href="#accept-ch-cache-origin" id="ref-for-acce
      For each <var>feature</var>-><var>allowList</var> of <var>policyDirective</var>: 
      <ol>
       <li>If <var>feature</var> is not a <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token③">client hints token</a>, then continue. 
-      <li>If <var>permissionsPolicy</var>[<var>feature</var>]'s <a data-link-type="biblio" href="#biblio-permissions-policy">permissions policy</a> is <code>*</code>, then continue. 
+      <li>If <var>permissionsPolicy</var>[<var>feature</var>]'s <a data-link-type="biblio" href="#biblio-permissions-policy" title="Permissions Policy">permissions policy</a> is <code>*</code>, then continue. 
       <li>Let <var>filteredAllowList</var> be an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set②">ordered set</a>. 
       <li>
        For each <var>item</var> in <var>allowList</var>: 
        <ol>
         <li>If <var>item</var> is <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin③">origin</a> then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append②">Append</a> <var>item</var> to <var>filteredAllowList</var>. 
        </ol>
-      <li><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append③">Append</a> <var>feature</var> to <var>settingsObject</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set④">client hints set</a> and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append④">Append</a> <var>filteredAllowList</var> to <var>permissionsPolicy</var>[<var>feature</var>]'s <a data-link-type="biblio" href="#biblio-permissions-policy">permissions policy</a>. 
+      <li><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append③">Append</a> <var>feature</var> to <var>settingsObject</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set④">client hints set</a> and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append④">Append</a> <var>filteredAllowList</var> to <var>permissionsPolicy</var>[<var>feature</var>]'s <a data-link-type="biblio" href="#biblio-permissions-policy" title="Permissions Policy">permissions policy</a>. 
      </ol>
    </ol>
    <p class="issue" id="issue-b9ef9066"><a class="self-link" href="#issue-b9ef9066"></a> Clarify detection of <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-link-element" id="ref-for-the-link-element①">link</a></code>, <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-style-element" id="ref-for-the-style-element①">style</a></code>, or <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script" id="ref-for-script①">script</a></code> element execution. <a href="https://github.com/WICG/client-hints-infrastructure/issues/110">[Issue #110]</a></p>
    <h2 class="heading settled" data-level="4" id="html"><span class="secno">4. </span><span class="content">Integration with HTML</span><a class="self-link" href="#html"></a></h2>
-   <p>This specification integrates with the <a data-link-type="biblio" href="#biblio-html">[HTML]</a> specification by patching the algorithms below:</p>
+   <p>This specification integrates with the <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a> specification by patching the algorithms below:</p>
    <h3 class="heading settled" data-level="4.1" id="navigation-response"><span class="secno">4.1. </span><span class="content">Navigation response</span><a class="self-link" href="#navigation-response"></a></h3>
-   <p>At <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-response" id="ref-for-process-a-navigate-response">process a navigate response</a>, after step 7 call <a data-link-type="abstract-op" href="#abstract-opdef-update-the-client-hints-set" id="ref-for-abstract-opdef-update-the-client-hints-set">update the Client Hints set</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a> and <var>response</var> as inputs.</p>
+   <p>At <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#populating-a-session-history-entry" id="ref-for-populating-a-session-history-entry">populating a session history entry</a>, in step 6 after substep 7 call <a data-link-type="abstract-op" href="#abstract-opdef-update-the-client-hints-set" id="ref-for-abstract-opdef-update-the-client-hints-set">update the Client Hints set</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a> and <var>response</var> as inputs.</p>
    <h3 class="heading settled" data-level="4.2" id="service-worker-init"><span class="secno">4.2. </span><span class="content">Service Worker initialization</span><a class="self-link" href="#service-worker-init"></a></h3>
     At <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
 after step 6, add the following step: 
@@ -728,7 +736,7 @@ following steps:</p>
      </ol>
    </ol>
    <h2 class="heading settled" data-level="6" id="fetch"><span class="secno">6. </span><span class="content">Integration with Fetch</span><a class="self-link" href="#fetch"></a></h2>
-   <p>This specification integrates with the <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> specification by patching the algorithms below:</p>
+   <p>This specification integrates with the <a data-link-type="biblio" href="#biblio-fetch" title="Fetch Standard">[FETCH]</a> specification by patching the algorithms below:</p>
    <p>In <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-http-network-or-cache-fetch" id="ref-for-concept-http-network-or-cache-fetch">HTTP-network-or-cache fetch</a>, within step 8, after substep 23, run <a data-link-type="abstract-op" href="#abstract-opdef-append-client-hints-to-request" id="ref-for-abstract-opdef-append-client-hints-to-request">append client hints to request</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object②">relevant settings object</a> and <var>request</var> as input.</p>
    <p>In <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-http-redirect-fetch" id="ref-for-concept-http-redirect-fetch">HTTP-redirect fetch</a>, after step 11, run <a data-link-type="abstract-op" href="#abstract-opdef-remove-client-hints-from-redirect-if-needed" id="ref-for-abstract-opdef-remove-client-hints-from-redirect-if-needed">remove client hints from redirect if needed</a> with <var>request</var> as input.</p>
    <h2 class="heading settled" data-level="7" id="registry"><span class="secno">7. </span><span class="content">Feature Registry</span><a class="self-link" href="#registry"></a></h2>
@@ -877,7 +885,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
     However, for readability,
     these words do not appear in all uppercase letters in this specification. </p>
    <p>All of the text of this specification is normative
-    except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a> </p>
+    except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119" title="Key words for use in RFCs to Indicate Requirement Levels">[RFC2119]</a> </p>
    <p>Examples in this specification are introduced with the words “for example”
     or are set apart from the normative text
     with <code>class="example"</code>,
@@ -1034,7 +1042,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-window-bc">
-   <a href="https://html.spec.whatwg.org/multipage/window-object.html#window-bc">https://html.spec.whatwg.org/multipage/window-object.html#window-bc</a><b>Referenced in:</b>
+   <a href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-bc">https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-bc</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-window-bc">3.2. Accept-CH cache</a>
     <li><a href="#ref-for-window-bc①">3.3. Delegate-CH</a>
@@ -1097,10 +1105,10 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
     <li><a href="#ref-for-concept-document-permissions-policy">3.3. Delegate-CH</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-process-a-navigate-response">
-   <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-response">https://html.spec.whatwg.org/multipage/browsing-the-web.html#process-a-navigate-response</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-populating-a-session-history-entry">
+   <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#populating-a-session-history-entry">https://html.spec.whatwg.org/multipage/browsing-the-web.html#populating-a-session-history-entry</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-process-a-navigate-response">4.1. Navigation response</a>
+    <li><a href="#ref-for-populating-a-session-history-entry">4.1. Navigation response</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-relevant-settings-object">
@@ -1112,7 +1120,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-same-origin">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#same-origin">https://html.spec.whatwg.org/multipage/origin.html#same-origin</a><b>Referenced in:</b>
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#same-origin">https://html.spec.whatwg.org/multipage/browsers.html#same-origin</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-same-origin">3.2. Accept-CH cache</a>
    </ul>
@@ -1130,7 +1138,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-top-level-browsing-context">
-   <a href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context</a><b>Referenced in:</b>
+   <a href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context">https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-top-level-browsing-context">3.2. Accept-CH cache</a>
     <li><a href="#ref-for-top-level-browsing-context①">3.3. Delegate-CH</a>
@@ -1178,6 +1186,14 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    <a href="https://infra.spec.whatwg.org/#ordered-map">https://infra.spec.whatwg.org/#ordered-map</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-ordered-map">3.2. Accept-CH cache</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-ordered-set">
+   <a href="https://infra.spec.whatwg.org/#ordered-set">https://infra.spec.whatwg.org/#ordered-set</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-ordered-set">3.1. Client hints set</a>
+    <li><a href="#ref-for-ordered-set①">3.2. Accept-CH cache</a>
+    <li><a href="#ref-for-ordered-set②">3.3. Delegate-CH</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-ordered-set">
@@ -1257,7 +1273,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="term-for-non-secure-context">non-secure context</span>
      <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin">origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-permissions-policy">permissions policy</span>
-     <li><span class="dfn-paneled" id="term-for-process-a-navigate-response">process a navigate response</span>
+     <li><span class="dfn-paneled" id="term-for-populating-a-session-history-entry">populating a session history entry</span>
      <li><span class="dfn-paneled" id="term-for-relevant-settings-object">relevant settings object</span>
      <li><span class="dfn-paneled" id="term-for-same-origin">same origin</span>
      <li><span class="dfn-paneled" id="term-for-script">script</span>
@@ -1275,6 +1291,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="term-for-map-key">key</span>
      <li><span class="dfn-paneled" id="term-for-ordered-map">ordered map</span>
      <li><span class="dfn-paneled" id="term-for-ordered-set">ordered set</span>
+     <li><span class="dfn-paneled" id="term-for-ordered-set①">set</span>
      <li><span class="dfn-paneled" id="term-for-map-set">set <small>(for map)</small></span>
      <li><span class="dfn-paneled" id="term-for-user-agent">user agent</span>
     </ul>
@@ -1305,7 +1322,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-permissions-policy">[PERMISSIONS-POLICY]
-   <dd>Permissions Policy URL: <a href="https://www.w3.org/TR/permissions-policy/">https://www.w3.org/TR/permissions-policy/</a>
+   <dd>Ian Clelland. <a href="https://w3c.github.io/webappsec-permissions-policy/"><cite>Permissions Policy</cite></a>. URL: <a href="https://w3c.github.io/webappsec-permissions-policy/">https://w3c.github.io/webappsec-permissions-policy/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-rfc8942">[RFC8942]
