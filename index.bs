@@ -262,7 +262,7 @@ In <a spec=FETCH>HTTP-network-or-cache fetch</a>, within step 8, after substep 2
 
 In [=HTTP-redirect fetch=], after step 11, run [$remove client hints from redirect if needed$] with |request| as input.
 
-In [=forbidden request header=], to the list of headers within step 1, add `Save-Data`, `DPR`, `Device-Memory`, `Width`, and `Viewport-Width`.
+In [=forbidden request-header=], to the list of headers within step 1, add `Save-Data`, `DPR`, `Device-Memory`, `Width`, and `Viewport-Width`.
 
 Feature Registry {#registry}
 ==========
