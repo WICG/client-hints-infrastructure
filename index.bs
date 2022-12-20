@@ -137,7 +137,7 @@ When asked to <dfn>retrieve the cached Client Hints set</dfn> given a |settingsO
 <ol>
  <li>Let |hintSet| be an empty [=ordered set=].
  <li>Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |settingsObject|'s [=environment settings object/origin=].
- <li>For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |hintSet|.
+ <li>For each |entry| in |originMatchingEntries|, for each |token| in |entry|'s [=accept-ch-cache/client hints set=], [=set/append=] the |token| to |hintSet|.
  <li>For each |hint| in |hintSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
 </ol>
 
