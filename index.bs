@@ -132,7 +132,7 @@ header in a response. This sets the origin's [=/client hints set=] to an empty s
 
 Note: As the cache can only be modified by the top-level frame, it is considered to be partitioned.
 
-When asked to <dfn>retrieve the cached Client Hints set</dfn> given a |settingsObject|:
+When asked to <dfn>update the settings object's Client Hints from the cache</dfn> given a |settingsObject|:
 
 <ol>
  <li>Let |hintSet| be an empty [=ordered set=].
@@ -227,7 +227,7 @@ following steps:
 <ol>
  <li>If |request| is a [=non-subresource request=] for a "sharedworker" or "worker" [=request/destination=], exit without appending any hints to the [=request/header list=].
  <li>Let |hintSet| be an empty [=/client hints set=].
- <li>Run [=retrieve the cached Client Hints set=] with |settingsObject|.
+ <li>Run [=update the settings object's Client Hints from the cache=] with |settingsObject|.
  <li>For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=], [=set/append=] |lowEntropyHint| to |hintSet|.
  <li>If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
 |settingsObject|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
