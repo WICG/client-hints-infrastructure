@@ -154,7 +154,7 @@ When asked to <dfn abstract-op>create or override the cached Client Hints set</d
   <li>If |hint| is a [=client hints token=] add it to |hintSet|.
  </ol>
  <li>Let |origin| be |response|'s [=url/origin=].
- <li>[=map/set=] [=Accept-CH cache=][|origin|] to |hintSet|.
+ <li>[=map/Set=] [=Accept-CH cache=][|origin|] to |hintSet|.
 </ol>
 
 <dfn>Delegate-CH</dfn> {#delegate-ch-algo}
