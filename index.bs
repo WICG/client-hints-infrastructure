@@ -40,6 +40,14 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
         "href": "https://w3c.github.io/webappsec-permissions-policy/",
         "publisher": "W3C",
         "title": "Permissions Policy"
+    },
+    "CLIENT-HINT-RELIABILITY": {
+        "authors": [
+            "David Benjamin"
+        ],
+        "href": "https://datatracker.ietf.org/doc/html/draft-davidben-http-client-hint-reliability",
+        "publisher": "W3C",
+        "title": "Client Hint Reliability"
     }
 }
 </pre>
@@ -109,6 +117,8 @@ following specifications and proposals:
 * [[PERMISSIONS-POLICY|W3C Permissions Policy specification]]
      - In order to perform third party Client Hint delegation, Permissions Policy has
          been extended to control features within fetch requests (rather than just Documents). See [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
+* [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]
+     - See [=Interaction with ACCEPT_CH Frame=] 
 
 Environment settings object processing {#environment-settings-object-processing}
 ==============
@@ -141,6 +151,8 @@ When asked to <dfn>update the client hints set from cache</dfn> given a |setting
  <li>Let |hintSet| be an empty [=ordered set=].
  <li>Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |settingsObject|'s [=environment settings object/origin=].
  <li>For each |entry| in |originMatchingEntries|, for each |token| in |entry|'s [=accept-ch-cache/client hints set=], [=set/append=] the |token| to |hintSet|.
+ <li>Let |frameHintSet| be the [=ordered set=] of hints requested by the `ACCEPT_CH` Frame (if any).
+ <li>For each |hint| in |frameHintSet| [=set/append=] the |hint| to |hintSet|.
  <li>For each |hint| in |hintSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
 </ol>
 
@@ -191,6 +203,15 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
 </ol>
      
 Issue(110): Clarify detection of <{link}>, <{style}>, or <{script}> element execution.
+
+<dfn>Interaction with `ACCEPT_CH` Frame</dfn> {#interaction-with-accept-ch-frame}
+--------
+
+The `ACCEPT_CH` frame is a way for Client Hints to be requested by a server
+during the TLS handshake of HTTP/2 and HTTP/3. The requested hints are *not*
+persisted in the [=Accept-CH cache=], but will be retrieved and merged when
+[=update the client hints set from cache=] is run. The full processing model
+is defined in [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]</a>.
 
 Integration with HTML {#html}
 ===========
