@@ -24,8 +24,11 @@ spec:infra; type:dfn; text:user agent
 </pre>
 
 <pre class="anchors">
-spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/browsing-the-web.html
-    type: dfn; text: populating a session history entry; url: populating-a-session-history-entry
+spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
+    urlPrefix: browsing-the-web.html
+        type: dfn;text: populating a session history entry; url: populating-a-session-history-entry
+    urlPrefix: semantics.html
+        type: dfn; text: standard metadata names; url: standard-metadata-names
 </pre>
 
 <pre class=biblio>
@@ -103,9 +106,9 @@ following specifications and proposals:
             redirections.
      - Integrates those concepts with the [[!HTML]] and [[!FETCH]] specifications,
           by patching various concepts there.
-* W3C Permissions Policy specification (<a href="https://w3c.github.io/webappsec-permissions-policy/#should-request-be-allowed-to-use-feature">relevant section</a>)
+* [[PERMISSIONS-POLICY|W3C Permissions Policy specification]]
      - In order to perform third party Client Hint delegation, Permissions Policy has
-         been extended to control features within fetch requests (rather than just Documents).
+         been extended to control features within fetch requests (rather than just Documents). See [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
 
 Environment settings object processing {#environment-settings-object-processing}
 ==============
@@ -201,7 +204,7 @@ At [=populating a session history entry=], in step 6 after substep 7 call [$crea
 
 Service Worker initialization {#service-worker-init}
 -----------
-At <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
+At <a spec=HTML>set up a worker environment settings object</a>,
 after step 6, add the following step:
 <ol>
  <li>If <var ignore>worker global scope</var> implements {{ServiceWorkerGlobalScope}}, then set <var ignore="">settings object</var>'s [=environment settings object/client hints set=] to be a [=set/clone=] of <var ignore>outside settings</var>' [=environment settings object/client hints set=].
@@ -209,7 +212,7 @@ after step 6, add the following step:
 
 Standard metadata names {#standard-metadata-names}
 ------------
-For the section <a href="https://html.spec.whatwg.org/multipage/#standard-metadata-names">standard metadata names</a>,
+For the section [=standard metadata names=],
 add a subsection named `delegate-ch` with the [=Delegate-CH|outlined explanation=].
 
 Extending environment settings object {#extending-environment-settings-object}
