@@ -132,29 +132,29 @@ header in a response. This sets the origin's [=/client hints set=] to an empty s
 
 Note: As the cache can only be modified by the top-level frame, it is considered to be partitioned.
 
-To <dfn>add a new Accept-CH cache entry</dfn> to the [=Accept-CH cache=],
-given an [=accept-ch-cache/origin=] |origin| and a [=/client hints set=] |hintSet|,
-[=map/set=] [=Accept-CH cache=][|origin|] to |hintSet|.
-
-When asked to <dfn>retrieve the client hints set</dfn> given a |settingsObject|:
+When asked to <dfn>update the client hints set from cache</dfn> given a |settingsObject|:
 
 <ol>
  <li>Let |hintSet| be an empty [=ordered set=].
  <li>Let |originMatchingEntries| be the entries in the [=Accept-CH cache=] whose [=accept-ch-cache/origin=] is [=same origin=] with |settingsObject|'s [=environment settings object/origin=].
- <li>For each entry in |originMatchingEntries|, for each token in its [=accept-ch-cache/client hints set=], [=set/append=] the token to |hintSet|.
+ <li>For each |entry| in |originMatchingEntries|, for each |token| in |entry|'s [=accept-ch-cache/client hints set=], [=set/append=] the |token| to |hintSet|.
  <li>For each |hint| in |hintSet|, [=set/append=] |hint| to |settingsObject|'s [=environment settings object/client hints set=].
 </ol>
 
-When asked to <dfn abstract-op>update the Client Hints set</dfn> given a |settingsObject| and |response|:
+When asked to <dfn abstract-op>create or override the cached client hints set</dfn> given a |settingsObject| and |response|:
 
 <ol>
- <li>Run [=retrieve the client hints set=] with |settingsObject|.
  <li>If |settingsObject| is a [=non-secure context=], abort these steps.
  <li>Let |browsingContext| be |settingsObject|'s [=environment settings object/global object=]'s [=Window/browsing context=].
  <li>If the [=top-level browsing context=] does not equal |browsingContext|, abort these steps.
- <li>If |response|'s `Accept-CH` header is present, parse the header field value according to the
- `Accept-CH` header parsing rules, as a [=field-name=]. Add each parsed [=client hints token=] to |settingsObject|'s [=environment settings object/client hints set=].
- <li>[=Add a new Accept-CH cache entry=] with |response|'s [=url/origin=] and |settingsObject|'s [=environment settings object/client hints set=].
+ <li>If |response|'s `Accept-CH` header is not present, abort these steps.
+ <li>Let |hintSet| be an empty [=ordered set=].
+ <li>For each |hint| in the result of parsing `Accept-CH` according to the header parsing rules, as a [=field-name=]:
+ <ol>
+  <li>If |hint| is a [=client hints token=] add it to |hintSet|.
+ </ol>
+ <li>Let |origin| be |response|'s [=url/origin=].
+ <li>[=map/Set=] [=Accept-CH cache=][|origin|] to |hintSet|.
 </ol>
 
 <dfn>Delegate-CH</dfn> {#delegate-ch-algo}
@@ -197,7 +197,7 @@ This specification integrates with the [[!HTML]] specification by patching the a
 Navigation response {#navigation-response}
 ----------
 
-At [=populating a session history entry=], in step 6 after substep 7 call [$update the Client Hints set$] with the [=relevant settings object=] and |response| as inputs.
+At [=populating a session history entry=], in step 6 after substep 7 call [$create or override the cached client hints set$] with the [=relevant settings object=] and |response| as inputs.
 
 Service Worker initialization {#service-worker-init}
 -----------
@@ -227,7 +227,7 @@ following steps:
 <ol>
  <li>If |request| is a [=non-subresource request=] for a "sharedworker" or "worker" [=request/destination=], exit without appending any hints to the [=request/header list=].
  <li>Let |hintSet| be an empty [=/client hints set=].
- <li>Run [=retrieve the client hints set=] with |settingsObject|.
+ <li>Run [=update the client hints set from cache=] with |settingsObject|.
  <li>For each [=client hints token=] |lowEntropyHint| in the registry's [=low entropy hint table=], [=set/append=] |lowEntropyHint| to |hintSet|.
  <li>If |request|'s [=request/client=] is not null, then for each [=client hints token=] |requestHint| in
 |settingsObject|'s [=environment settings object/client hints set=], [=set/append=] |requestHint| to
