@@ -116,9 +116,7 @@ following specifications and proposals:
           by patching various concepts there.
 * [[PERMISSIONS-POLICY|W3C Permissions Policy specification]]
      - In order to perform third party Client Hint delegation, Permissions Policy has
-         been extended to control features within fetch requests (rather than just Documents). See [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
-* [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]
-     - See [=Interaction with ACCEPT_CH Frame=] 
+         been extended to control features within fetch requests (rather than just Documents).
 
 Environment settings object processing {#environment-settings-object-processing}
 ==============
