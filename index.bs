@@ -118,7 +118,7 @@ following specifications and proposals:
      - In order to perform third party Client Hint delegation, Permissions Policy has
          been extended to control features within fetch requests (rather than just Documents). See [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
 * [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]
-     - See [=Interaction with ACCEPT_CH Frame=] 
+     - See <a href="#interaction-with-accept-ch-frame">Interaction with `ACCEPT_CH` frame</a>.
 
 Environment settings object processing {#environment-settings-object-processing}
 ==============
@@ -204,7 +204,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
      
 Issue(110): Clarify detection of <{link}>, <{style}>, or <{script}> element execution.
 
-<dfn>Interaction with `ACCEPT_CH` Frame</dfn> {#interaction-with-accept-ch-frame}
+Interaction with `ACCEPT_CH` frame {#interaction-with-accept-ch-frame}
 --------
 
 The `ACCEPT_CH` frame is a way for Client Hints to be requested by a server
