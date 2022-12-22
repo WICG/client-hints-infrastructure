@@ -172,6 +172,11 @@ When asked to <dfn abstract-op>create or override the cached client hints set</d
  <li>[=map/Set=] [=Accept-CH cache=][|origin|] to |hintSet|.
 </ol>
 
+<dfn>Critical-CH</dfn> {#critical-ch-algo}
+--------
+
+TODO
+
 <dfn>Delegate-CH</dfn> {#delegate-ch-algo}
 --------
 
