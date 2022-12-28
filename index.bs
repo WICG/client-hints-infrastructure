@@ -207,7 +207,7 @@ When asked if the user agent <dfn abstract-op>should reload page for critical cl
  <li>Let |origin| be |response|'s [=url/origin=].
  <li>For each |hint| in [=Accept-CH cache=][|origin|]:
  <ol>
-  <li>If |hint| is in |missingHintSet| remove it.
+  <li>Remove |hint| from |missingHintSet| if present.
  </ol>
  <li>For each |hint| in the result of parsing `Critical-CH` according to the header parsing rules, as a [=field-name=]:
  <ol>
@@ -215,6 +215,8 @@ When asked if the user agent <dfn abstract-op>should reload page for critical cl
  </ol>
  <li>Return `false`.
 </ol>
+
+Issue: Prevent reload loops by detecting if one `Critical-CH` reload has already occured for the current page.
 
 <dfn>`Delegate-CH`</dfn> {#delegate-ch-algo}
 --------
