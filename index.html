@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 26e85e599, updated Thu Dec 8 15:29:31 2022 -0800" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="d3ce15fc0c0605fbb88cf992377cebb8280e6d26" name="document-revision">
+  <meta content="09219c06d020c1eaeed8353a39a47fb09d6e53ab" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -463,7 +463,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-12-28">28 December 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-12-29">29 December 2022</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -513,10 +513,11 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li>
      <a href="#html"><span class="secno">4</span> <span class="content">Integration with HTML</span></a>
      <ol class="toc">
-      <li><a href="#navigation-response"><span class="secno">4.1</span> <span class="content">Navigation response</span></a>
-      <li><a href="#service-worker-init"><span class="secno">4.2</span> <span class="content">Service Worker initialization</span></a>
-      <li><a href="#standard-metadata-names"><span class="secno">4.3</span> <span class="content">Standard metadata names</span></a>
-      <li><a href="#extending-environment-settings-object"><span class="secno">4.4</span> <span class="content">Extending environment settings object</span></a>
+      <li><a href="#navigable"><span class="secno">4.1</span> <span class="content">Navigable</span></a>
+      <li><a href="#navigation-response"><span class="secno">4.2</span> <span class="content">Navigation response</span></a>
+      <li><a href="#service-worker-init"><span class="secno">4.3</span> <span class="content">Service Worker initialization</span></a>
+      <li><a href="#standard-metadata-names"><span class="secno">4.4</span> <span class="content">Standard metadata names</span></a>
+      <li><a href="#extending-environment-settings-object"><span class="secno">4.5</span> <span class="content">Extending environment settings object</span></a>
      </ol>
     <li><a href="#request-processing"><span class="secno">5</span> <span class="content">Request processing</span></a>
     <li><a href="#fetch"><span class="secno">6</span> <span class="content">Integration with Fetch</span></a>
@@ -691,7 +692,7 @@ then the server can set a <code>Critical-CH</code> header to request a reload. T
 the <code>Critical-CH</code> header are already in the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache⑤">Accept-CH cache</a> no reload is
 needed as they were sent. If hints listed in the <code>Critical-CH</code> header are not
 in the <code>Accept-CH</code> header a reload would not result in the hints being included
-anyway so none should be done to prevent an infinite loop.</p>
+anyway.</p>
    <p>When asked if the user agent <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export id="abstract-opdef-should-reload-page-for-critical-client-hints">should reload page for critical client hints</dfn> given a <var>settingsObject</var> and <var>response</var>:</p>
    <ol>
     <li>If <var>settingsObject</var> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context" id="ref-for-non-secure-context①">non-secure context</a>, abort these steps. 
@@ -718,7 +719,6 @@ anyway so none should be done to prevent an infinite loop.</p>
      </ol>
     <li>Return <code>false</code>. 
    </ol>
-   <p class="issue" id="issue-bbe3c221"><a class="self-link" href="#issue-bbe3c221"></a> Prevent reload loops by detecting if one <code>Critical-CH</code> reload has already occured for the current page.</p>
    <h3 class="heading settled" data-level="3.4" id="delegate-ch-algo"><span class="secno">3.4. </span><span class="content"><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="delegate-ch"><code>Delegate-CH</code></dfn></span><a class="self-link" href="#delegate-ch-algo"></a></h3>
    <p class="note" role="note"><span>Note:</span> This metadata <em>appends</em> <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token③">client hints token</a>s to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a>'s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set①">client hints set</a>. It <em>does not</em> add those hints to the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache⑦">Accept-CH cache</a>.</p>
    <ol>
@@ -754,23 +754,38 @@ during the TLS handshake of HTTP/2 and HTTP/3. The requested hints are <em>not</
 is defined in <a data-link-type="biblio" href="#biblio-client-hint-reliability" title="Client Hint Reliability">Client Hints Reliability</a>.</p>
    <h2 class="heading settled" data-level="4" id="html"><span class="secno">4. </span><span class="content">Integration with HTML</span><a class="self-link" href="#html"></a></h2>
    <p>This specification integrates with the <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a> specification by patching the algorithms below:</p>
-   <h3 class="heading settled" data-level="4.1" id="navigation-response"><span class="secno">4.1. </span><span class="content">Navigation response</span><a class="self-link" href="#navigation-response"></a></h3>
+   <h3 class="heading settled" data-level="4.1" id="navigable"><span class="secno">4.1. </span><span class="content">Navigable</span><a class="self-link" href="#navigable"></a></h3>
+   <p>Add a new field to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-navigable" id="ref-for-window-navigable">navigable</a>:</p>
+   <ul>
+    <li>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="has-reloaded-for-critical-ch">has reloaded for <code>Critical-CH</code></dfn> boolean, initially <code>false</code>. 
+   </ul>
+   <h3 class="heading settled" data-level="4.2" id="navigation-response"><span class="secno">4.2. </span><span class="content">Navigation response</span><a class="self-link" href="#navigation-response"></a></h3>
    <p>At <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#populating-a-session-history-entry" id="ref-for-populating-a-session-history-entry">populating a session history entry</a>, in step 6 after substep 7 insert the following:</p>
    <ol>
-    <li>Let <var>shouldReloadForCriticalClientHints</var> be the result of running <a data-link-type="abstract-op" href="#abstract-opdef-should-reload-page-for-critical-client-hints" id="ref-for-abstract-opdef-should-reload-page-for-critical-client-hints">should reload page for critical client hints</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a> and <var>response</var>. 
+    <li>Let <var>shouldReloadForCriticalClientHints</var> be <code>false</code>. 
+    <li>
+     If <var>navigable</var>’s <a data-link-type="dfn" href="#has-reloaded-for-critical-ch" id="ref-for-has-reloaded-for-critical-ch">has reloaded for Critical-CH</a> is <code>false</code>: 
+     <ol>
+      <li>Let <var>shouldReloadForCriticalClientHints</var> be the result of running <a data-link-type="abstract-op" href="#abstract-opdef-should-reload-page-for-critical-client-hints" id="ref-for-abstract-opdef-should-reload-page-for-critical-client-hints">should reload page for critical client hints</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a> and <var>response</var>. 
+     </ol>
     <li>Run <a data-link-type="abstract-op" href="#abstract-opdef-create-or-override-the-cached-client-hints-set" id="ref-for-abstract-opdef-create-or-override-the-cached-client-hints-set">create or override the cached client hints set</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object②">relevant settings object</a> and <var>response</var> as inputs. 
-    <li>If <var>shouldReloadForCriticalClientHints</var> then <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#reload" id="ref-for-reload">reload</a> <var>navigable</var>. 
+    <li>
+     If <var>shouldReloadForCriticalClientHints</var> then: 
+     <ol>
+      <li>Set <var>navigable</var>’s <a data-link-type="dfn" href="#has-reloaded-for-critical-ch" id="ref-for-has-reloaded-for-critical-ch①">has reloaded for Critical-CH</a> to <code>true</code>. 
+      <li><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#reload" id="ref-for-reload">reload</a> <var>navigable</var>. 
+     </ol>
    </ol>
-   <h3 class="heading settled" data-level="4.2" id="service-worker-init"><span class="secno">4.2. </span><span class="content">Service Worker initialization</span><a class="self-link" href="#service-worker-init"></a></h3>
+   <h3 class="heading settled" data-level="4.3" id="service-worker-init"><span class="secno">4.3. </span><span class="content">Service Worker initialization</span><a class="self-link" href="#service-worker-init"></a></h3>
     At <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object" id="ref-for-set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
 after step 6, add the following step: 
    <ol>
     <li>If <var>worker global scope</var> implements <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope" id="ref-for-serviceworkerglobalscope">ServiceWorkerGlobalScope</a></code>, then set <var>settings object</var>’s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set③">client hints set</a> to be a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-clone" id="ref-for-list-clone">clone</a> of <var>outside settings</var>’ <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set④">client hints set</a>. 
    </ol>
-   <h3 class="heading settled" data-level="4.3" id="standard-metadata-names"><span class="secno">4.3. </span><span class="content">Standard metadata names</span><a class="self-link" href="#standard-metadata-names"></a></h3>
+   <h3 class="heading settled" data-level="4.4" id="standard-metadata-names"><span class="secno">4.4. </span><span class="content">Standard metadata names</span><a class="self-link" href="#standard-metadata-names"></a></h3>
     For the section <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#standard-metadata-names" id="ref-for-standard-metadata-names">standard metadata names</a>,
 add a subsection named <code>delegate-ch</code> with the <a data-link-type="dfn" href="#delegate-ch" id="ref-for-delegate-ch">outlined explanation</a>. 
-   <h3 class="heading settled" data-level="4.4" id="extending-environment-settings-object"><span class="secno">4.4. </span><span class="content">Extending environment settings object</span><a class="self-link" href="#extending-environment-settings-object"></a></h3>
+   <h3 class="heading settled" data-level="4.5" id="extending-environment-settings-object"><span class="secno">4.5. </span><span class="content">Extending environment settings object</span><a class="self-link" href="#extending-environment-settings-object"></a></h3>
    <p>An <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> has a <dfn class="dfn-paneled" data-dfn-for="environment settings object" data-dfn-type="dfn" data-noexport id="environment-settings-object-client-hints-set">client hints set</dfn>: a <a data-link-type="dfn" href="#client-hints-set" id="ref-for-client-hints-set②">client hints set</a>, initially the empty set, used for <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch" id="ref-for-concept-fetch">fetches</a> performed using the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object②">environment settings object</a> as a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-request" id="ref-for-concept-request-request">request</a> <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client">client</a>.</p>
    <h2 class="heading settled" data-level="5" id="request-processing"><span class="secno">5. </span><span class="content">Request processing</span><a class="self-link" href="#request-processing"></a></h2>
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export id="abstract-opdef-append-client-hints-to-request">append client hints to request</dfn> with <var>settingsObject</var> and <var>request</var> as input, run the
@@ -1012,13 +1027,14 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
     <ul>
      <li><a href="#client-hints-set">definition of</a><span>, in § 3.1</span>
      <li><a href="#accept-ch-cache-client-hints-set">dfn for accept-ch-cache</a><span>, in § 3.2</span>
-     <li><a href="#environment-settings-object-client-hints-set">dfn for environment settings object</a><span>, in § 4.4</span>
+     <li><a href="#environment-settings-object-client-hints-set">dfn for environment settings object</a><span>, in § 4.5</span>
     </ul>
    <li><a href="#client-hints-token">client hints token</a><span>, in § 7.1</span>
    <li><a href="#abstract-opdef-create-or-override-the-cached-client-hints-set">create or override the cached client hints set</a><span>, in § 3.2</span>
    <li><a href="#delegate-ch">Delegate-CH</a><span>, in § 3.4</span>
    <li><a href="#field-name">field-name</a><span>, in § 9</span>
    <li><a href="#find-client-hint-value">find client hint value</a><span>, in § 7.4</span>
+   <li><a href="#has-reloaded-for-critical-ch">has reloaded for Critical-CH</a><span>, in § 4.1</span>
    <li><a href="#high-entropy-client-hint">high-entropy client hint</a><span>, in § 7.3</span>
    <li><a href="#low-entropy-hint-table">low entropy hint table</a><span>, in § 7.3</span>
    <li><a href="#low-entropy-hint-table">low-entropy hint table</a><span>, in § 7.3</span>
@@ -1037,7 +1053,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <aside class="dfn-panel" data-for="term-for-concept-request-client">
    <a href="https://fetch.spec.whatwg.org/#concept-request-client">https://fetch.spec.whatwg.org/#concept-request-client</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-request-client">4.4. Extending environment settings object</a>
+    <li><a href="#ref-for-concept-request-client">4.5. Extending environment settings object</a>
     <li><a href="#ref-for-concept-request-client①">5. Request processing</a>
    </ul>
   </aside>
@@ -1056,7 +1072,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <aside class="dfn-panel" data-for="term-for-concept-fetch">
    <a href="https://fetch.spec.whatwg.org/#concept-fetch">https://fetch.spec.whatwg.org/#concept-fetch</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-fetch">4.4. Extending environment settings object</a>
+    <li><a href="#ref-for-concept-fetch">4.5. Extending environment settings object</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-forbidden-request-header">
@@ -1104,7 +1120,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <aside class="dfn-panel" data-for="term-for-concept-request-request">
    <a href="https://fetch.spec.whatwg.org/#concept-request-request">https://fetch.spec.whatwg.org/#concept-request-request</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-request-request">4.4. Extending environment settings object</a>
+    <li><a href="#ref-for-concept-request-request">4.5. Extending environment settings object</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-header-value">
@@ -1131,7 +1147,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-environment-settings-object">3.4. Delegate-CH</a>
-    <li><a href="#ref-for-environment-settings-object①">4.4. Extending environment settings object</a> <a href="#ref-for-environment-settings-object②">(2)</a>
+    <li><a href="#ref-for-environment-settings-object①">4.5. Extending environment settings object</a> <a href="#ref-for-environment-settings-object②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-settings-object-global">
@@ -1160,6 +1176,12 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
     <li><a href="#ref-for-attr-meta-name">3.4. Delegate-CH</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-window-navigable">
+   <a href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-navigable">https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-navigable</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-window-navigable">4.1. Navigable</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-non-secure-context">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context">https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context</a><b>Referenced in:</b>
    <ul>
@@ -1183,21 +1205,21 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <aside class="dfn-panel" data-for="term-for-populating-a-session-history-entry">
    <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#populating-a-session-history-entry">https://html.spec.whatwg.org/multipage/browsing-the-web.html#populating-a-session-history-entry</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-populating-a-session-history-entry">4.1. Navigation response</a>
+    <li><a href="#ref-for-populating-a-session-history-entry">4.2. Navigation response</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-relevant-settings-object">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-relevant-settings-object">3.4. Delegate-CH</a>
-    <li><a href="#ref-for-relevant-settings-object①">4.1. Navigation response</a> <a href="#ref-for-relevant-settings-object②">(2)</a>
+    <li><a href="#ref-for-relevant-settings-object①">4.2. Navigation response</a> <a href="#ref-for-relevant-settings-object②">(2)</a>
     <li><a href="#ref-for-relevant-settings-object③">6. Integration with Fetch</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-reload">
    <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#reload">https://html.spec.whatwg.org/multipage/browsing-the-web.html#reload</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-reload">4.1. Navigation response</a>
+    <li><a href="#ref-for-reload">4.2. Navigation response</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-same-origin">
@@ -1215,13 +1237,13 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <aside class="dfn-panel" data-for="term-for-set-up-a-worker-environment-settings-object">
    <a href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object">https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-set-up-a-worker-environment-settings-object">4.2. Service Worker initialization</a>
+    <li><a href="#ref-for-set-up-a-worker-environment-settings-object">4.3. Service Worker initialization</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-standard-metadata-names">
    <a href="https://html.spec.whatwg.org/multipage/semantics.html#standard-metadata-names">https://html.spec.whatwg.org/multipage/semantics.html#standard-metadata-names</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-standard-metadata-names">4.3. Standard metadata names</a>
+    <li><a href="#ref-for-standard-metadata-names">4.4. Standard metadata names</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-the-style-element">
@@ -1255,7 +1277,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <aside class="dfn-panel" data-for="term-for-list-clone">
    <a href="https://infra.spec.whatwg.org/#list-clone">https://infra.spec.whatwg.org/#list-clone</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-list-clone">4.2. Service Worker initialization</a>
+    <li><a href="#ref-for-list-clone">4.3. Service Worker initialization</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list-iterate">
@@ -1327,7 +1349,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <aside class="dfn-panel" data-for="term-for-serviceworkerglobalscope">
    <a href="https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope">https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-serviceworkerglobalscope">4.2. Service Worker initialization</a>
+    <li><a href="#ref-for-serviceworkerglobalscope">4.3. Service Worker initialization</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-origin">
@@ -1368,6 +1390,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="term-for-the-link-element">link</span>
      <li><span class="dfn-paneled" id="term-for-meta">meta</span>
      <li><span class="dfn-paneled" id="term-for-attr-meta-name">name</span>
+     <li><span class="dfn-paneled" id="term-for-window-navigable">navigable</span>
      <li><span class="dfn-paneled" id="term-for-non-secure-context">non-secure context</span>
      <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin">origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-permissions-policy">permissions policy</span>
@@ -1440,7 +1463,6 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> Prevent reload loops by detecting if one <code>Critical-CH</code> reload has already occured for the current page. <a class="issue-return" href="#issue-bbe3c221" title="Jump to section">↵</a></div>
    <div class="issue"> Clarify detection of <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-link-element">link</a></code>, <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-style-element">style</a></code>, or <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script">script</a></code> element execution. <a href="https://github.com/WICG/client-hints-infrastructure/issues/110">[Issue #110]</a> <a class="issue-return" href="#issue-b9ef9066" title="Jump to section">↵</a></div>
    <div class="issue"> Should we tie low-entropy-ness to allowlists, generally? <a class="issue-return" href="#issue-0277eb34" title="Jump to section">↵</a></div>
    <div class="issue"> Links for image features are broken, need to actually define that and link to them. <a class="issue-return" href="#issue-707decdc" title="Jump to section">↵</a></div>
@@ -1449,7 +1471,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    <b><a href="#client-hints-set">#client-hints-set</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-client-hints-set">3.2. Accept-CH cache</a> <a href="#ref-for-client-hints-set①">(2)</a>
-    <li><a href="#ref-for-client-hints-set②">4.4. Extending environment settings object</a>
+    <li><a href="#ref-for-client-hints-set②">4.5. Extending environment settings object</a>
     <li><a href="#ref-for-client-hints-set③">5. Request processing</a>
    </ul>
   </aside>
@@ -1484,19 +1506,25 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <aside class="dfn-panel" data-for="abstract-opdef-create-or-override-the-cached-client-hints-set">
    <b><a href="#abstract-opdef-create-or-override-the-cached-client-hints-set">#abstract-opdef-create-or-override-the-cached-client-hints-set</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-create-or-override-the-cached-client-hints-set">4.1. Navigation response</a>
+    <li><a href="#ref-for-abstract-opdef-create-or-override-the-cached-client-hints-set">4.2. Navigation response</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="abstract-opdef-should-reload-page-for-critical-client-hints">
    <b><a href="#abstract-opdef-should-reload-page-for-critical-client-hints">#abstract-opdef-should-reload-page-for-critical-client-hints</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-should-reload-page-for-critical-client-hints">4.1. Navigation response</a>
+    <li><a href="#ref-for-abstract-opdef-should-reload-page-for-critical-client-hints">4.2. Navigation response</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="delegate-ch">
    <b><a href="#delegate-ch">#delegate-ch</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-delegate-ch">4.3. Standard metadata names</a>
+    <li><a href="#ref-for-delegate-ch">4.4. Standard metadata names</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="has-reloaded-for-critical-ch">
+   <b><a href="#has-reloaded-for-critical-ch">#has-reloaded-for-critical-ch</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-has-reloaded-for-critical-ch">4.2. Navigation response</a> <a href="#ref-for-has-reloaded-for-critical-ch①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="environment-settings-object-client-hints-set">
@@ -1504,7 +1532,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    <ul>
     <li><a href="#ref-for-environment-settings-object-client-hints-set">3.2. Accept-CH cache</a>
     <li><a href="#ref-for-environment-settings-object-client-hints-set①">3.4. Delegate-CH</a> <a href="#ref-for-environment-settings-object-client-hints-set②">(2)</a>
-    <li><a href="#ref-for-environment-settings-object-client-hints-set③">4.2. Service Worker initialization</a> <a href="#ref-for-environment-settings-object-client-hints-set④">(2)</a>
+    <li><a href="#ref-for-environment-settings-object-client-hints-set③">4.3. Service Worker initialization</a> <a href="#ref-for-environment-settings-object-client-hints-set④">(2)</a>
     <li><a href="#ref-for-environment-settings-object-client-hints-set⑤">5. Request processing</a>
    </ul>
   </aside>
