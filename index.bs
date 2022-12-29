@@ -282,7 +282,11 @@ At [=populating a session history entry=], in step 6 after substep 7 insert the 
    <li>Let |shouldReloadForCriticalClientHints| be the result of running [$should reload page for critical client hints$] with the [=relevant settings object=] and |response|.
  </ol>
  <li>Run [$create or override the cached client hints set$] with the [=relevant settings object=] and |response| as inputs.
- <li>If |shouldReloadForCriticalClientHints| then <a spec=HTML>reload</a> <var>navigable</var>.
+ <li>If |shouldReloadForCriticalClientHints| then:
+ <ol>
+   <li>Set <var>navigable</var>'s [=has reloaded for Critical-CH=] to `true`.
+   <li><a spec=HTML>reload</a> <var>navigable</var>.
+ </ol>
 </ol>
 
 Service Worker initialization {#service-worker-init}
