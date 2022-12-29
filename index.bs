@@ -21,6 +21,7 @@ spec:ServiceWorker; type:dfn; for:/; text:
 spec:url; type:dfn; for:url; text:origin
 spec:html; type:element; text:style
 spec:infra; type:dfn; text:user agent
+spec:html; type:dfn; text:navigable
 </pre>
 
 <pre class="anchors">
@@ -189,7 +190,7 @@ the [=Accept-CH cache=] and *in* the `Critical-CH` header. If hints listed in
 the `Critical-CH` header are already in the [=Accept-CH cache=] no reload is
 needed as they were sent. If hints listed in the `Critical-CH` header are not
 in the `Accept-CH` header a reload would not result in the hints being included
-anyway so none should be done to prevent an infinite loop.
+anyway.
 
 When asked if the user agent <dfn abstract-op>should reload page for critical client hints</dfn> given a |settingsObject| and |response|:
 
@@ -215,8 +216,6 @@ When asked if the user agent <dfn abstract-op>should reload page for critical cl
  </ol>
  <li>Return `false`.
 </ol>
-
-Issue: Prevent reload loops by detecting if one `Critical-CH` reload has already occured for the current page.
 
 <dfn>`Delegate-CH`</dfn> {#delegate-ch-algo}
 --------
@@ -264,14 +263,30 @@ Integration with HTML {#html}
 
 This specification integrates with the [[!HTML]] specification by patching the algorithms below:
 
+Navigable {#navigable}
+----------
+
+Add a new field to [=navigable=]:
+<ul>
+ <li>A <dfn>has reloaded for `Critical-CH`</dfn> boolean, initially `false`.
+</ul>
+
 Navigation response {#navigation-response}
 ----------
 
 At [=populating a session history entry=], in step 6 after substep 7 insert the following:
 <ol>
- <li>Let |shouldReloadForCriticalClientHints| be the result of running [$should reload page for critical client hints$] with the [=relevant settings object=] and |response|.
+ <li>Let |shouldReloadForCriticalClientHints| be `false`.
+ <li>If <var>navigable</var>'s [=has reloaded for Critical-CH=] is `false`:
+ <ol>
+   <li>Let |shouldReloadForCriticalClientHints| be the result of running [$should reload page for critical client hints$] with the [=relevant settings object=] and |response|.
+ </ol>
  <li>Run [$create or override the cached client hints set$] with the [=relevant settings object=] and |response| as inputs.
- <li>If |shouldReloadForCriticalClientHints| then <a spec=HTML>reload</a> <var ignore>navigable</var>.
+ <li>If |shouldReloadForCriticalClientHints| then:
+ <ol>
+   <li>Set <var>navigable</var>'s [=has reloaded for Critical-CH=] to `true`.
+   <li><a spec=HTML>reload</a> <var>navigable</var>.
+ </ol>
 </ol>
 
 Service Worker initialization {#service-worker-init}
