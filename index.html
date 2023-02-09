@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 26e85e599, updated Thu Dec 8 15:29:31 2022 -0800" name="generator">
+  <meta content="Bikeshed version 859efb4bd, updated Fri Jan 27 16:04:01 2023 -0800" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="09219c06d020c1eaeed8353a39a47fb09d6e53ab" name="document-revision">
+  <meta content="510827bdaca3983b6ea975f6c1368364a99b901d" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -463,7 +463,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-12-29">29 December 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-02-09">9 February 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -476,7 +476,7 @@ dfn > a.self-link::before      { content: "#"; }
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2022 the Contributors to the Client Hints Infrastructure Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2023 the Contributors to the Client Hints Infrastructure Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
 A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
    <hr title="Separator for header">
   </div>
@@ -637,7 +637,7 @@ redirections.</p>
      <ul>
       <li data-md>
        <p>In order to perform third party Client Hint delegation, Permissions Policy has
- been extended to control features within fetch requests (rather than just Documents). See <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.11 Should request be allowed to use feature?</a></p>
+ been extended to control features within fetch requests (rather than just Documents). See <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.10 Should request be allowed to use feature?</a></p>
      </ul>
     <li data-md>
      <p><a data-link-type="biblio" href="#biblio-client-hint-reliability" title="Client Hint Reliability">Client Hints Reliability</a></p>
@@ -656,8 +656,8 @@ with a value of <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn
 since sites can use each of the hints as a bit set on the client, and that information will be
 communicated to them on every request. As such, a user agent MUST evict that
 cache whenever the user clears their cookies or when session cookies expire.</p>
-   <p class="note" role="note"><span>Note:</span> A site can clear the browser’s <code>Accept-CH</code> cache for its origin by sending an empty <code>Accept-CH</code> header in a response. This sets the origin’s <a data-link-type="dfn" href="#client-hints-set" id="ref-for-client-hints-set①">client hints set</a> to an empty set.</p>
-   <p class="note" role="note"><span>Note:</span> As the cache can only be modified by the top-level frame, it is considered to be partitioned.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> A site can clear the browser’s <code>Accept-CH</code> cache for its origin by sending an empty <code>Accept-CH</code> header in a response. This sets the origin’s <a data-link-type="dfn" href="#client-hints-set" id="ref-for-client-hints-set①">client hints set</a> to an empty set.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> As the cache can only be modified by the top-level frame, it is considered to be partitioned.</p>
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="update-the-client-hints-set-from-cache">update the client hints set from cache</dfn> given a <var>settingsObject</var>:</p>
    <ol>
     <li>Let <var>hintSet</var> be an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set①">ordered set</a>. 
@@ -720,7 +720,7 @@ anyway.</p>
     <li>Return <code>false</code>. 
    </ol>
    <h3 class="heading settled" data-level="3.4" id="delegate-ch-algo"><span class="secno">3.4. </span><span class="content"><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="delegate-ch"><code>Delegate-CH</code></dfn></span><a class="self-link" href="#delegate-ch-algo"></a></h3>
-   <p class="note" role="note"><span>Note:</span> This metadata <em>appends</em> <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token③">client hints token</a>s to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a>'s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set①">client hints set</a>. It <em>does not</em> add those hints to the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache⑦">Accept-CH cache</a>.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> This metadata <em>appends</em> <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token③">client hints token</a>s to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a>'s <a data-link-type="dfn" href="#environment-settings-object-client-hints-set" id="ref-for-environment-settings-object-client-hints-set①">client hints set</a>. It <em>does not</em> add those hints to the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache⑦">Accept-CH cache</a>.</p>
    <ol>
     <li>Let <var>metaElement</var> be the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#meta" id="ref-for-meta">meta</a></code> element. 
     <li>If any <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-link-element" id="ref-for-the-link-element">link</a></code>, <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-style-element" id="ref-for-the-style-element">style</a></code>, or <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script" id="ref-for-script">script</a></code> elements have begun to execute, then return. 
@@ -755,7 +755,7 @@ is defined in <a data-link-type="biblio" href="#biblio-client-hint-reliability" 
    <h2 class="heading settled" data-level="4" id="html"><span class="secno">4. </span><span class="content">Integration with HTML</span><a class="self-link" href="#html"></a></h2>
    <p>This specification integrates with the <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a> specification by patching the algorithms below:</p>
    <h3 class="heading settled" data-level="4.1" id="navigable"><span class="secno">4.1. </span><span class="content">Navigable</span><a class="self-link" href="#navigable"></a></h3>
-   <p>Add a new field to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-navigable" id="ref-for-window-navigable">navigable</a>:</p>
+   <p>Add a new field to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#changing-nav-continuation-navigable" id="ref-for-changing-nav-continuation-navigable">navigable</a>:</p>
    <ul>
     <li>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="has-reloaded-for-critical-ch">has reloaded for <code>Critical-CH</code></dfn> boolean, initially <code>false</code>. 
    </ul>
@@ -799,7 +799,7 @@ following steps:</p>
     <li>
      For each <var>hintName</var> in <var>hintSet</var>: 
      <ol>
-      <li>If <var>request</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> for a "document" <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> and if the result of running <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.11 Should request be allowed to use feature?</a> given <var>request</var> and <var>hintName</var>’s associated feature in <a href="#policy-controlled-features">§ 7.2 Policy-controlled features</a> returns <code>false</code>, then continue to next <var>hintName</var>. 
+      <li>If <var>request</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> for a "document" <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a> and if the result of running <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.10 Should request be allowed to use feature?</a> given <var>request</var> and <var>hintName</var>’s associated feature in <a href="#policy-controlled-features">§ 7.2 Policy-controlled features</a> returns <code>false</code>, then continue to next <var>hintName</var>. 
       <li>If the user agent decides, in an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined">implementation-defined</a> way (see <a href="#privacy">§ 8 Security and Privacy considerations</a>), to omit this hint then continue. 
       <li>Let <var>value</var> be the result of running <a data-link-type="dfn" href="#find-client-hint-value" id="ref-for-find-client-hint-value">find client hint value</a> with <var>hintName</var>. 
       <li>If the user agent decides, in an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined①">implementation-defined</a> way (see <a href="#privacy">§ 8 Security and Privacy considerations</a>), to modify <var>value</var> then do so. 
@@ -821,59 +821,59 @@ following steps:</p>
    <p>In <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-http-redirect-fetch" id="ref-for-concept-http-redirect-fetch">HTTP-redirect fetch</a>, after step 11, run <a data-link-type="abstract-op" href="#abstract-opdef-remove-client-hints-from-redirect-if-needed" id="ref-for-abstract-opdef-remove-client-hints-from-redirect-if-needed">remove client hints from redirect if needed</a> with <var>request</var> as input.</p>
    <p>In <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#forbidden-request-header" id="ref-for-forbidden-request-header">forbidden request-header</a>, to the list of headers within step 1, add <code>Save-Data</code>, <code>DPR</code>, <code>Device-Memory</code>, <code>Width</code>, and <code>Viewport-Width</code>.</p>
    <h2 class="heading settled" data-level="7" id="registry"><span class="secno">7. </span><span class="content">Feature Registry</span><a class="self-link" href="#registry"></a></h2>
-   <p class="note" role="note"><span>Note:</span> This section contains feature-specific definitions.
+   <p class="note" role="note"><span class="marker">Note:</span> This section contains feature-specific definitions.
 New features that rely on the Client Hints infrastructure need to add their respective definitions to this registry.
 User Agents can implement some of those features without implementing others.</p>
    <h3 class="heading settled" data-level="7.1" id="client-hints-token-definition"><span class="secno">7.1. </span><span class="content">Client hints token</span><a class="self-link" href="#client-hints-token-definition"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="client-hints-token">client hints token</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#byte-lowercase" id="ref-for-byte-lowercase">byte-lowercase</a> representation of one of <code>Save-Data</code>, <code>Sec-CH-DPR</code>, <code>Sec-CH-Width</code>, <code>Sec-CH-Viewport-Width</code>, <code>Sec-CH-Viewport-Height</code>, <code>Sec-CH-Device-Memory</code>, <code>Sec-CH-RTT</code>, <code>Sec-CH-Downlink</code>, <code>Sec-CH-ECT</code>, <code>Sec-CH-Prefers-Color-Scheme</code>, <code>Sec-CH-Prefers-Reduced-Motion</code>, <code>Sec-CH-UA</code>, <code>Sec-CH-UA-Arch</code>, <code>Sec-CH-UA-Bitness</code>, <code>Sec-CH-UA-Full-Version</code>, <code>Sec-CH-UA-Full-Version-List</code>, <code>Sec-CH-UA-Mobile</code>, <code>Sec-CH-UA-Model</code>, <code>Sec-CH-UA-Platform</code>, <code>Sec-CH-UA-Platform-Version</code>, or <code>Sec-CH-UA-WoW64</code>.</p>
-   <p class="note" role="note"><span>Note:</span> A client hints token will also match the request header sent by the user agent when
+   <p class="note" role="note"><span class="marker">Note:</span> A client hints token will also match the request header sent by the user agent when
 appropriate (as determined by the <a href="#request-processing">request processing algorithm</a>).</p>
    <h3 class="heading settled" data-level="7.2" id="policy-controlled-features"><span class="secno">7.2. </span><span class="content">Policy-controlled features</span><a class="self-link" href="#policy-controlled-features"></a></h3>
    <p>This document defines <dfn data-dfn-type="dfn" data-export id="policy-controlled-client-hints-features">policy-controlled client hints features<a class="self-link" href="#policy-controlled-client-hints-features"></a></dfn>,
 the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature" id="ref-for-policy-controlled-feature">policy-controlled features</a>:</p>
    <ul>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-save-data">ch-save-data<a class="self-link" href="#ch-save-data"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist">default allowlist</a> of <code>'*'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-save-data">ch-save-data<a class="self-link" href="#ch-save-data"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist">default allowlist</a> of <code>'*'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-dpr">ch-dpr<a class="self-link" href="#ch-dpr"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-dpr">ch-dpr<a class="self-link" href="#ch-dpr"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-width">ch-width<a class="self-link" href="#ch-width"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist②">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-width">ch-width<a class="self-link" href="#ch-width"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist②">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-viewport-width">ch-viewport-width<a class="self-link" href="#ch-viewport-width"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist③">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-viewport-width">ch-viewport-width<a class="self-link" href="#ch-viewport-width"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist③">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-viewport-height">ch-viewport-height<a class="self-link" href="#ch-viewport-height"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist④">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-viewport-height">ch-viewport-height<a class="self-link" href="#ch-viewport-height"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist④">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-device-memory">ch-device-memory<a class="self-link" href="#ch-device-memory"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist⑤">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-device-memory">ch-device-memory<a class="self-link" href="#ch-device-memory"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist⑤">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-rtt">ch-rtt<a class="self-link" href="#ch-rtt"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist⑥">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-rtt">ch-rtt<a class="self-link" href="#ch-rtt"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist⑥">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-downlink">ch-downlink<a class="self-link" href="#ch-downlink"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist⑦">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-downlink">ch-downlink<a class="self-link" href="#ch-downlink"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist⑦">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ect">ch-ect<a class="self-link" href="#ch-ect"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist⑧">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ect">ch-ect<a class="self-link" href="#ch-ect"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist⑧">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-prefers-color-scheme">ch-prefers-color-scheme<a class="self-link" href="#ch-prefers-color-scheme"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist⑨">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-prefers-color-scheme">ch-prefers-color-scheme<a class="self-link" href="#ch-prefers-color-scheme"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist⑨">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-prefers-reduced-motion">ch-prefers-reduced-motion<a class="self-link" href="#ch-prefers-reduced-motion"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①⓪">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-prefers-reduced-motion">ch-prefers-reduced-motion<a class="self-link" href="#ch-prefers-reduced-motion"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①⓪">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua">ch-ua<a class="self-link" href="#ch-ua"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①①">default allowlist</a> of <code>'*'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua">ch-ua<a class="self-link" href="#ch-ua"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①①">default allowlist</a> of <code>'*'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-arch">ch-ua-arch<a class="self-link" href="#ch-ua-arch"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①②">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-arch">ch-ua-arch<a class="self-link" href="#ch-ua-arch"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①②">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-bitness">ch-ua-bitness<a class="self-link" href="#ch-ua-bitness"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①③">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-bitness">ch-ua-bitness<a class="self-link" href="#ch-ua-bitness"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①③">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-full-version">ch-ua-full-version<a class="self-link" href="#ch-ua-full-version"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①④">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-full-version">ch-ua-full-version<a class="self-link" href="#ch-ua-full-version"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①④">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-full-version-list">ch-ua-full-version-list<a class="self-link" href="#ch-ua-full-version-list"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①⑤">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-full-version-list">ch-ua-full-version-list<a class="self-link" href="#ch-ua-full-version-list"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①⑤">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-mobile">ch-ua-mobile<a class="self-link" href="#ch-ua-mobile"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①⑥">default allowlist</a> of <code>'*'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-mobile">ch-ua-mobile<a class="self-link" href="#ch-ua-mobile"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①⑥">default allowlist</a> of <code>'*'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-model">ch-ua-model<a class="self-link" href="#ch-ua-model"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①⑦">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-model">ch-ua-model<a class="self-link" href="#ch-ua-model"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①⑦">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-platform">ch-ua-platform<a class="self-link" href="#ch-ua-platform"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①⑧">default allowlist</a> of <code>'*'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-platform">ch-ua-platform<a class="self-link" href="#ch-ua-platform"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①⑧">default allowlist</a> of <code>'*'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-platform-version">ch-ua-platform-version<a class="self-link" href="#ch-ua-platform-version"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist①⑨">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-platform-version">ch-ua-platform-version<a class="self-link" href="#ch-ua-platform-version"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist①⑨">default allowlist</a> of <code>'self'</code></p>
     <li data-md>
-     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-wow64">ch-ua-wow64<a class="self-link" href="#ch-ua-wow64"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist②⓪">default allowlist</a> of <code>'self'</code></p>
+     <p><code><dfn data-dfn-type="dfn" data-export id="ch-ua-wow64">ch-ua-wow64<a class="self-link" href="#ch-ua-wow64"></a></dfn></code> which has a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist②⓪">default allowlist</a> of <code>'self'</code></p>
    </ul>
    <p class="issue" id="issue-0277eb34"><a class="self-link" href="#issue-0277eb34"></a> Should we tie low-entropy-ness to allowlists, generally?</p>
    <h3 class="heading settled" data-level="7.3" id="low-entropy-table"><span class="secno">7.3. </span><span class="content">Low-entropy hint table</span><a class="self-link" href="#low-entropy-table"></a></h3>
@@ -898,7 +898,7 @@ the following <a data-link-type="dfn" href="https://w3c.github.io/webappsec-perm
       <td><code>Sec-CH-UA-Platform</code> 
       <td>a suitable <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-platform">Platform value</a> 
    </table>
-   <p class="note" role="note"><span>Note:</span> If the value transmitted by <code>Save-Data</code> is the empty string, the header will be omitted entirely.
+   <p class="note" role="note"><span class="marker">Note:</span> If the value transmitted by <code>Save-Data</code> is the empty string, the header will be omitted entirely.
 This is done to reduce redundant header information sent by default.</p>
    <h3 class="heading settled" data-level="7.4" id="find-client-hint-value-section"><span class="secno">7.4. </span><span class="content">Find client hint value</span><a class="self-link" href="#find-client-hint-value-section"></a></h3>
    <p>When asked to <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="find-client-hint-value">find client hint value</dfn>, given <var>hint</var> as input, switch on <var>hint</var> and return the result:</p>
@@ -1176,10 +1176,10 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
     <li><a href="#ref-for-attr-meta-name">3.4. Delegate-CH</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-window-navigable">
-   <a href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-navigable">https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-navigable</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-changing-nav-continuation-navigable">
+   <a href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#changing-nav-continuation-navigable">https://html.spec.whatwg.org/multipage/browsing-the-web.html#changing-nav-continuation-navigable</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-window-navigable">4.1. Navigable</a>
+    <li><a href="#ref-for-changing-nav-continuation-navigable">4.1. Navigable</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-non-secure-context">
@@ -1334,10 +1334,10 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
     <li><a href="#ref-for-user-agent">8. Security and Privacy considerations</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-default-allowlist">
-   <a href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist">https://w3c.github.io/webappsec-permissions-policy/#default-allowlist</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-policy-controlled-feature-default-allowlist">
+   <a href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist">https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-default-allowlist">7.2. Policy-controlled features</a> <a href="#ref-for-default-allowlist①">(2)</a> <a href="#ref-for-default-allowlist②">(3)</a> <a href="#ref-for-default-allowlist③">(4)</a> <a href="#ref-for-default-allowlist④">(5)</a> <a href="#ref-for-default-allowlist⑤">(6)</a> <a href="#ref-for-default-allowlist⑥">(7)</a> <a href="#ref-for-default-allowlist⑦">(8)</a> <a href="#ref-for-default-allowlist⑧">(9)</a> <a href="#ref-for-default-allowlist⑨">(10)</a> <a href="#ref-for-default-allowlist①⓪">(11)</a> <a href="#ref-for-default-allowlist①①">(12)</a> <a href="#ref-for-default-allowlist①②">(13)</a> <a href="#ref-for-default-allowlist①③">(14)</a> <a href="#ref-for-default-allowlist①④">(15)</a> <a href="#ref-for-default-allowlist①⑤">(16)</a> <a href="#ref-for-default-allowlist①⑥">(17)</a> <a href="#ref-for-default-allowlist①⑦">(18)</a> <a href="#ref-for-default-allowlist①⑧">(19)</a> <a href="#ref-for-default-allowlist①⑨">(20)</a> <a href="#ref-for-default-allowlist②⓪">(21)</a>
+    <li><a href="#ref-for-policy-controlled-feature-default-allowlist">7.2. Policy-controlled features</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①">(2)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist②">(3)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist③">(4)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist④">(5)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist⑤">(6)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist⑥">(7)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist⑦">(8)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist⑧">(9)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist⑨">(10)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①⓪">(11)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①①">(12)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①②">(13)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①③">(14)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①④">(15)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①⑤">(16)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①⑥">(17)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①⑦">(18)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①⑧">(19)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist①⑨">(20)</a> <a href="#ref-for-policy-controlled-feature-default-allowlist②⓪">(21)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-policy-controlled-feature">
@@ -1390,7 +1390,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="term-for-the-link-element">link</span>
      <li><span class="dfn-paneled" id="term-for-meta">meta</span>
      <li><span class="dfn-paneled" id="term-for-attr-meta-name">name</span>
-     <li><span class="dfn-paneled" id="term-for-window-navigable">navigable</span>
+     <li><span class="dfn-paneled" id="term-for-changing-nav-continuation-navigable">navigable</span>
      <li><span class="dfn-paneled" id="term-for-non-secure-context">non-secure context</span>
      <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin">origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-permissions-policy">permissions policy</span>
@@ -1420,9 +1420,9 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="term-for-user-agent">user agent</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[PERMISSIONS-POLICY]</a> defines the following terms:
+    <a data-link-type="biblio">[PERMISSIONS-POLICY-1]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-default-allowlist">default allowlist</span>
+     <li><span class="dfn-paneled" id="term-for-policy-controlled-feature-default-allowlist">default allowlist</span>
      <li><span class="dfn-paneled" id="term-for-policy-controlled-feature">policy-controlled feature</span>
     </ul>
    <li>
@@ -1445,7 +1445,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
-   <dt id="biblio-permissions-policy">[PERMISSIONS-POLICY]
+   <dt id="biblio-permissions-policy-1">[PERMISSIONS-POLICY-1]
    <dd>Ian Clelland. <a href="https://w3c.github.io/webappsec-permissions-policy/"><cite>Permissions Policy</cite></a>. URL: <a href="https://w3c.github.io/webappsec-permissions-policy/">https://w3c.github.io/webappsec-permissions-policy/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
@@ -1460,6 +1460,8 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <dl>
    <dt id="biblio-client-hint-reliability">[CLIENT-HINT-RELIABILITY]
    <dd>David Benjamin. <a href="https://datatracker.ietf.org/doc/html/draft-davidben-http-client-hint-reliability"><cite>Client Hint Reliability</cite></a>. URL: <a href="https://datatracker.ietf.org/doc/html/draft-davidben-http-client-hint-reliability">https://datatracker.ietf.org/doc/html/draft-davidben-http-client-hint-reliability</a>
+   <dt id="biblio-permissions-policy">[PERMISSIONS-POLICY]
+   <dd>Ian Clelland. <a href="https://w3c.github.io/webappsec-permissions-policy/"><cite>Permissions Policy</cite></a>. URL: <a href="https://w3c.github.io/webappsec-permissions-policy/">https://w3c.github.io/webappsec-permissions-policy/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
