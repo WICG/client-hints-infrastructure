@@ -246,7 +246,7 @@ Note: This metadata *appends* [=client hints token=]s to the [=environment setti
   <li>[=set/Append=] |feature| to |settingsObject|'s [=environment settings object/client hints set=] and [=set/Append=] |filteredAllowList| to |permissionsPolicy|[|feature|]'s [[PERMISSIONS-POLICY|permissions policy]].
  </ol>
 </ol>
-     
+
 Issue(110): Clarify detection of <{link}>, <{style}>, or <{script}> element execution.
 
 Interaction with `ACCEPT_CH` frame {#interaction-with-accept-ch-frame}
@@ -311,7 +311,7 @@ An [=environment settings object=] has a <dfn for="environment settings object">
 Request processing {#request-processing}
 ===========
 
-When asked to <dfn abstract-op>append client hints to request</dfn> with |settingsObject| and |request| as input, run the
+When asked to <dfn export abstract-op>append client hints to request</dfn> with |settingsObject| and |request| as input, run the
 following steps:
 
 <ol>
