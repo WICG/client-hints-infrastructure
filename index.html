@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 859efb4bd, updated Fri Jan 27 16:04:01 2023 -0800" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="510827bdaca3983b6ea975f6c1368364a99b901d" name="document-revision">
+  <meta content="e513dfa8d60f03a6326afc0e5e382b0fd7437bfe" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -463,7 +463,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-02-09">9 February 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-02-10">10 February 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -593,15 +593,8 @@ following specifications and proposals:</p>
       <li data-md>
        <p>Provides the motivation for Client Hints.</p>
       <li data-md>
-       <p>Defines the fundamental Client Hints infrastructure:</p>
-       <ul>
-        <li data-md>
-         <p>The <code>Accept-CH</code> response header, which servers may use to advertise
-support for certain Client Hints.</p>
-        <li data-md>
-         <p>The <code>Critical-CH</code> response header, which servers may use to request a reload
-to include critical Client Hints missing in the initial load.</p>
-       </ul>
+       <p>Defines the <code>Accept-CH</code> response header, which servers may use to advertise
+ support for certain Client Hints.</p>
       <li data-md>
        <p>Provides both general guidelines, and formal requirements, about Client
  Hints’ impact on caching, security, and privacy.</p>
@@ -629,8 +622,11 @@ hints are removed from not delegated-to cross-origin requests after
 redirections.</p>
        </ul>
       <li data-md>
+       <p>Defines the <code>Critical-CH</code> response header, which servers may use to request a reload
+ to include critical Client Hints missing in the initial load.</p>
+      <li data-md>
        <p>Integrates those concepts with the <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a> and <a data-link-type="biblio" href="#biblio-fetch" title="Fetch Standard">[FETCH]</a> specifications,
-  by patching various concepts there.</p>
+ by patching various concepts there.</p>
      </ul>
     <li data-md>
      <p><a data-link-type="biblio" href="#biblio-permissions-policy" title="Permissions Policy">W3C Permissions Policy specification</a></p>
