@@ -95,11 +95,8 @@ following specifications and proposals:
 
 * IETF [[!RFC8942]]
      - Provides the motivation for Client Hints.
-     - Defines the fundamental Client Hints infrastructure:
-        - The `Accept-CH` response header, which servers may use to advertise
-            support for certain Client Hints.
-        - The `Critical-CH` response header, which servers may use to request a reload
-            to include critical Client Hints missing in the initial load.
+     - Defines the `Accept-CH` response header, which servers may use to advertise
+         support for certain Client Hints.
      - Provides both general guidelines, and formal requirements, about Client
          Hints’ impact on caching, security, and privacy.
      - Does *not* define any actual, particular hints – or say anything about how
@@ -115,8 +112,10 @@ following specifications and proposals:
             same-origin or delegated-to cross-origin requests. It also makes sure
             hints are removed from not delegated-to cross-origin requests after
             redirections.
+     - Defines the `Critical-CH` response header, which servers may use to request a reload	
+         to include critical Client Hints missing in the initial load.
      - Integrates those concepts with the [[!HTML]] and [[!FETCH]] specifications,
-          by patching various concepts there.
+         by patching various concepts there.
 * [[PERMISSIONS-POLICY|W3C Permissions Policy specification]]
      - In order to perform third party Client Hint delegation, Permissions Policy has
          been extended to control features within fetch requests (rather than just Documents). See [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
