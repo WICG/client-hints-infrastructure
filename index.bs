@@ -257,6 +257,10 @@ persisted in the [=Accept-CH cache=], but will be retrieved and merged when
 [=update the client hints set from cache=] is run. The full processing model
 is defined in [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]</a>.
 
+If it's possible for multiple `ACCEPT_CH` frames to be processed in a single
+connection, the set of hints requested by them is considered to be the union
+of all valid hints requested across all frames.
+
 Integration with HTML {#html}
 ===========
 
