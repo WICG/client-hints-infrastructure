@@ -145,6 +145,8 @@ cache whenever the user clears their cookies or when session cookies expire.
 Note: A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH`
 header in a response. This sets the origin's [=/client hints set=] to an empty set.
 
+Note: There MUST only be one `Accept-CH` header per-request and behavior is not defined if multiple are present.
+
 Note: As the cache can only be modified by the top-level frame, it is considered to be partitioned.
 
 When asked to <dfn>update the client hints set from cache</dfn> given a |settingsObject|:
@@ -191,6 +193,8 @@ needed as they were sent. If hints listed in the `Critical-CH` header are not
 in the `Accept-CH` header a reload would not result in the hints being included
 anyway.
 
+Note: There MUST only be one `Critical-CH` header per-request and behavior is not defined if multiple are present.
+
 When asked if the user agent <dfn abstract-op>should reload page for critical client hints</dfn> given a |settingsObject| and |response|:
 
 <ol>
@@ -220,6 +224,8 @@ When asked if the user agent <dfn abstract-op>should reload page for critical cl
 --------
 
 Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=].
+
+Note: There MAY be multiple `Delegate-CH` tags per-document and this algorithm is run once for each in the order of the appearance of the tags.
 
 <ol>
  <li>Let |metaElement| be the <{meta}> element.
@@ -257,9 +263,7 @@ persisted in the [=Accept-CH cache=], but will be retrieved and merged when
 [=update the client hints set from cache=] is run. The full processing model
 is defined in [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]</a>.
 
-If it's possible for multiple `ACCEPT_CH` frames to be processed in a single
-connection, the set of hints requested by them is considered to be the union
-of all valid hints requested across all frames.
+Note: There MUST only be one `ACCEPT_CH` frame per-connection and behavior is not defined if multiple are present.
 
 Integration with HTML {#html}
 ===========
