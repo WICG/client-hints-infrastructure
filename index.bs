@@ -142,11 +142,11 @@ since sites can use each of the hints as a bit set on the client, and that infor
 communicated to them on every request. As such, a user agent MUST evict that
 cache whenever the user clears their cookies or when session cookies expire.
 
-Note: A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH` header in a response with no other `Accept-CH` headers. This sets the origin's [=/client hints set=] to an empty set.
+A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH` header in a response with no other `Accept-CH` headers. This sets the origin's [=/client hints set=] to an empty set.
+
+There MAY be multiple `Accept-CH` headers per-response and this algorithm is run once for each in the order of the appearance of the header.
 
 Note: As the cache can only be modified by the top-level frame, it is considered to be partitioned.
-
-Note: There MAY be multiple `Accept-CH` headers per-response and this algorithm is run once for each in the order of the appearance of the header.
 
 When asked to <dfn>update the client hints set from cache</dfn> given a |settingsObject|:
 
@@ -192,7 +192,7 @@ needed as they were sent. If hints listed in the `Critical-CH` header are not
 in the `Accept-CH` header a reload would not result in the hints being included
 anyway.
 
-Note: There MAY be multiple `Critical-CH` headers per-response and this algorithm is run once for each in the order of the appearance of the header.
+There MAY be multiple `Critical-CH` headers per-response and this algorithm is run once for each in the order of the appearance of the header.
 
 When asked if the user agent <dfn abstract-op>should reload page for critical client hints</dfn> given a |settingsObject| and |response|:
 
@@ -222,9 +222,9 @@ When asked if the user agent <dfn abstract-op>should reload page for critical cl
 <dfn>`Delegate-CH`</dfn> {#delegate-ch-algo}
 --------
 
-Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=].
+There MAY be multiple `Delegate-CH` tags per-document and this algorithm is run once for each in the order of the appearance of the tags.
 
-Note: There MAY be multiple `Delegate-CH` tags per-document and this algorithm is run once for each in the order of the appearance of the tags.
+Note: This metadata *appends* [=client hints token=]s to the [=environment settings object=]'s [=environment settings object/client hints set=]. It *does not* add those hints to the [=Accept-CH cache=].
 
 <ol>
  <li>Let |metaElement| be the <{meta}> element.
@@ -262,7 +262,7 @@ persisted in the [=Accept-CH cache=], but will be retrieved and merged when
 [=update the client hints set from cache=] is run. The full processing model
 is defined in [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]</a>.
 
-Note: There MAY be multiple `ACCEPT_CH` frames per-connection and this algorithm is run once for each in the order of the appearance of the frames.
+There MUST be only one `ACCEPT_CH` frames per-connection. Additional frames will be ignored.
 
 Integration with HTML {#html}
 ===========
