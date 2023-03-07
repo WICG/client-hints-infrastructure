@@ -145,7 +145,8 @@ cache whenever the user clears their cookies or when session cookies expire.
 Note: A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH`
 header in a response. This sets the origin's [=/client hints set=] to an empty set.
 
-Note: There MUST only be one `Accept-CH` header per-request and behavior is not defined if multiple are present.
+Note: There MUST only be one `Accept-CH` header per-request and if more than one is present the browser
+MAY choose to only respect the first.
 
 Note: As the cache can only be modified by the top-level frame, it is considered to be partitioned.
 
@@ -193,7 +194,8 @@ needed as they were sent. If hints listed in the `Critical-CH` header are not
 in the `Accept-CH` header a reload would not result in the hints being included
 anyway.
 
-Note: There MUST only be one `Critical-CH` header per-request and behavior is not defined if multiple are present.
+Note: There MUST only be one `Critical-CH` header per-request and if more than one is present the browser
+MAY choose to only respect the first.
 
 When asked if the user agent <dfn abstract-op>should reload page for critical client hints</dfn> given a |settingsObject| and |response|:
 
@@ -263,7 +265,8 @@ persisted in the [=Accept-CH cache=], but will be retrieved and merged when
 [=update the client hints set from cache=] is run. The full processing model
 is defined in [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]</a>.
 
-Note: There MUST only be one `ACCEPT_CH` frame per-connection and behavior is not defined if multiple are present.
+Note: There MUST only be one `ACCEPT_CH` frame per-connection and if more than one is present the browser
+MAY choose to only respect the first.
 
 Integration with HTML {#html}
 ===========
