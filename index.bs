@@ -142,13 +142,11 @@ since sites can use each of the hints as a bit set on the client, and that infor
 communicated to them on every request. As such, a user agent MUST evict that
 cache whenever the user clears their cookies or when session cookies expire.
 
-Note: A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH`
-header in a response. This sets the origin's [=/client hints set=] to an empty set.
-
-Note: There MUST only be one `Accept-CH` header per-response and if more than one is present the browser
-MAY choose to only respect the first.
+Note: A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH` header in a response with no other `Accept-CH` headers. This sets the origin's [=/client hints set=] to an empty set.
 
 Note: As the cache can only be modified by the top-level frame, it is considered to be partitioned.
+
+Note: There MAY be multiple `Accept-CH` headers per-response and this algorithm is run once for each in the order of the appearance of the header.
 
 When asked to <dfn>update the client hints set from cache</dfn> given a |settingsObject|:
 
@@ -194,8 +192,7 @@ needed as they were sent. If hints listed in the `Critical-CH` header are not
 in the `Accept-CH` header a reload would not result in the hints being included
 anyway.
 
-Note: There MUST only be one `Critical-CH` header per-response and if more than one is present the browser
-MAY choose to only respect the first.
+Note: There MAY be multiple `Critical-CH` headers per-response and this algorithm is run once for each in the order of the appearance of the header.
 
 When asked if the user agent <dfn abstract-op>should reload page for critical client hints</dfn> given a |settingsObject| and |response|:
 
@@ -265,8 +262,7 @@ persisted in the [=Accept-CH cache=], but will be retrieved and merged when
 [=update the client hints set from cache=] is run. The full processing model
 is defined in [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]</a>.
 
-Note: There MUST only be one `ACCEPT_CH` frame per-connection and if more than one is present the browser
-MAY choose to only respect the first.
+Note: There MAY be multiple `ACCEPT_CH` frames per-connection and this algorithm is run once for each in the order of the appearance of the frames.
 
 Integration with HTML {#html}
 ===========
