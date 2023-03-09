@@ -31,8 +31,8 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
     urlPrefix: semantics.html
         type: dfn; text: standard metadata names; url: standard-metadata-names
 spec: STRUCTURED-FIELDS; urlPrefix: https://www.rfc-editor.org/rfc/rfc8941.html#name-
-  type: dfn
-    text: sf-lists; url: lists
+    type: dfn
+        text: sf-lists; url: lists
 </pre>
 
 <pre class=biblio>
