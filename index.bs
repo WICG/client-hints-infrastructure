@@ -30,6 +30,9 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
         type: dfn;text: populating a session history entry; url: populating-a-session-history-entry
     urlPrefix: semantics.html
         type: dfn; text: standard metadata names; url: standard-metadata-names
+spec: STRUCTURED-FIELDS; urlPrefix: https://www.rfc-editor.org/rfc/rfc8941.html#name-
+    type: dfn
+        text: sf-lists; url: lists
 </pre>
 
 <pre class=biblio>
@@ -142,9 +145,9 @@ since sites can use each of the hints as a bit set on the client, and that infor
 communicated to them on every request. As such, a user agent MUST evict that
 cache whenever the user clears their cookies or when session cookies expire.
 
-A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH` header in a response with no other `Accept-CH` headers. This sets the origin's [=/client hints set=] to an empty set.
+A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH` header in a response. This sets the origin's [=/client hints set=] to an empty set.
 
-There MAY be multiple `Accept-CH` headers per-response and this algorithm is run once for each in the order of the appearance of the header.
+There MAY be multiple `Accept-CH` headers per-response and <a>sf-lists</a> can be split across lines as long as each line contains at least one token.
 
 Note: As the cache can only be modified by the top-level frame, it is considered to be partitioned.
 
@@ -192,7 +195,7 @@ needed as they were sent. If hints listed in the `Critical-CH` header are not
 in the `Accept-CH` header a reload would not result in the hints being included
 anyway.
 
-There MAY be multiple `Critical-CH` headers per-response and this algorithm is run once for each in the order of the appearance of the header.
+There MAY be multiple `Critical-CH` headers per-response and <a>sf-lists</a> can be split across lines as long as each line contains at least one token.
 
 When asked if the user agent <dfn abstract-op>should reload page for critical client hints</dfn> given a |settingsObject| and |response|:
 
