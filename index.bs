@@ -333,8 +333,11 @@ following steps:
 |hintSet|.
  <li>For each |hintName| in |hintSet|:
  <ol>
-   <li>If |request| is not a [=navigation request=] for a "document" [=request/destination=] and if the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]]
-   given |request| and |hintName|'s associated feature in [[#policy-controlled-features]] returns `false`, then continue to next |hintName|.
+   <li>If |request| is not a [=navigation request=] for a "document" [=request/destination=]:
+   <ol>
+     <li>Let |requestPermitsHint| be the result of running [[permissions-policy#algo-should-request-be-allowed-to-use-feature]] given |request| and |hintName|'s associated feature in [[#policy-controlled-features]].
+     <li>If |requestPermitsHint| is `false`, then continue to next |hintName|.
+   </ol>
    <li>If the user agent decides, in an [=implementation-defined=] way (see [[#privacy]]), to omit this hint then continue.
    <li>Let |value| be the result of running [=find client hint value=] with |hintName|.
    <li>If the user agent decides, in an [=implementation-defined=] way (see [[#privacy]]), to modify |value| then do so.
