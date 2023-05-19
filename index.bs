@@ -302,8 +302,7 @@ At [=populating a session history entry=], in step 6 after substep 7 insert the 
 At [=navigation params=], append the following:
 <dl>
 <dt><dfn>critical ch restart time</dfn></dt>
-  <dd>a {{DOMHighResTimeStamp}} used for <span data-x="create the navigation timing
-   entry">creating the navigation timing entry</span> for the new <code>Document</code></dd>
+  <dd>a {{DOMHighResTimeStamp}} used for [=creating the navigation timing entry=] for the new <code>Document</code></dd>
 </dl>
 
 
