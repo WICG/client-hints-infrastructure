@@ -294,9 +294,18 @@ At [=populating a session history entry=], in step 6 after substep 7 insert the 
  <li>If |shouldReloadForCriticalClientHints| then:
  <ol>
    <li>Set <var>navigable</var>'s [=has reloaded for Critical-CH=] to `true`.
+   <li>Set <var>navigationParams</var>'s [=critical ch restart time=] to be the [=current high resolution time=].
    <li><a spec=HTML>reload</a> <var>navigable</var>.
  </ol>
 </ol>
+
+At [=navigation params=], append the following:
+<dl>
+<dt><dfn>critical ch restart time</dfn></dt>
+  <dd>a {{DOMHighResTimeStamp}} used for <span data-x="create the navigation timing
+   entry">creating the navigation timing entry</span> for the new <code>Document</code></dd>
+</dl>
+
 
 Service Worker initialization {#service-worker-init}
 -----------
