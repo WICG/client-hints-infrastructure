@@ -277,7 +277,7 @@ Navigable {#navigable}
 
 Add a new field to [=navigable=]:
 <ul>
- <li>A <dfn>has reloaded for `Critical-CH`</dfn> boolean, initially `false`.
+ <li>A <dfn>time reloaded for `Critical-CH`</dfn> {{DOMHighResTimeStamp}}, initially 0.
 </ul>
 
 Navigation response {#navigation-response}
@@ -286,16 +286,19 @@ Navigation response {#navigation-response}
 At [=populating a session history entry=], in step 6 after substep 7 insert the following:
 <ol>
  <li>Let |shouldReloadForCriticalClientHints| be `false`.
- <li>If <var>navigable</var>'s [=has reloaded for Critical-CH=] is `false`:
+ <li>If <var>navigable</var>'s [=time reloaded for Critical-CH=] is 0:
  <ol>
    <li>Let |shouldReloadForCriticalClientHints| be the result of running [$should reload page for critical client hints$] with the [=relevant settings object=] and |response|.
  </ol>
  <li>Run [$create or override the cached client hints set$] with the [=relevant settings object=] and |response| as inputs.
  <li>If |shouldReloadForCriticalClientHints| then:
  <ol>
-   <li>Set <var>navigable</var>'s [=has reloaded for Critical-CH=] to `true`.
-   <li>Set <var>navigationParams</var>'s [=critical ch restart time=] to be the [=current high resolution time=].
+   <li>Set <var>navigable</var>'s [=time reloaded for Critical-CH=] to the [=current high resolution time=].
    <li><a spec=HTML>reload</a> <var>navigable</var>.
+ </ol>
+ <li>If <var>navigable</var>'s [=time reloaded for Critical-CH=] is not 0:
+ <ol>
+    <li>Set <var>navigationParams</var>'s [=critical ch restart time=] to be <var>navigable</var>'s [=time reloaded for Critical-CH=].
  </ol>
 </ol>
 
