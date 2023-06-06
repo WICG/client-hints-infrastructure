@@ -306,6 +306,8 @@ At [=populating a session history entry=], in step 6 after substep 7 insert the 
  </ol>
 </ol>
 
+Issue(154): Clarify how the restart logic integrates with the HTML spec.
+
 At [=navigation params=], append the following:
 <dl>
 <dt>`Critical-CH` restart time</dt>
