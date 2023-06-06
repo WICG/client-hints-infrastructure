@@ -280,7 +280,7 @@ Navigable {#navigable}
 Add a new field to [=navigable=]:
 <ul>
  <li>A <dfn>`Critical-CH` restart time</dfn> {{DOMHighResTimeStamp}}, initially 0.
- This records the time the navigation was restarted due to ensure required Client Hint
+ This records the time the navigation was restarted to ensure required Client Hint
  headers will be sent.
 </ul>
 
@@ -310,7 +310,7 @@ At [=navigation params=], append the following:
 <dl>
 <dt>[=Critical-CH restart time=]</dt>
   <dd>a {{DOMHighResTimeStamp}} used for [=creating the navigation timing entry=] for the new <code>Document</code>.
-  This records the time the navigation was restarted due to ensure required Client Hint headers will be sent.</dd>
+  This records the time the navigation was restarted to ensure required Client Hint headers will be sent.</dd>
 </dl>
 
 
