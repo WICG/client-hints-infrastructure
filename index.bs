@@ -298,7 +298,7 @@ At [=populating a session history entry=], in step 6 after substep 7 insert the 
  <li>If |shouldRestartForCriticalClientHints| then:
  <ol>
    <li>Set <var>navigable</var>'s [=Critical-CH restart time=] to the [=current high resolution time=].
-   <li><a spec=HTML>reload</a> <var>navigable</var>.
+   <li>Restart the initial navigation (before any redirects).
  </ol>
  <li>If <var>navigable</var>'s [=Critical-CH restart time=] is not 0:
  <ol>
