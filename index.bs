@@ -277,7 +277,7 @@ Navigable {#navigable}
 
 Add a new field to [=navigable=]:
 <ul>
- <li>A <dfn>`Critical-CH` restart time</dfn> {{DOMHighResTimeStamp}}, initially 0.
+ <li>A <dfn>`Critical-CH` restart time cache</dfn> {{DOMHighResTimeStamp}}, initially 0.
 </ul>
 
 Navigation response {#navigation-response}
@@ -293,18 +293,18 @@ At [=populating a session history entry=], in step 6 after substep 7 insert the 
  <li>Run [$create or override the cached client hints set$] with the [=relevant settings object=] and |response| as inputs.
  <li>If |shouldReloadForCriticalClientHints| then:
  <ol>
-   <li>Set <var>navigable</var>'s [=Critical-CH restart time=] to the [=current high resolution time=].
+   <li>Set <var>navigable</var>'s [=Critical-CH restart time cache=] to the [=current high resolution time=].
    <li><a spec=HTML>reload</a> <var>navigable</var>.
  </ol>
- <li>If <var>navigable</var>'s [=Critical-CH restart time=] is not 0:
+ <li>If <var>navigable</var>'s [=Critical-CH restart time cache=] is not 0:
  <ol>
-    <li>Set <var>navigationParams</var>'s [=Critical-CH restart time=] to be <var>navigable</var>'s [=Critical-CH restart time=].
+    <li>Set <var>navigationParams</var>'s [=Critical-CH restart time=] to be <var>navigable</var>'s [=Critical-CH restart time cache=].
  </ol>
 </ol>
 
 At [=navigation params=], append the following:
 <dl>
-<dt><dfn>Critical-CH restart time</dfn></dt>
+<dt><dfn>`Critical-CH` restart time</dfn></dt>
   <dd>a {{DOMHighResTimeStamp}} used for [=creating the navigation timing entry=] for the new <code>Document</code></dd>
 </dl>
 
