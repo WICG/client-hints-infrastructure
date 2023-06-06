@@ -308,7 +308,7 @@ At [=populating a session history entry=], in step 6 after substep 7 insert the 
 
 At [=navigation params=], append the following:
 <dl>
-<dt>[=Critical-CH restart time=]</dt>
+<dt>`Critical-CH` restart time</dt>
   <dd>a {{DOMHighResTimeStamp}} used for [=creating the navigation timing entry=] for the new <code>Document</code>.
   This records the time the navigation was restarted to ensure required Client Hint headers will be sent.</dd>
 </dl>
