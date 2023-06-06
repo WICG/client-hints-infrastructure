@@ -115,7 +115,7 @@ following specifications and proposals:
             same-origin or delegated-to cross-origin requests. It also makes sure
             hints are removed from not delegated-to cross-origin requests after
             redirections.
-     - Defines the `Critical-CH` response header, which servers may use to request a reload	
+     - Defines the `Critical-CH` response header, which servers may use to request a restart	
          to include critical Client Hints missing in the initial load.
      - Integrates those concepts with the [[!HTML]] and [[!FETCH]] specifications,
          by patching various concepts there.
@@ -185,19 +185,19 @@ If an [=url/origin=] is loaded and the server sets an `Accept-CH` header that
 lists hints not already in the current [=Accept-CH cache=] that means only
 subsiquent loads of that [=url/origin=] will include the hints. If it's
 critical that every load (including the first) has the requested Client Hints,
-then the server can set a `Critical-CH` header to request a reload. The
+then the server can set a `Critical-CH` header to request a restart. The
 `Critical-CH` header itself does not modify the [=Accept-CH cache=].
 
-A reload will only occur when a hint in the `Accept-CH` header is both *not in*
+A restart will only occur when a hint in the `Accept-CH` header is both *not in*
 the [=Accept-CH cache=] and *in* the `Critical-CH` header. If hints listed in
-the `Critical-CH` header are already in the [=Accept-CH cache=] no reload is
+the `Critical-CH` header are already in the [=Accept-CH cache=] no restart is
 needed as they were sent. If hints listed in the `Critical-CH` header are not
-in the `Accept-CH` header a reload would not result in the hints being included
+in the `Accept-CH` header a restart would not result in the hints being included
 anyway.
 
 There MAY be multiple `Critical-CH` headers per-response and <a>sf-lists</a> can be split across lines as long as each line contains at least one token.
 
-When asked if the user agent <dfn abstract-op>should reload page for critical client hints</dfn> given a |settingsObject| and |response|:
+When asked if the user agent <dfn abstract-op>should restart loading the page for critical client hints</dfn> given a |settingsObject| and |response|:
 
 <ol>
  <li>If |settingsObject| is a [=non-secure context=], abort these steps.
@@ -285,13 +285,13 @@ Navigation response {#navigation-response}
 
 At [=populating a session history entry=], in step 6 after substep 7 insert the following:
 <ol>
- <li>Let |shouldReloadForCriticalClientHints| be `false`.
- <li>If <var>navigable</var>'s [=time reloaded for Critical-CH=] is 0:
+ <li>Let |shouldRestartForCriticalClientHints| be `false`.
+ <li>If <var>navigable</var>'s [=Critical-CH restart time cache=] is 0:
  <ol>
-   <li>Let |shouldReloadForCriticalClientHints| be the result of running [$should reload page for critical client hints$] with the [=relevant settings object=] and |response|.
+   <li>Let |shouldRestartForCriticalClientHints| be the result of running [$should restart page for critical client hints$] with the [=relevant settings object=] and |response|.
  </ol>
  <li>Run [$create or override the cached client hints set$] with the [=relevant settings object=] and |response| as inputs.
- <li>If |shouldReloadForCriticalClientHints| then:
+ <li>If |shouldRestartForCriticalClientHints| then:
  <ol>
    <li>Set <var>navigable</var>'s [=Critical-CH restart time cache=] to the [=current high resolution time=].
    <li><a spec=HTML>reload</a> <var>navigable</var>.
