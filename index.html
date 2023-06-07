@@ -4,14 +4,14 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version bf22245b8, updated Tue Apr 18 15:53:37 2023 -0700" name="generator">
+  <meta content="Bikeshed version 5fcd28d6d, updated Tue May 30 13:12:11 2023 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="96a82dfdc159dc220ae02017937df45075722e97" name="document-revision">
+  <meta content="193d5991389238acabb957455a7576fdcace7758" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
 </style>
-<style>/* style-autolinks */
+<style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
     font-size: inherit;
@@ -72,8 +72,16 @@ pre .property::before, pre .property::after {
 [data-link-type=biblio] {
     white-space: pre;
 }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
 </style>
-<style>/* style-colors */
+<style>/* Boilerplate: style-colors */
 
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
 :root {
@@ -182,163 +190,6 @@ pre .property::before, pre .property::after {
 
     --editedrec-bg: darkorange;
 }
-</style>
-<style>/* style-counters */
-body {
-    counter-reset: example figure issue;
-}
-.issue {
-    counter-increment: issue;
-}
-.issue:not(.no-marker)::before {
-    content: "Issue " counter(issue);
-}
-
-.example {
-    counter-increment: example;
-}
-.example:not(.no-marker)::before {
-    content: "Example " counter(example);
-}
-.invalid.example:not(.no-marker)::before,
-.illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
-}
-
-figcaption {
-    counter-increment: figure;
-}
-figcaption:not(.no-marker)::before {
-    content: "Figure " counter(figure) " ";
-}
-</style>
-<style>/* style-dfn-panel */
-:root {
-    --dfnpanel-bg: #ddd;
-    --dfnpanel-text: var(--text);
-}
-.dfn-panel {
-    position: absolute;
-    z-index: 35;
-    width: 20em;
-    width: 300px;
-    height: auto;
-    max-height: 500px;
-    overflow: auto;
-    padding: 0.5em 0.75em;
-    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
-    background: var(--dfnpanel-bg);
-    color: var(--dfnpanel-text);
-    border: outset 0.2em;
-    white-space: normal; /* in case it's moved into a pre */
-}
-.dfn-panel:not(.on) { display: none; }
-.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
-.dfn-panel > b { display: block; }
-.dfn-panel a { color: var(--dfnpanel-text); }
-.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
-.dfn-panel > b + b { margin-top: 0.25em; }
-.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
-.dfn-panel li a {
-    white-space: pre;
-    display: inline-block;
-    max-width: calc(300px - 1.5em - 1em);
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.dfn-panel.activated {
-    display: inline-block;
-    position: fixed;
-    left: .5em;
-    bottom: 2em;
-    margin: 0 auto;
-    max-width: calc(100vw - 1.5em - .4em - .5em);
-    max-height: 30vh;
-}
-
-.dfn-paneled[role="button"] { cursor: pointer; }
-</style>
-<style>/* style-issues */
-a[href].issue-return {
-    float: right;
-    float: inline-end;
-    color: var(--issueheading-text);
-    font-weight: bold;
-    text-decoration: none;
-}
-</style>
-<style>/* style-md-lists */
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
-}
-[data-md] > :last-child {
-    margin-bottom: 0;
-}
-</style>
-<style>/* style-selflinks */
-
-:root {
-    --selflink-text: white;
-    --selflink-bg: gray;
-    --selflink-hover-text: black;
-}
-.heading, .issue, .note, .example, li, dt {
-    position: relative;
-}
-a.self-link {
-    position: absolute;
-    top: 0;
-    left: calc(-1 * (3.5rem - 26px));
-    width: calc(3.5rem - 26px);
-    height: 2em;
-    text-align: center;
-    border: none;
-    transition: opacity .2s;
-    opacity: .5;
-}
-a.self-link:hover {
-    opacity: 1;
-}
-.heading > a.self-link {
-    font-size: 83%;
-}
-.example > a.self-link,
-.note > a.self-link,
-.issue > a.self-link {
-    /* These blocks are overflow:auto, so positioning outside
-       doesn't work. */
-    left: auto;
-    right: 0;
-}
-li > a.self-link {
-    left: calc(-1 * (3.5rem - 26px) - 2em);
-}
-dfn > a.self-link {
-    top: auto;
-    left: auto;
-    opacity: 0;
-    width: 1.5em;
-    height: 1.5em;
-    background: var(--selflink-bg);
-    color: var(--selflink-text);
-    font-style: normal;
-    transition: opacity .2s, background-color .2s, color .2s;
-}
-dfn:hover > a.self-link {
-    opacity: 1;
-}
-dfn > a.self-link:hover {
-    color: var(--selflink-hover-text);
-}
-
-a.self-link::before            { content: "¶"; }
-.heading > a.self-link::before { content: "§"; }
-dfn > a.self-link::before      { content: "#"; }
-</style>
-<style>/* style-darkmode */
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -451,27 +302,226 @@ dfn > a.self-link::before      { content: "#"; }
        which is quite common in practice... */
     img { background: white; }
 }
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --selflink-text: black;
-        --selflink-bg: silver;
-        --selflink-hover-text: white;
-    }
+</style>
+<style>/* Boilerplate: style-counters */
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
 }
 
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
 @media (prefers-color-scheme: dark) {
     :root {
         --dfnpanel-bg: #222;
         --dfnpanel-text: var(--text);
     }
 }
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dfnpanel-bg: #222;
+        --dfnpanel-text: var(--text);
+    }
+}
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-issues */
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+<style>/* Boilerplate: style-md-lists */
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}
+</style>
+<style>/* Boilerplate: style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
 </style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-04-26">26 April 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-06-07">7 June 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -629,7 +679,7 @@ hints are removed from not delegated-to cross-origin requests after
 redirections.</p>
        </ul>
       <li data-md>
-       <p>Defines the <code>Critical-CH</code> response header, which servers may use to request a reload
+       <p>Defines the <code>Critical-CH</code> response header, which servers may use to request a restart
  to include critical Client Hints missing in the initial load.</p>
       <li data-md>
        <p>Integrates those concepts with the <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a> and <a data-link-type="biblio" href="#biblio-fetch" title="Fetch Standard">[FETCH]</a> specifications,
@@ -691,14 +741,15 @@ cache whenever the user clears their cookies or when session cookies expire.</p>
 lists hints not already in the current <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache②">Accept-CH cache</a> that means only
 subsiquent loads of that <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin③">origin</a> will include the hints. If it’s
 critical that every load (including the first) has the requested Client Hints,
-then the server can set a <code>Critical-CH</code> header to request a reload. The <code>Critical-CH</code> header itself does not modify the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache③">Accept-CH cache</a>.</p>
-   <p>A reload will only occur when a hint in the <code>Accept-CH</code> header is both <em>not in</em> the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache④">Accept-CH cache</a> and <em>in</em> the <code>Critical-CH</code> header. If hints listed in
-the <code>Critical-CH</code> header are already in the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache⑤">Accept-CH cache</a> no reload is
+then the server can set a <code>Critical-CH</code> header to request a restart. The <code>Critical-CH</code> header itself does not modify the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache③">Accept-CH cache</a>.</p>
+   <p>A restart will only occur when a hint in the <code>Accept-CH</code> header is both <em>not in</em> the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache④">Accept-CH cache</a> and <em>in</em> the <code>Critical-CH</code> header. If hints listed in
+the <code>Critical-CH</code> header are already in the <a data-link-type="dfn" href="#accept-ch-cache" id="ref-for-accept-ch-cache⑤">Accept-CH cache</a> no restart is
 needed as they were sent. If hints listed in the <code>Critical-CH</code> header are not
-in the <code>Accept-CH</code> header a reload would not result in the hints being included
+in the <code>Accept-CH</code> header a restart would not result in the hints being included
 anyway.</p>
+   <p>The restart retries the entire navigation (including any prior redirects).</p>
    <p>There MAY be multiple <code>Critical-CH</code> headers per-response and <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc8941.html#name-lists" id="ref-for-name-lists①">sf-lists</a> can be split across lines as long as each line contains at least one token.</p>
-   <p>When asked if the user agent <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export id="abstract-opdef-should-reload-page-for-critical-client-hints">should reload page for critical client hints</dfn> given a <var>settingsObject</var> and <var>response</var>:</p>
+   <p>When asked if the user agent <dfn data-dfn-type="abstract-op" data-export id="abstract-opdef-should-restart-loading-the-page-for-critical-client-hints">should restart loading the page for critical client hints<a class="self-link" href="#abstract-opdef-should-restart-loading-the-page-for-critical-client-hints"></a></dfn> given a <var>settingsObject</var> and <var>response</var>:</p>
    <ol>
     <li>If <var>settingsObject</var> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context" id="ref-for-non-secure-context①">non-secure context</a>, abort these steps. 
     <li>Let <var>browsingContext</var> be <var>settingsObject</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global①">global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-bc" id="ref-for-window-bc①">browsing context</a>. 
@@ -764,25 +815,39 @@ is defined in <a data-link-type="biblio" href="#biblio-client-hint-reliability" 
    <h3 class="heading settled" data-level="4.1" id="navigable"><span class="secno">4.1. </span><span class="content">Navigable</span><a class="self-link" href="#navigable"></a></h3>
    <p>Add a new field to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#changing-nav-continuation-navigable" id="ref-for-changing-nav-continuation-navigable">navigable</a>:</p>
    <ul>
-    <li>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="has-reloaded-for-critical-ch">has reloaded for <code>Critical-CH</code></dfn> boolean, initially <code>false</code>. 
+    <li>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="critical-ch-restart-time"><code>Critical-CH</code> restart time</dfn> <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/hr-time/#dom-domhighrestimestamp" id="ref-for-dom-domhighrestimestamp">DOMHighResTimeStamp</a></code>, initially 0.
+ This records the time the navigation was restarted to ensure required Client Hint
+ headers will be sent. 
    </ul>
    <h3 class="heading settled" data-level="4.2" id="navigation-response"><span class="secno">4.2. </span><span class="content">Navigation response</span><a class="self-link" href="#navigation-response"></a></h3>
    <p>At <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#populating-a-session-history-entry" id="ref-for-populating-a-session-history-entry">populating a session history entry</a>, in step 6 after substep 7 insert the following:</p>
    <ol>
-    <li>Let <var>shouldReloadForCriticalClientHints</var> be <code>false</code>. 
+    <li>Let <var>shouldRestartForCriticalClientHints</var> be <code>false</code>. 
     <li>
-     If <var>navigable</var>’s <a data-link-type="dfn" href="#has-reloaded-for-critical-ch" id="ref-for-has-reloaded-for-critical-ch">has reloaded for Critical-CH</a> is <code>false</code>: 
+     If <var>navigable</var>’s <a data-link-type="dfn" href="#critical-ch-restart-time" id="ref-for-critical-ch-restart-time">Critical-CH restart time</a> is 0: 
      <ol>
-      <li>Let <var>shouldReloadForCriticalClientHints</var> be the result of running <a data-link-type="abstract-op" href="#abstract-opdef-should-reload-page-for-critical-client-hints" id="ref-for-abstract-opdef-should-reload-page-for-critical-client-hints">should reload page for critical client hints</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a> and <var>response</var>. 
+      <li>Let <var>shouldRestartForCriticalClientHints</var> be the result of running <a data-link-type="abstract-op">should restart page for critical client hints</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a> and <var>response</var>. 
      </ol>
     <li>Run <a data-link-type="abstract-op" href="#abstract-opdef-create-or-override-the-cached-client-hints-set" id="ref-for-abstract-opdef-create-or-override-the-cached-client-hints-set">create or override the cached client hints set</a> with the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object②">relevant settings object</a> and <var>response</var> as inputs. 
     <li>
-     If <var>shouldReloadForCriticalClientHints</var> then: 
+     If <var>shouldRestartForCriticalClientHints</var> then: 
      <ol>
-      <li>Set <var>navigable</var>’s <a data-link-type="dfn" href="#has-reloaded-for-critical-ch" id="ref-for-has-reloaded-for-critical-ch①">has reloaded for Critical-CH</a> to <code>true</code>. 
-      <li><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#reload" id="ref-for-reload">reload</a> <var>navigable</var>. 
+      <li>Set <var>navigable</var>’s <a data-link-type="dfn" href="#critical-ch-restart-time" id="ref-for-critical-ch-restart-time①">Critical-CH restart time</a> to the <a data-link-type="dfn" href="https://w3c.github.io/hr-time/#dfn-current-high-resolution-time" id="ref-for-dfn-current-high-resolution-time">current high resolution time</a>. 
+      <li>Restart the initial navigation (before any redirects). 
+     </ol>
+    <li>
+     If <var>navigable</var>’s <a data-link-type="dfn" href="#critical-ch-restart-time" id="ref-for-critical-ch-restart-time②">Critical-CH restart time</a> is not 0: 
+     <ol>
+      <li>Set <var>navigationParams</var>’s <a data-link-type="dfn" href="#critical-ch-restart-time" id="ref-for-critical-ch-restart-time③">Critical-CH restart time</a> to be <var>navigable</var>’s <a data-link-type="dfn" href="#critical-ch-restart-time" id="ref-for-critical-ch-restart-time④">Critical-CH restart time</a>. 
      </ol>
    </ol>
+   <p class="issue" id="issue-8a20107e"><a class="self-link" href="#issue-8a20107e"></a> Clarify how "Restart the initial navigation (before any redirects)" integrates with the HTML spec. <a href="https://github.com/WICG/client-hints-infrastructure/issues/154">[Issue #154]</a></p>
+   <p>At <a data-link-type="dfn">navigation params</a>, append the following:</p>
+   <dl>
+    <dt><code>Critical-CH</code> restart time
+    <dd>a <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/hr-time/#dom-domhighrestimestamp" id="ref-for-dom-domhighrestimestamp①">DOMHighResTimeStamp</a></code> used for <a data-link-type="dfn" href="https://w3c.github.io/navigation-timing/#dfn-create-the-navigation-timing-entry" id="ref-for-dfn-create-the-navigation-timing-entry">creating the navigation timing entry</a> for the new <code>Document</code>.
+  This records the time the navigation was restarted to ensure required Client Hint headers will be sent.
+   </dl>
    <h3 class="heading settled" data-level="4.3" id="service-worker-init"><span class="secno">4.3. </span><span class="content">Service Worker initialization</span><a class="self-link" href="#service-worker-init"></a></h3>
     At <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object" id="ref-for-set-up-a-worker-environment-settings-object">set up a worker environment settings object</a>,
 after step 6, add the following step: 
@@ -1029,17 +1094,17 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
     </ul>
    <li><a href="#client-hints-token">client hints token</a><span>, in § 7.1</span>
    <li><a href="#abstract-opdef-create-or-override-the-cached-client-hints-set">create or override the cached client hints set</a><span>, in § 3.2</span>
+   <li><a href="#critical-ch-restart-time">Critical-CH restart time</a><span>, in § 4.1</span>
    <li><a href="#delegate-ch">Delegate-CH</a><span>, in § 3.4</span>
    <li><a href="#field-name">field-name</a><span>, in § 9</span>
    <li><a href="#find-client-hint-value">find client hint value</a><span>, in § 7.4</span>
-   <li><a href="#has-reloaded-for-critical-ch">has reloaded for Critical-CH</a><span>, in § 4.1</span>
    <li><a href="#high-entropy-client-hint">high-entropy client hint</a><span>, in § 7.3</span>
    <li><a href="#low-entropy-hint-table">low entropy hint table</a><span>, in § 7.3</span>
    <li><a href="#low-entropy-hint-table">low-entropy hint table</a><span>, in § 7.3</span>
    <li><a href="#accept-ch-cache-origin">origin</a><span>, in § 3.2</span>
    <li><a href="#policy-controlled-client-hints-features">policy-controlled client hints features</a><span>, in § 7.2</span>
    <li><a href="#abstract-opdef-remove-client-hints-from-redirect-if-needed">remove client hints from redirect if needed</a><span>, in § 5</span>
-   <li><a href="#abstract-opdef-should-reload-page-for-critical-client-hints">should reload page for critical client hints</a><span>, in § 3.3</span>
+   <li><a href="#abstract-opdef-should-restart-loading-the-page-for-critical-client-hints">should restart loading the page for critical client hints</a><span>, in § 3.3</span>
    <li><a href="#update-the-client-hints-set-from-cache">update the client hints set from cache</a><span>, in § 3.2</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -1063,6 +1128,12 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="8a608b90">value</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[HR-TIME-3]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="0e9f636b">DOMHighResTimeStamp</span>
+     <li><span class="dfn-paneled" id="7e7cc1d8">current high resolution time</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="6d88ab2e">browsing context</span>
@@ -1078,7 +1149,6 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="a41102eb">permissions policy</span>
      <li><span class="dfn-paneled" id="4405ae42">populating a session history entry</span>
      <li><span class="dfn-paneled" id="9c4c1e66">relevant settings object</span>
-     <li><span class="dfn-paneled" id="06b3efd0">reload</span>
      <li><span class="dfn-paneled" id="7393da89">same origin</span>
      <li><span class="dfn-paneled" id="0cf3964f">script</span>
      <li><span class="dfn-paneled" id="bbb5f6df">set up a worker environment settings object</span>
@@ -1100,6 +1170,11 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="15e48c39">set</span>
      <li><span class="dfn-paneled" id="0e6b2056">set <small>(for map)</small></span>
      <li><span class="dfn-paneled" id="6d19ac93">user agent</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[NAVIGATION-TIMING-2]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="85e4c237">create the navigation timing entry</span>
     </ul>
    <li>
     <a data-link-type="biblio">[PERMISSIONS-POLICY-1]</a> defines the following terms:
@@ -1128,10 +1203,14 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <dl>
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dt id="biblio-hr-time-3">[HR-TIME-3]
+   <dd>Yoav Weiss. <a href="https://w3c.github.io/hr-time/"><cite>High Resolution Time</cite></a>. URL: <a href="https://w3c.github.io/hr-time/">https://w3c.github.io/hr-time/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dt id="biblio-navigation-timing-2">[NAVIGATION-TIMING-2]
+   <dd>Yoav Weiss; Noam Rosenthal. <a href="https://w3c.github.io/navigation-timing/"><cite>Navigation Timing Level 2</cite></a>. URL: <a href="https://w3c.github.io/navigation-timing/">https://w3c.github.io/navigation-timing/</a>
    <dt id="biblio-permissions-policy-1">[PERMISSIONS-POLICY-1]
    <dd>Ian Clelland. <a href="https://w3c.github.io/webappsec-permissions-policy/"><cite>Permissions Policy</cite></a>. URL: <a href="https://w3c.github.io/webappsec-permissions-policy/">https://w3c.github.io/webappsec-permissions-policy/</a>
    <dt id="biblio-rfc2119">[RFC2119]
@@ -1153,10 +1232,11 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> Clarify detection of <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-link-element">link</a></code>, <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-style-element">style</a></code>, or <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script">script</a></code> element execution. <a href="https://github.com/WICG/client-hints-infrastructure/issues/110">[Issue #110]</a> <a class="issue-return" href="#issue-b9ef9066" title="Jump to section">↵</a></div>
+   <div class="issue"> Clarify how "Restart the initial navigation (before any redirects)" integrates with the HTML spec. <a href="https://github.com/WICG/client-hints-infrastructure/issues/154">[Issue #154]</a> <a class="issue-return" href="#issue-8a20107e" title="Jump to section">↵</a></div>
    <div class="issue"> Should we tie low-entropy-ness to allowlists, generally? <a class="issue-return" href="#issue-0277eb34" title="Jump to section">↵</a></div>
    <div class="issue"> Links for image features are broken, need to actually define that and link to them. <a class="issue-return" href="#issue-707decdc" title="Jump to section">↵</a></div>
   </div>
-<script>/* script-dfn-panel */
+<script>/* Boilerplate: script-dfn-panel */
 "use strict";
 {
     const dfnsJson = window.dfnsJson || {};
@@ -1309,7 +1389,160 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
     }
 }
 </script>
-<script>/* script-dfn-panel-json */
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+    const dfnsJson = window.dfnsJson || {};
+
+    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
+        return mk.aside({
+            class: "dfn-panel",
+            id: `infopanel-for-${dfnID}`,
+            "data-for": dfnID,
+            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+            },
+            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+                `Info about the '${dfnText}' ${external?"external":""} reference.`),
+            mk.a({href:url}, url),
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({
+                                    href: `#${ref.id}`
+                                    },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        );
+    }
+
+    function genAllDfnPanels() {
+        for(const panelData of Object.values(window.dfnpanelData)) {
+            const dfnID = panelData.dfnID;
+            const dfn = document.getElementById(dfnID);
+            if(!dfn) {
+                console.log(`Can't find dfn#${dfnID}.`, panelData);
+            } else {
+                const panel = genDfnPanel(panelData);
+                append(document.body, panel);
+                insertDfnPopupAction(dfn, panel)
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", ()=>{
+        genAllDfnPanels();
+
+        // Add popup behavior to all dfns to show the corresponding dfn-panel.
+        var dfns = queryAll('.dfn-paneled');
+        for(let dfn of dfns) { ; }
+
+        document.body.addEventListener("click", (e) => {
+            // If not handled already, just hide all dfn panels.
+            hideAllDfnPanels();
+        });
+    })
+
+
+    function hideAllDfnPanels() {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
+    }
+
+    function showDfnPanel(dfnPanel, dfn) {
+        hideAllDfnPanels(); // Only display one at this time.
+        dfn.setAttribute("aria-expanded", "true");
+        dfnPanel.classList.add("on");
+        dfnPanel.style.left = "5px";
+        dfnPanel.style.top = "0px";
+        const panelRect = dfnPanel.getBoundingClientRect();
+        const panelWidth = panelRect.right - panelRect.left;
+        if (panelRect.right > document.body.scrollWidth) {
+            // Panel's overflowing the screen.
+            // Just drop it below the dfn and flip it rightward instead.
+            // This still wont' fix things if the screen is *really* wide,
+            // but fixing that's a lot harder without 'anchor()'.
+            dfnPanel.style.top = "1.5em";
+            dfnPanel.style.left = "auto";
+            dfnPanel.style.right = "0px";
+        }
+    }
+
+    function pinDfnPanel(dfnPanel) {
+        // Switch it to "activated" state, which pins it.
+        dfnPanel.classList.add("activated");
+        dfnPanel.style.left = null;
+        dfnPanel.style.top = null;
+    }
+
+    function hideDfnPanel(dfnPanel, dfn) {
+        if(!dfn) {
+            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
+        }
+        dfn.setAttribute("aria-expanded", "false")
+        dfnPanel.classList.remove("on");
+        dfnPanel.classList.remove("activated");
+    }
+
+    function toggleDfnPanel(dfnPanel, dfn) {
+        if(dfnPanel.classList.contains("on")) {
+            hideDfnPanel(dfnPanel, dfn);
+        } else {
+            showDfnPanel(dfnPanel, dfn);
+        }
+    }
+
+    function insertDfnPopupAction(dfn, dfnPanel) {
+        // Find dfn panel
+        const panelWrapper = document.createElement('span');
+        panelWrapper.appendChild(dfnPanel);
+        panelWrapper.style.position = "relative";
+        panelWrapper.style.height = "0px";
+        dfn.insertAdjacentElement("afterend", panelWrapper);
+        dfn.setAttribute('role', 'button');
+        dfn.setAttribute('aria-expanded', 'false')
+        dfn.tabIndex = 0;
+        dfn.classList.add('has-dfn-panel');
+        dfn.addEventListener('click', (event) => {
+            showDfnPanel(dfnPanel, dfn);
+            event.stopPropagation();
+        });
+        dfn.addEventListener('keypress', (event) => {
+            const kc = event.keyCode;
+            // 32->Space, 13->Enter
+            if(kc == 32 || kc == 13) {
+                toggleDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        });
+
+        dfnPanel.addEventListener('click', (event) => {
+            if (event.target.nodeName == 'A') {
+                pinDfnPanel(dfnPanel);
+            }
+            event.stopPropagation();
+        });
+
+        dfnPanel.addEventListener('keydown', (event) => {
+            if(event.keyCode == 27) { // Escape key
+                hideDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        })
+    }
+}
+</script>
+<script>/* Boilerplate: script-dfn-panel-json */
 window.dfnpanelData = {};
 window.dfnpanelData['a6a8ec88'] = {"dfnID": "a6a8ec88", "url": "https://fetch.spec.whatwg.org/#concept-header-list-append", "dfnText": "append", "refSections": [{"refs": [{"id": "ref-for-concept-header-list-append"}], "title": "5. Request processing"}], "external": true};
 window.dfnpanelData['857d5516'] = {"dfnID": "857d5516", "url": "https://fetch.spec.whatwg.org/#concept-request-client", "dfnText": "client", "refSections": [{"refs": [{"id": "ref-for-concept-request-client"}], "title": "4.5. Extending environment settings object"}, {"refs": [{"id": "ref-for-concept-request-client\u2460"}], "title": "5. Request processing"}], "external": true};
@@ -1325,6 +1558,8 @@ window.dfnpanelData['2889d1ec'] = {"dfnID": "2889d1ec", "url": "https://fetch.sp
 window.dfnpanelData['5a391458'] = {"dfnID": "5a391458", "url": "https://fetch.spec.whatwg.org/#non-subresource-request", "dfnText": "non-subresource request", "refSections": [{"refs": [{"id": "ref-for-non-subresource-request"}], "title": "5. Request processing"}], "external": true};
 window.dfnpanelData['162d2b51'] = {"dfnID": "162d2b51", "url": "https://fetch.spec.whatwg.org/#concept-request-request", "dfnText": "request", "refSections": [{"refs": [{"id": "ref-for-concept-request-request"}], "title": "4.5. Extending environment settings object"}], "external": true};
 window.dfnpanelData['8a608b90'] = {"dfnID": "8a608b90", "url": "https://fetch.spec.whatwg.org/#concept-header-value", "dfnText": "value", "refSections": [{"refs": [{"id": "ref-for-concept-header-value"}], "title": "7.3. Low-entropy hint table"}], "external": true};
+window.dfnpanelData['0e9f636b'] = {"dfnID": "0e9f636b", "url": "https://w3c.github.io/hr-time/#dom-domhighrestimestamp", "dfnText": "DOMHighResTimeStamp", "refSections": [{"refs": [{"id": "ref-for-dom-domhighrestimestamp"}], "title": "4.1. Navigable"}, {"refs": [{"id": "ref-for-dom-domhighrestimestamp\u2460"}], "title": "4.2. Navigation response"}], "external": true};
+window.dfnpanelData['7e7cc1d8'] = {"dfnID": "7e7cc1d8", "url": "https://w3c.github.io/hr-time/#dfn-current-high-resolution-time", "dfnText": "current high resolution time", "refSections": [{"refs": [{"id": "ref-for-dfn-current-high-resolution-time"}], "title": "4.2. Navigation response"}], "external": true};
 window.dfnpanelData['6d88ab2e'] = {"dfnID": "6d88ab2e", "url": "https://html.spec.whatwg.org/multipage/nav-history-apis.html#window-bc", "dfnText": "browsing context", "refSections": [{"refs": [{"id": "ref-for-window-bc"}], "title": "3.2. Accept-CH cache"}, {"refs": [{"id": "ref-for-window-bc\u2460"}], "title": "3.3. Critical-CH"}, {"refs": [{"id": "ref-for-window-bc\u2461"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['5a88c1c3'] = {"dfnID": "5a88c1c3", "url": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content", "dfnText": "content", "refSections": [{"refs": [{"id": "ref-for-attr-meta-content"}, {"id": "ref-for-attr-meta-content\u2460"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['3e12e042'] = {"dfnID": "3e12e042", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object", "dfnText": "environment settings object", "refSections": [{"refs": [{"id": "ref-for-environment-settings-object"}], "title": "3.4. Delegate-CH"}, {"refs": [{"id": "ref-for-environment-settings-object\u2460"}, {"id": "ref-for-environment-settings-object\u2461"}], "title": "4.5. Extending environment settings object"}], "external": true};
@@ -1338,7 +1573,6 @@ window.dfnpanelData['43ac8374'] = {"dfnID": "43ac8374", "url": "https://html.spe
 window.dfnpanelData['a41102eb'] = {"dfnID": "a41102eb", "url": "https://html.spec.whatwg.org/multipage/dom.html#concept-document-permissions-policy", "dfnText": "permissions policy", "refSections": [{"refs": [{"id": "ref-for-concept-document-permissions-policy"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['4405ae42'] = {"dfnID": "4405ae42", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#populating-a-session-history-entry", "dfnText": "populating a session history entry", "refSections": [{"refs": [{"id": "ref-for-populating-a-session-history-entry"}], "title": "4.2. Navigation response"}], "external": true};
 window.dfnpanelData['9c4c1e66'] = {"dfnID": "9c4c1e66", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object", "dfnText": "relevant settings object", "refSections": [{"refs": [{"id": "ref-for-relevant-settings-object"}], "title": "3.4. Delegate-CH"}, {"refs": [{"id": "ref-for-relevant-settings-object\u2460"}, {"id": "ref-for-relevant-settings-object\u2461"}], "title": "4.2. Navigation response"}, {"refs": [{"id": "ref-for-relevant-settings-object\u2462"}], "title": "6. Integration with Fetch"}], "external": true};
-window.dfnpanelData['06b3efd0'] = {"dfnID": "06b3efd0", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#reload", "dfnText": "reload", "refSections": [{"refs": [{"id": "ref-for-reload"}], "title": "4.2. Navigation response"}], "external": true};
 window.dfnpanelData['7393da89'] = {"dfnID": "7393da89", "url": "https://html.spec.whatwg.org/multipage/browsers.html#same-origin", "dfnText": "same origin", "refSections": [{"refs": [{"id": "ref-for-same-origin"}], "title": "3.2. Accept-CH cache"}], "external": true};
 window.dfnpanelData['0cf3964f'] = {"dfnID": "0cf3964f", "url": "https://html.spec.whatwg.org/multipage/scripting.html#script", "dfnText": "script", "refSections": [{"refs": [{"id": "ref-for-script"}, {"id": "ref-for-script\u2460"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['bbb5f6df'] = {"dfnID": "bbb5f6df", "url": "https://html.spec.whatwg.org/multipage/workers.html#set-up-a-worker-environment-settings-object", "dfnText": "set up a worker environment settings object", "refSections": [{"refs": [{"id": "ref-for-set-up-a-worker-environment-settings-object"}], "title": "4.3. Service Worker initialization"}], "external": true};
@@ -1356,6 +1590,7 @@ window.dfnpanelData['692595fe'] = {"dfnID": "692595fe", "url": "https://infra.sp
 window.dfnpanelData['15e48c39'] = {"dfnID": "15e48c39", "url": "https://infra.spec.whatwg.org/#ordered-set", "dfnText": "set", "refSections": [{"refs": [{"id": "ref-for-ordered-set"}], "title": "3.1. Client hints set"}, {"refs": [{"id": "ref-for-ordered-set\u2460"}, {"id": "ref-for-ordered-set\u2461"}, {"id": "ref-for-ordered-set\u2462"}], "title": "3.2. Accept-CH cache"}, {"refs": [{"id": "ref-for-ordered-set\u2463"}], "title": "3.3. Critical-CH"}, {"refs": [{"id": "ref-for-ordered-set\u2464"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['0e6b2056'] = {"dfnID": "0e6b2056", "url": "https://infra.spec.whatwg.org/#map-set", "dfnText": "set (for map)", "refSections": [{"refs": [{"id": "ref-for-map-set"}], "title": "3.2. Accept-CH cache"}], "external": true};
 window.dfnpanelData['6d19ac93'] = {"dfnID": "6d19ac93", "url": "https://infra.spec.whatwg.org/#user-agent", "dfnText": "user agent", "refSections": [{"refs": [{"id": "ref-for-user-agent"}], "title": "8. Security and Privacy considerations"}], "external": true};
+window.dfnpanelData['85e4c237'] = {"dfnID": "85e4c237", "url": "https://w3c.github.io/navigation-timing/#dfn-create-the-navigation-timing-entry", "dfnText": "create the navigation timing entry", "refSections": [{"refs": [{"id": "ref-for-dfn-create-the-navigation-timing-entry"}], "title": "4.2. Navigation response"}], "external": true};
 window.dfnpanelData['1570624a'] = {"dfnID": "1570624a", "url": "https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist", "dfnText": "default allowlist", "refSections": [{"refs": [{"id": "ref-for-policy-controlled-feature-default-allowlist"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2461"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2462"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2463"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2464"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2465"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2466"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2467"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2468"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u24ea"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u2460"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u2461"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u2462"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u2463"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u2464"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u2465"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u2466"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u2467"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2460\u2468"}, {"id": "ref-for-policy-controlled-feature-default-allowlist\u2461\u24ea"}], "title": "7.2. Policy-controlled features"}], "external": true};
 window.dfnpanelData['cc890cc1'] = {"dfnID": "cc890cc1", "url": "https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature", "dfnText": "policy-controlled feature", "refSections": [{"refs": [{"id": "ref-for-policy-controlled-feature"}], "title": "7.2. Policy-controlled features"}], "external": true};
 window.dfnpanelData['86d2a717'] = {"dfnID": "86d2a717", "url": "https://w3c.github.io/ServiceWorker/#serviceworkerglobalscope", "dfnText": "ServiceWorkerGlobalScope", "refSections": [{"refs": [{"id": "ref-for-serviceworkerglobalscope"}], "title": "4.3. Service Worker initialization"}], "external": true};
@@ -1367,17 +1602,17 @@ window.dfnpanelData['accept-ch-cache-origin'] = {"dfnID": "accept-ch-cache-origi
 window.dfnpanelData['accept-ch-cache-client-hints-set'] = {"dfnID": "accept-ch-cache-client-hints-set", "url": "#accept-ch-cache-client-hints-set", "dfnText": "client hints set", "refSections": [{"refs": [{"id": "ref-for-accept-ch-cache-client-hints-set"}], "title": "3.2. Accept-CH cache"}], "external": false};
 window.dfnpanelData['update-the-client-hints-set-from-cache'] = {"dfnID": "update-the-client-hints-set-from-cache", "url": "#update-the-client-hints-set-from-cache", "dfnText": "update the client hints set from cache", "refSections": [{"refs": [{"id": "ref-for-update-the-client-hints-set-from-cache"}], "title": "3.5. Interaction with ACCEPT_CH frame"}, {"refs": [{"id": "ref-for-update-the-client-hints-set-from-cache\u2460"}], "title": "5. Request processing"}], "external": false};
 window.dfnpanelData['abstract-opdef-create-or-override-the-cached-client-hints-set'] = {"dfnID": "abstract-opdef-create-or-override-the-cached-client-hints-set", "url": "#abstract-opdef-create-or-override-the-cached-client-hints-set", "dfnText": "create or override the cached client hints set", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-create-or-override-the-cached-client-hints-set"}], "title": "4.2. Navigation response"}], "external": false};
-window.dfnpanelData['abstract-opdef-should-reload-page-for-critical-client-hints'] = {"dfnID": "abstract-opdef-should-reload-page-for-critical-client-hints", "url": "#abstract-opdef-should-reload-page-for-critical-client-hints", "dfnText": "should reload page for critical client hints", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-should-reload-page-for-critical-client-hints"}], "title": "4.2. Navigation response"}], "external": false};
 window.dfnpanelData['delegate-ch'] = {"dfnID": "delegate-ch", "url": "#delegate-ch", "dfnText": "Delegate-CH", "refSections": [{"refs": [{"id": "ref-for-delegate-ch"}], "title": "4.4. Standard metadata names"}], "external": false};
-window.dfnpanelData['has-reloaded-for-critical-ch'] = {"dfnID": "has-reloaded-for-critical-ch", "url": "#has-reloaded-for-critical-ch", "dfnText": "has reloaded for Critical-CH", "refSections": [{"refs": [{"id": "ref-for-has-reloaded-for-critical-ch"}, {"id": "ref-for-has-reloaded-for-critical-ch\u2460"}], "title": "4.2. Navigation response"}], "external": false};
+window.dfnpanelData['critical-ch-restart-time'] = {"dfnID": "critical-ch-restart-time", "url": "#critical-ch-restart-time", "dfnText": "Critical-CH restart time", "refSections": [{"refs": [{"id": "ref-for-critical-ch-restart-time"}, {"id": "ref-for-critical-ch-restart-time\u2460"}, {"id": "ref-for-critical-ch-restart-time\u2461"}, {"id": "ref-for-critical-ch-restart-time\u2462"}, {"id": "ref-for-critical-ch-restart-time\u2463"}], "title": "4.2. Navigation response"}], "external": false};
 window.dfnpanelData['environment-settings-object-client-hints-set'] = {"dfnID": "environment-settings-object-client-hints-set", "url": "#environment-settings-object-client-hints-set", "dfnText": "client hints set", "refSections": [{"refs": [{"id": "ref-for-environment-settings-object-client-hints-set"}], "title": "3.2. Accept-CH cache"}, {"refs": [{"id": "ref-for-environment-settings-object-client-hints-set\u2460"}, {"id": "ref-for-environment-settings-object-client-hints-set\u2461"}], "title": "3.4. Delegate-CH"}, {"refs": [{"id": "ref-for-environment-settings-object-client-hints-set\u2462"}, {"id": "ref-for-environment-settings-object-client-hints-set\u2463"}], "title": "4.3. Service Worker initialization"}, {"refs": [{"id": "ref-for-environment-settings-object-client-hints-set\u2464"}], "title": "5. Request processing"}], "external": false};
 window.dfnpanelData['abstract-opdef-append-client-hints-to-request'] = {"dfnID": "abstract-opdef-append-client-hints-to-request", "url": "#abstract-opdef-append-client-hints-to-request", "dfnText": "append client hints to request", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-append-client-hints-to-request"}], "title": "6. Integration with Fetch"}], "external": false};
 window.dfnpanelData['abstract-opdef-remove-client-hints-from-redirect-if-needed'] = {"dfnID": "abstract-opdef-remove-client-hints-from-redirect-if-needed", "url": "#abstract-opdef-remove-client-hints-from-redirect-if-needed", "dfnText": "remove client hints from redirect if needed", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-remove-client-hints-from-redirect-if-needed"}], "title": "6. Integration with Fetch"}], "external": false};
 window.dfnpanelData['client-hints-token'] = {"dfnID": "client-hints-token", "url": "#client-hints-token", "dfnText": "client hints token", "refSections": [{"refs": [{"id": "ref-for-client-hints-token"}], "title": "3.1. Client hints set"}, {"refs": [{"id": "ref-for-client-hints-token\u2460"}], "title": "3.2. Accept-CH cache"}, {"refs": [{"id": "ref-for-client-hints-token\u2461"}], "title": "3.3. Critical-CH"}, {"refs": [{"id": "ref-for-client-hints-token\u2462"}, {"id": "ref-for-client-hints-token\u2463"}], "title": "3.4. Delegate-CH"}, {"refs": [{"id": "ref-for-client-hints-token\u2464"}, {"id": "ref-for-client-hints-token\u2465"}, {"id": "ref-for-client-hints-token\u2466"}], "title": "5. Request processing"}], "external": false};
 window.dfnpanelData['low-entropy-hint-table'] = {"dfnID": "low-entropy-hint-table", "url": "#low-entropy-hint-table", "dfnText": "low-entropy hint table", "refSections": [{"refs": [{"id": "ref-for-low-entropy-hint-table"}], "title": "5. Request processing"}, {"refs": [{"id": "ref-for-low-entropy-hint-table\u2460"}], "title": "7.3. Low-entropy hint table"}], "external": false};
 window.dfnpanelData['find-client-hint-value'] = {"dfnID": "find-client-hint-value", "url": "#find-client-hint-value", "dfnText": "find client hint value", "refSections": [{"refs": [{"id": "ref-for-find-client-hint-value"}], "title": "5. Request processing"}], "external": false};
-window.dfnpanelData['field-name'] = {"dfnID": "field-name", "url": "#field-name", "dfnText": "field-name", "refSections": [{"refs": [{"id": "ref-for-field-name"}], "title": "3.2. Accept-CH cache"}, {"refs": [{"id": "ref-for-field-name\u2460"}, {"id": "ref-for-field-name\u2461"}], "title": "3.3. Critical-CH"}], "external": false};</script>
-<script>/* script-dom-helper */
+window.dfnpanelData['field-name'] = {"dfnID": "field-name", "url": "#field-name", "dfnText": "field-name", "refSections": [{"refs": [{"id": "ref-for-field-name"}], "title": "3.2. Accept-CH cache"}, {"refs": [{"id": "ref-for-field-name\u2460"}, {"id": "ref-for-field-name\u2461"}], "title": "3.3. Critical-CH"}], "external": false};
+</script>
+<script>/* Boilerplate: script-dom-helper */
 function query(sel) { return document.querySelector(sel); }
 
 function queryAll(sel) { return [...document.querySelectorAll(sel)]; }
@@ -1571,4 +1806,5 @@ function parseHTML(markup) {
 		el.innerHTML = markup;
 		return el.content;
 	}
-}</script>
+}
+</script>
