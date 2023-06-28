@@ -136,7 +136,7 @@ Environment settings object processing {#environment-settings-object-processing}
 `Accept-CH` cache {#accept-ch-cache-definition}
 ----------------
 
-An <dfn>Accept-CH cache</dfn> is owned by the user agent and is an [=ordered map=],
+An <dfn export>Accept-CH cache</dfn> is owned by the user agent and is an [=ordered map=],
 [=keyed=] on <dfn for="accept-ch-cache">origin</dfn> (an [=url/origin=]),
 with a value of <dfn for="accept-ch-cache">client hints set</dfn> (a [=/client hints set=]).
 
