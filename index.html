@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 5fcd28d6d, updated Tue May 30 13:12:11 2023 -0700" name="generator">
+  <meta content="Bikeshed version 5edf5e459, updated Thu Jun 22 11:28:01 2023 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="193d5991389238acabb957455a7576fdcace7758" name="document-revision">
+  <meta content="c9d66e80df8d79d9e580098aa8d5e895a53d6945" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -521,7 +521,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-06-07">7 June 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-06-29">29 June 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -690,7 +690,7 @@ redirections.</p>
      <ul>
       <li data-md>
        <p>In order to perform third party Client Hint delegation, Permissions Policy has
- been extended to control features within fetch requests (rather than just Documents). See <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.10 Should request be allowed to use feature?</a></p>
+ been extended to control features within fetch requests (rather than just Documents). See <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.11 Should request be allowed to use feature?</a></p>
      </ul>
     <li data-md>
      <p><a data-link-type="biblio" href="#biblio-client-hint-reliability" title="Client Hint Reliability">Client Hints Reliability</a></p>
@@ -703,7 +703,7 @@ redirections.</p>
    <h3 class="heading settled" data-level="3.1" id="concept-client-hints-set"><span class="secno">3.1. </span><span class="content">Client hints set</span><a class="self-link" href="#concept-client-hints-set"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="client-hints-set">client hints set</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set">set</a> of <a data-link-type="dfn" href="#client-hints-token" id="ref-for-client-hints-token">client hints token</a>s. </p>
    <h3 class="heading settled" data-level="3.2" id="accept-ch-cache-definition"><span class="secno">3.2. </span><span class="content"><code>Accept-CH</code> cache</span><a class="self-link" href="#accept-ch-cache-definition"></a></h3>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="accept-ch-cache">Accept-CH cache</dfn> is owned by the user agent and is an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">ordered map</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-key" id="ref-for-map-key">keyed</a> on <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn-type="dfn" data-noexport id="accept-ch-cache-origin">origin</dfn> (an <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>),
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="accept-ch-cache">Accept-CH cache</dfn> is owned by the user agent and is an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">ordered map</a>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-key" id="ref-for-map-key">keyed</a> on <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn-type="dfn" data-noexport id="accept-ch-cache-origin">origin</dfn> (an <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>),
 with a value of <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn-type="dfn" data-noexport id="accept-ch-cache-client-hints-set">client hints set</dfn> (a <a data-link-type="dfn" href="#client-hints-set" id="ref-for-client-hints-set">client hints set</a>).</p>
    <p>The Accept-CH cache can effectively act as an alternative cookie store,
 since sites can use each of the hints as a bit set on the client, and that information will be
@@ -874,7 +874,7 @@ following steps:</p>
       <li>
        If <var>request</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> for a "document" <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a>: 
        <ol>
-        <li>Let <var>requestPermitsHint</var> be the result of running <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.10 Should request be allowed to use feature?</a> given <var>request</var> and <var>hintName</var>’s associated feature in <a href="#policy-controlled-features">§ 7.2 Policy-controlled features</a>. 
+        <li>Let <var>requestPermitsHint</var> be the result of running <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.11 Should request be allowed to use feature?</a> given <var>request</var> and <var>hintName</var>’s associated feature in <a href="#policy-controlled-features">§ 7.2 Policy-controlled features</a>. 
         <li>If <var>requestPermitsHint</var> is <code>false</code>, then continue to next <var>hintName</var>. 
        </ol>
       <li>If the user agent decides, in an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined">implementation-defined</a> way (see <a href="#privacy">§ 8 Security and Privacy considerations</a>), to omit this hint then continue. 
