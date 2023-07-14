@@ -33,6 +33,9 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 spec: STRUCTURED-FIELDS; urlPrefix: https://www.rfc-editor.org/rfc/rfc8941.html#name-
     type: dfn
         text: sf-lists; url: lists
+spec: clear-site-data; urlPrefix: https://w3c.github.io/webappsec-clear-site-data/#
+    type: dfn
+        text: Clear-Site-Data Header; url: header
 </pre>
 
 <pre class=biblio>
@@ -144,6 +147,8 @@ The Accept-CH cache can effectively act as an alternative cookie store,
 since sites can use each of the hints as a bit set on the client, and that information will be
 communicated to them on every request. As such, a user agent MUST evict that
 cache whenever the user clears their cookies or when session cookies expire.
+A user agent also MUST clear the Accept-CH according to the rules of the
+[=Clear-Site-Data Header=].
 
 A site can clear the browser's `Accept-CH` cache for its origin by sending an empty `Accept-CH` header in a response. This sets the origin's [=/client hints set=] to an empty set.
 
