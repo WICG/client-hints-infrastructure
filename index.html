@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 5edf5e459, updated Thu Jun 22 11:28:01 2023 -0700" name="generator">
+  <meta content="Bikeshed version b06c00b8e, updated Tue Jul 11 13:41:16 2023 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="c9d66e80df8d79d9e580098aa8d5e895a53d6945" name="document-revision">
+  <meta content="404398c6a11fe161feda415b625f93e48f0be7de" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -521,7 +521,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-06-29">29 June 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-07-14">14 July 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -708,7 +708,8 @@ with a value of <dfn class="dfn-paneled" data-dfn-for="accept-ch-cache" data-dfn
    <p>The Accept-CH cache can effectively act as an alternative cookie store,
 since sites can use each of the hints as a bit set on the client, and that information will be
 communicated to them on every request. As such, a user agent MUST evict that
-cache whenever the user clears their cookies or when session cookies expire.</p>
+cache whenever the user clears their cookies or when session cookies expire.
+A user agent also MUST clear the Accept-CH according to the rules of the <a data-link-type="dfn" href="https://w3c.github.io/webappsec-clear-site-data/#header" id="ref-for-header">Clear-Site-Data Header</a>.</p>
    <p>A site can clear the browser’s <code>Accept-CH</code> cache for its origin by sending an empty <code>Accept-CH</code> header in a response. This sets the origin’s <a data-link-type="dfn" href="#client-hints-set" id="ref-for-client-hints-set①">client hints set</a> to an empty set.</p>
    <p>There MAY be multiple <code>Accept-CH</code> headers per-response and <a data-link-type="dfn" href="https://www.rfc-editor.org/rfc/rfc8941.html#name-lists" id="ref-for-name-lists">sf-lists</a> can be split across lines as long as each line contains at least one token.</p>
    <p class="note" role="note"><span class="marker">Note:</span> As the cache can only be modified by the top-level frame, it is considered to be partitioned.</p>
@@ -1110,6 +1111,11 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
+    <a data-link-type="biblio">[CLEAR-SITE-DATA]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="ab40a5e8">clear-site-data header</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="a6a8ec88">append</span>
@@ -1201,6 +1207,8 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-clear-site-data">[CLEAR-SITE-DATA]
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec-clear-site-data/"><cite>Clear Site Data</cite></a>. URL: <a href="https://w3c.github.io/webappsec-clear-site-data/">https://w3c.github.io/webappsec-clear-site-data/</a>
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-hr-time-3">[HR-TIME-3]
@@ -1544,6 +1552,7 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
 </script>
 <script>/* Boilerplate: script-dfn-panel-json */
 window.dfnpanelData = {};
+window.dfnpanelData['ab40a5e8'] = {"dfnID": "ab40a5e8", "url": "https://w3c.github.io/webappsec-clear-site-data/#header", "dfnText": "clear-site-data header", "refSections": [{"refs": [{"id": "ref-for-header"}], "title": "3.2. Accept-CH cache"}], "external": true};
 window.dfnpanelData['a6a8ec88'] = {"dfnID": "a6a8ec88", "url": "https://fetch.spec.whatwg.org/#concept-header-list-append", "dfnText": "append", "refSections": [{"refs": [{"id": "ref-for-concept-header-list-append"}], "title": "5. Request processing"}], "external": true};
 window.dfnpanelData['857d5516'] = {"dfnID": "857d5516", "url": "https://fetch.spec.whatwg.org/#concept-request-client", "dfnText": "client", "refSections": [{"refs": [{"id": "ref-for-concept-request-client"}], "title": "4.5. Extending environment settings object"}, {"refs": [{"id": "ref-for-concept-request-client\u2460"}], "title": "5. Request processing"}], "external": true};
 window.dfnpanelData['d5434eef'] = {"dfnID": "d5434eef", "url": "https://fetch.spec.whatwg.org/#header-list-contains", "dfnText": "contains", "refSections": [{"refs": [{"id": "ref-for-header-list-contains"}], "title": "5. Request processing"}], "external": true};
