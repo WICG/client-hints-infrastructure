@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version b06c00b8e, updated Tue Jul 11 13:41:16 2023 -0700" name="generator">
+  <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="404398c6a11fe161feda415b625f93e48f0be7de" name="document-revision">
+  <meta content="11b77f05175bc9234d5a31639f54a24cc2a2e56a" name="document-revision">
 <style>
 table, th, td { border: 1px black solid; }
 thead {background-color: yellow; }
@@ -521,7 +521,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Client Hints Infrastructure</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2023-07-14">14 July 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2024-05-21">21 May 2024</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -534,7 +534,7 @@ dfn > a.self-link::before      { content: "#"; }
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2023 the Contributors to the Client Hints Infrastructure Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2024 the Contributors to the Client Hints Infrastructure Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
 A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
    <hr title="Separator for header">
   </div>
@@ -690,7 +690,7 @@ redirections.</p>
      <ul>
       <li data-md>
        <p>In order to perform third party Client Hint delegation, Permissions Policy has
- been extended to control features within fetch requests (rather than just Documents). See <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.11 Should request be allowed to use feature?</a></p>
+ been extended to control features within fetch requests (rather than just Documents). See <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.13 Should request be allowed to use feature?</a></p>
      </ul>
     <li data-md>
      <p><a data-link-type="biblio" href="#biblio-client-hint-reliability" title="Client Hint Reliability">Client Hints Reliability</a></p>
@@ -782,7 +782,7 @@ anyway.</p>
    <ol>
     <li>Let <var>metaElement</var> be the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#meta" id="ref-for-meta">meta</a></code> element. 
     <li>If any <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-link-element" id="ref-for-the-link-element">link</a></code>, <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/semantics.html#the-style-element" id="ref-for-the-style-element">style</a></code>, or <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script" id="ref-for-script">script</a></code> elements have begun to execute, then return. 
-    <li>If <var>metaElement</var> has no <code><a data-link-type="element-sub" href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-name" id="ref-for-attr-meta-name">name</a></code> attribute, or if that attribute’s value is not <code>delegate-ch</code>, then return. 
+    <li>If <var>metaElement</var> has no <code><a data-link-type="element-sub" href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv" id="ref-for-attr-meta-http-equiv">http-equiv</a></code> attribute, or if that attribute’s value is not <code>delegate-ch</code>, then return. 
     <li>If <var>metaElement</var> has no <code><a data-link-type="element-sub" href="https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content" id="ref-for-attr-meta-content">content</a></code> attribute, or if that attribute’s value is the empty string, then return. 
     <li>Let <var>settingsObject</var> be <var>metaElement</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>. 
     <li>If <var>settingsObject</var> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context" id="ref-for-non-secure-context②">non-secure context</a>, abort these steps. 
@@ -875,7 +875,7 @@ following steps:</p>
       <li>
        If <var>request</var> is not a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#navigation-request" id="ref-for-navigation-request">navigation request</a> for a "document" <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-destination" id="ref-for-concept-request-destination①">destination</a>: 
        <ol>
-        <li>Let <var>requestPermitsHint</var> be the result of running <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.11 Should request be allowed to use feature?</a> given <var>request</var> and <var>hintName</var>’s associated feature in <a href="#policy-controlled-features">§ 7.2 Policy-controlled features</a>. 
+        <li>Let <var>requestPermitsHint</var> be the result of running <a href="https://w3c.github.io/webappsec-permissions-policy/#algo-should-request-be-allowed-to-use-feature"><cite>Permissions Policy</cite> § 9.13 Should request be allowed to use feature?</a> given <var>request</var> and <var>hintName</var>’s associated feature in <a href="#policy-controlled-features">§ 7.2 Policy-controlled features</a>. 
         <li>If <var>requestPermitsHint</var> is <code>false</code>, then continue to next <var>hintName</var>. 
        </ol>
       <li>If the user agent decides, in an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined">implementation-defined</a> way (see <a href="#privacy">§ 8 Security and Privacy considerations</a>), to omit this hint then continue. 
@@ -1146,9 +1146,9 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
      <li><span class="dfn-paneled" id="5a88c1c3">content</span>
      <li><span class="dfn-paneled" id="3e12e042">environment settings object</span>
      <li><span class="dfn-paneled" id="8a30477b">global object</span>
+     <li><span class="dfn-paneled" id="448c95f9">http-equiv</span>
      <li><span class="dfn-paneled" id="6cfa013d">link</span>
      <li><span class="dfn-paneled" id="64b89595">meta</span>
-     <li><span class="dfn-paneled" id="a23d5e9f">name</span>
      <li><span class="dfn-paneled" id="791b51ec">navigable</span>
      <li><span class="dfn-paneled" id="5155c2d3">non-secure context</span>
      <li><span class="dfn-paneled" id="43ac8374">origin</span>
@@ -1573,9 +1573,9 @@ window.dfnpanelData['6d88ab2e'] = {"dfnID": "6d88ab2e", "url": "https://html.spe
 window.dfnpanelData['5a88c1c3'] = {"dfnID": "5a88c1c3", "url": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-content", "dfnText": "content", "refSections": [{"refs": [{"id": "ref-for-attr-meta-content"}, {"id": "ref-for-attr-meta-content\u2460"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['3e12e042'] = {"dfnID": "3e12e042", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object", "dfnText": "environment settings object", "refSections": [{"refs": [{"id": "ref-for-environment-settings-object"}], "title": "3.4. Delegate-CH"}, {"refs": [{"id": "ref-for-environment-settings-object\u2460"}, {"id": "ref-for-environment-settings-object\u2461"}], "title": "4.5. Extending environment settings object"}], "external": true};
 window.dfnpanelData['8a30477b'] = {"dfnID": "8a30477b", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global", "dfnText": "global object", "refSections": [{"refs": [{"id": "ref-for-concept-settings-object-global"}], "title": "3.2. Accept-CH cache"}, {"refs": [{"id": "ref-for-concept-settings-object-global\u2460"}], "title": "3.3. Critical-CH"}, {"refs": [{"id": "ref-for-concept-settings-object-global\u2461"}], "title": "3.4. Delegate-CH"}], "external": true};
+window.dfnpanelData['448c95f9'] = {"dfnID": "448c95f9", "url": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv", "dfnText": "http-equiv", "refSections": [{"refs": [{"id": "ref-for-attr-meta-http-equiv"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['6cfa013d'] = {"dfnID": "6cfa013d", "url": "https://html.spec.whatwg.org/multipage/semantics.html#the-link-element", "dfnText": "link", "refSections": [{"refs": [{"id": "ref-for-the-link-element"}, {"id": "ref-for-the-link-element\u2460"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['64b89595'] = {"dfnID": "64b89595", "url": "https://html.spec.whatwg.org/multipage/semantics.html#meta", "dfnText": "meta", "refSections": [{"refs": [{"id": "ref-for-meta"}], "title": "3.4. Delegate-CH"}], "external": true};
-window.dfnpanelData['a23d5e9f'] = {"dfnID": "a23d5e9f", "url": "https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-name", "dfnText": "name", "refSections": [{"refs": [{"id": "ref-for-attr-meta-name"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['791b51ec'] = {"dfnID": "791b51ec", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#changing-nav-continuation-navigable", "dfnText": "navigable", "refSections": [{"refs": [{"id": "ref-for-changing-nav-continuation-navigable"}], "title": "4.1. Navigable"}], "external": true};
 window.dfnpanelData['5155c2d3'] = {"dfnID": "5155c2d3", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context", "dfnText": "non-secure context", "refSections": [{"refs": [{"id": "ref-for-non-secure-context"}], "title": "3.2. Accept-CH cache"}, {"refs": [{"id": "ref-for-non-secure-context\u2460"}], "title": "3.3. Critical-CH"}, {"refs": [{"id": "ref-for-non-secure-context\u2461"}], "title": "3.4. Delegate-CH"}], "external": true};
 window.dfnpanelData['43ac8374'] = {"dfnID": "43ac8374", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-settings-object-origin"}], "title": "3.2. Accept-CH cache"}], "external": true};
