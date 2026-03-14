@@ -271,7 +271,7 @@ The `ACCEPT_CH` frame is a way for Client Hints to be requested by a server
 during the TLS handshake of HTTP/2 and HTTP/3. The requested hints are *not*
 persisted in the [=Accept-CH cache=], but will be retrieved and merged when
 [=update the client hints set from cache=] is run. The full processing model
-is defined in [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]]</a>.
+is defined in [[CLIENT-HINT-RELIABILITY|Client Hints Reliability]].
 
 There MUST be only one `ACCEPT_CH` frames per-connection. Additional frames will be ignored.
 
