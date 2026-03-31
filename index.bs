@@ -496,15 +496,15 @@ When asked to <dfn>find client hint value</dfn>, given |hint| as input, switch o
   <dt>`Save-Data`
   <dd>a suitable <a href="https://wicg.github.io/savedata/#save-data-request-header-field">Save-Data value</a>
   <dt>`DPR`
-  <dd>a suitable <a href>DPR value</a>
+  <dd>a suitable <a href="https://wicg.github.io/responsive-image-client-hints/#sec-ch-dpr">DPR value</a>
   <dt>`Viewport-Width`
-  <dd>a suitable <a href>Viewport-Width value</a>
+  <dd>a suitable <a href="https://wicg.github.io/responsive-image-client-hints/#sec-ch-viewport-width">Viewport-Width value</a>
   <dt>`Viewport-Height`
-  <dd>a suitable <a href>Viewport-Height value</a>
+  <dd>a suitable <a href="https://wicg.github.io/responsive-image-client-hints/#sec-ch-viewport-height">Viewport-Height value</a>
   <dt>`Width`
-  <dd>a suitable <a href>Width value</a>
+  <dd>a suitable <a href="https://wicg.github.io/responsive-image-client-hints/#sec-ch-width">Width value</a>
   <dt>`Device-Memory`
-  <dd>a suitable <a href="https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header">Device-Memory value</a>
+  <dd>a suitable <a href="https://www.w3.org/TR/device-memory/#sec-device-memory-client-hint-header">Device-Memory value</a>
   <dt>`RTT`
   <dd>a suitable <a href="https://wicg.github.io/netinfo/#rtt-request-header-field">RTT value</a>
   <dt>`Downlink`
