@@ -4,9 +4,9 @@
   <title>Client Hints Infrastructure</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 0ef803fdf, updated Tue Jan 6 11:59:39 2026 -0800" name="generator">
+  <meta content="Bikeshed version ea4009a02, updated Thu Sep 17 15:24:44 2026 -0700" name="generator">
   <link href="https://wicg.github.io/client-hints-infrastructure" rel="canonical">
-  <meta content="fc52071266216c0eeb41f3d56fa6c95cd89f3caa" name="revision">
+  <meta content="a3ace474b553f63ee4514d0d8637abdce0309dfb" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>
@@ -306,7 +306,7 @@ pre .property::before, pre .property::after {
 </style>
 <style>/* Boilerplate: style-counters */
 body {
-    counter-reset: example figure issue;
+    counter-reset: example figure issue table;
 }
 .issue {
     counter-increment: issue;
@@ -331,6 +331,13 @@ figcaption {
 }
 figcaption:not(.no-marker)::before {
     content: "Figure " counter(figure) " ";
+}
+
+figure.table figcaption {
+    counter-increment: table;
+}
+figure.table figcaption:not(.no-marker)::before {
+    content: "Table " counter(table) " ";
 }
 </style>
 <style>/* Boilerplate: style-dfn-panel */
@@ -572,7 +579,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <h1 class="no-ref p-name" id="title">Client Hints Infrastructure</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-03-31">31 March 2026</time></p>
+    <time class="dt-updated" datetime="2026-09-22">22 September 2026</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -581,8 +588,10 @@ dfn > a.self-link::before      { content: "#"; }
      <dd><a href="https://github.com/WICG/client-hints-infrastructure/issues/">GitHub</a>
      <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editors:
-     <dd class="editor h-card p-author vcard"><a class="fn p-name u-url url" href="https://blog.yoav.ws">Yoav Weiss</a> (<span class="org p-org">Shopify</span>) <a class="email u-email" href="mailto:yoav@yoav.ws">yoav@yoav.ws</a>
+     <dd class="editor h-card p-author vcard" data-editor-id="90704"><a class="email fn p-name u-email" href="mailto:miketaylr@google.com">Mike Taylor</a> (<a class="org p-org" href="https://google.org">Google</a>)
      <dd class="editor h-card p-author vcard" data-editor-id="132484"><a class="email fn p-name u-email" href="mailto:arichiv@google.com">Ari Chivukula</a> (<a class="org p-org" href="https://google.org">Google</a>)
+     <dt class="editor">Former Editor:
+     <dd class="editor h-card p-author vcard" data-editor-id="58673"><a class="fn p-name u-url url" href="https://blog.yoav.ws">Yoav Weiss</a> (<a class="org p-org" href="https://www.shopify.com">Shopify</a>) <a class="email u-email" href="mailto:yoav@yoav.ws">yoav@yoav.ws</a>
     </dl>
    </div>
    <div data-fill-with="warning"></div>
@@ -662,7 +671,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
-      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Non-Normative References</span></a>
      </ol>
     <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
    </ol>
@@ -1466,13 +1475,13 @@ modify their returned values for a given hint, or omit the hint entirely.</p>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-rfc8942">[RFC8942]
-   <dd>I. Grigorik; Y. Weiss. <a href="https://www.rfc-editor.org/rfc/rfc8942"><cite>HTTP Client Hints</cite></a>. February 2021. Experimental. URL: <a href="https://www.rfc-editor.org/rfc/rfc8942">https://www.rfc-editor.org/rfc/rfc8942</a>
+   <dd>I. Grigorik; Y. Weiss. <a href="https://www.rfc-editor.org/info/rfc8942/"><cite>HTTP Client Hints</cite></a>. February 2021. Experimental. URL: <a href="https://www.rfc-editor.org/info/rfc8942/">https://www.rfc-editor.org/info/rfc8942/</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
    <dd>Monica CHINTALA; Yoshisato Yanagisawa. <a href="https://w3c.github.io/ServiceWorker/"><cite>Service Workers Nightly</cite></a>. URL: <a href="https://w3c.github.io/ServiceWorker/">https://w3c.github.io/ServiceWorker/</a>
    <dt id="biblio-url">[URL]
    <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/"><cite>URL Standard</cite></a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
   </dl>
-  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Non-Normative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-client-hint-reliability">[CLIENT-HINT-RELIABILITY]
    <dd>David Benjamin. <a href="https://datatracker.ietf.org/doc/html/draft-davidben-http-client-hint-reliability"><cite>Client Hint Reliability</cite></a>. URL: <a href="https://datatracker.ietf.org/doc/html/draft-davidben-http-client-hint-reliability">https://datatracker.ietf.org/doc/html/draft-davidben-http-client-hint-reliability</a>
