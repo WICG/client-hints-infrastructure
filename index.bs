@@ -5,8 +5,9 @@ Level: 1
 Status: CG-Draft
 Group: WICG
 URL: https://wicg.github.io/client-hints-infrastructure
-Editor: Yoav Weiss, Shopify, yoav@yoav.ws, https://blog.yoav.ws
+Editor: Mike Taylor, w3cid 90704, Google https://google.org, miketaylr@google.com
 Editor: Ari Chivukula, w3cid 132484, Google https://google.org, arichiv@google.com
+Former Editor: Yoav Weiss, w3cid 58673, Shopify https://www.shopify.com, yoav@yoav.ws, https://blog.yoav.ws
 Abstract: Specification of the Client Hints infrastructure and its integration with Fetch and HTML
 Markup Shorthands: markdown yes
 Repository: WICG/client-hints-infrastructure
